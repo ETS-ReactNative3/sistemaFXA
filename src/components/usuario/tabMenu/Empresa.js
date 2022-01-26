@@ -1,6 +1,7 @@
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import React from 'react';
+import { DefaultSelect } from '../items/DefaultSelect';
 
 export const Empresa = (props = {empleado:{}}) => {
   return (
@@ -12,44 +13,44 @@ export const Empresa = (props = {empleado:{}}) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Empresa:</span>
-            <InputText type="text" className='inputForm' value={props.empleado.empresa.nombre_empresa}></InputText> 
+            <DefaultSelect name='id_empresa_fk' id_def="id_empresa" nombre_def="nombre_empresa" serviceName="EmpresaService" id={props.empleado.values.id_empresa_fk} onChange={props.empleado.handleChange}/>
         </div>
-        <div className='text-left mb-2'>
+       <div className='text-left mb-2'>
             <span className='text-800 font-medium'>NIT:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.empresa.nit}></InputText> 
+            <InputText disabled type="text" className='inputForm' value={props.empleado.values.empresa.nit}></InputText> 
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Lugar De Trabajo:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.lugar_trabajo.nombre_ciudad}></InputText> 
+            <DefaultSelect name='lugar_trabajo_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_trabajo_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Centro De Costo:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.centro_costo.nombre_centro_costo}></InputText> 
+            <DefaultSelect name='centro_costo_fk' id_def="id_centro_costo" nombre_def="nombre_centro_costo" serviceName="CentroCostoService" id={props.empleado.values.centro_costo_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Cargo:</span>
-            <InputText type="text" className='inputForm' value={props.empleado.cargo.nombre_cargo}></InputText> 
+            <DefaultSelect name='cargo_fk' id_def="id_cargo" nombre_def="nombre_cargo" serviceName="CargoService" id={props.empleado.values.cargo_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Tipo De Contrato:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.tipo_contrato.nombre_tipo_contrato}></InputText> 
+            <DefaultSelect name='tipo_contrato_fk' id_def="id_tipo_contrato" nombre_def="nombre_tipo_contrato" serviceName="TipoContratoService" id={props.empleado.values.tipo_contrato_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Tiempo:</span>
-            <InputText type="text" className='inputForm' value={props.empleado.tiempo.nombre_tiempo}></InputText> 
+            <DefaultSelect name='tipoestado_contrato_fk' id_def="id_tiempo" nombre_def="nombre_tiempo" serviceName="TipoTiempoService" id={props.empleado.values.tipo_tiempo_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Fecha Ingreso:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.fecha_ingreso}></InputText> 
+            <InputText name='fecha_ingreso' type="text" className='inputForm' value={props.empleado.values.fecha_ingreso} onChange={props.empleado.handleChange}></InputText> 
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Contrato Firmado:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.estado_contrato.nombre_estado_contrato}></InputText> 
+            <DefaultSelect name='estado_contrato_fk' id_def="id_estado_contrato" nombre_def="nombre_estado_contrato" serviceName="EstadoContratoService" id={props.empleado.values.estado_contrato_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Jefe De Zona:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.jefe_zona.nombres}></InputText> 
-        </div>
+            <InputText type="text" className='inputForm' value={props.empleado.values.jefe_zona_fk}></InputText> 
+        </div> 
     </div>
   )
 };

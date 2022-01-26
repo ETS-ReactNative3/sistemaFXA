@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
-import { DefaultSelect } from '../selectItems/DefaultSelect';
+import { Calendar } from 'primereact/calendar';
+import { DefaultSelect } from '../items/DefaultSelect';
+import classNames from 'classnames';
+import { ToogleButton } from '../items/ToogleButton';
+import { Dropdown } from 'primereact/dropdown';
 
 export const Datos = (props) => {
+    let today = new Date()
 
-    const [datos, setDatos] = useState({
-        nombres:props.empleado.nombres||'',
-        apellidos: props.empleado.apellidos||'',
-        id_tipo_identificacion_fk: props.empleado.id_tipo_identificacion_fk||0,
-        numero_identificacion: props.empleado.numero_identificacion||'',
-        genero: props.empleado.genero || false,
-        fecha_nacimiento: props.empleado.fecha_nacimiento|| '',
-        lugar_nacimiento_fk: props.empleado.lugar_nacimiento_fk||0,
-        nacionalidad_fk: props.empleado.nacionalidad_fk||0,
-        estado_civil_fk: props.empleado.estado_civil_fk||0,
-        correo_electronico: props.empleado.correo_electronico||'',
-        celular: props.empleado.celular||'',
-        telefono_fijo: props.empleado.telefono_fijo||''
-    });
+    const isFormFieldValid = (name) => !!(props.empleado.touched[name] && props.empleado.errors[name]);
+
+    const getFormErrorMessage = (name) => {
+        return isFormFieldValid(name) && <small className="p-error">{props.empleado.errors[name]}</small>;
+    };
+
+    props.empleado.values.fecha_nacimiento = new Date(props.empleado.values.fecha_nacimiento)
     
+    const monthNavigatorTemplate=(e)=> {
+        return <Dropdown value={e.value} options={e.options} onChange={(event) => e.onChange(event.originalEvent, event.value)} style={{ lineHeight: 1 }} />;
+    }
+
+    const yearNavigatorTemplate=(e)=> {
+        return <Dropdown value={e.value} options={e.options} onChange={(event) => e.onChange(event.originalEvent, event.value)} className="p-ml-2" style={{ lineHeight: 1 }} />;
+    }
 
   return (
     <div>
@@ -30,36 +35,42 @@ export const Datos = (props) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Nombres:</span>
-            <InputText type="text" className='inputForm' value={datos.nombres}></InputText> 
+            <InputText name='nombres' type="text" className={classNames({ 'error-input': isFormFieldValid('nombres') })+' inputForm'} value={props.empleado.values.nombres} onChange={props.empleado.handleChange}></InputText> 
+            <div>{getFormErrorMessage('nombres')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Apellidos:</span> 
-            <InputText type="text" className='inputForm' value={datos.apellidos}></InputText> 
+            <InputText name='apellidos' type="text" className={classNames({ 'error-input': isFormFieldValid('apellidos') })+' inputForm'} value={props.empleado.values.apellidos} onChange={props.empleado.handleChange}></InputText> 
+            <div>{getFormErrorMessage('apellidos')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Documento:</span> 
-            <DefaultSelect id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={datos.id_tipo_identificacion_fk}/>
-            <InputText type="text" className='inputForm' value={datos.numero_identificacion}></InputText> 
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('id_tipo_identificacion_fk') })+' inputForm'} name='id_tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.empleado.values.id_tipo_identificacion_fk} onChange={props.empleado.handleChange}/>
+            <InputText name='numero_identificacion' type="text" className={classNames({ 'error-input': isFormFieldValid('numero_identificacion') })+' inputForm'} value={props.empleado.values.numero_identificacion} onChange={props.empleado.handleChange}></InputText> 
+            <div>{getFormErrorMessage('id_tipo_identificacion_fk')}</div>
+            <div>{getFormErrorMessage('numero_identificacion')}</div>
         </div>
-        <div className='text-left mb-2'>
+        <div className='text-left mb-2 grid' >
             <span className='text-800 font-medium'>Genero:</span> 
-            <InputText type="text" className='inputForm' value={datos.genero}></InputText>
+            <ToogleButton name='genero' id={props.empleado.values.genero} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Fecha De Nacimiento:</span>
-            <InputText type="text" className='inputForm' value={datos.fecha_nacimiento}></InputText> 
+            <InputText name='fecha_nacimiento' type="text" className='inputForm' value={props.empleado.values.fecha_nacimiento} onChange={props.empleado.handleChange}></InputText> 
+            <Calendar  name="fecha_nacimiento" yearRange={`${today.getFullYear()-90}:${today.getFullYear()-14}`} id="fecha_nacimiento" value={props.empleado.values.fecha_nacimiento} onChange={props.empleado.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_nacimiento') })}
+                readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Lugar De Nacimiento:</span> 
-            <DefaultSelect id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={datos.lugar_nacimiento_fk}/>
+            <DefaultSelect name='lugar_nacimiento_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_nacimiento_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Nacionalidad:</span>
-            <DefaultSelect id_def="id_nacionalidad" nombre_def="nombre_nacionalidad" serviceName="NacionalidadService" id={datos.nacionalidad_fk}/>
+            <DefaultSelect name='nacionalidad_fk' id_def="id_nacionalidad" nombre_def="nombre_nacionalidad" serviceName="NacionalidadService" id={props.empleado.values.nacionalidad_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Estado Civil:</span> 
-            <DefaultSelect id_def="id_estado_civil" nombre_def="nombre_estado_civil" serviceName="EstadoCivilService" id={datos.estado_civil_fk}/>
+            <DefaultSelect name='estado_civil_fk' id_def="id_estado_civil" nombre_def="nombre_estado_civil" serviceName="EstadoCivilService" id={props.empleado.values.estado_civil_fk} onChange={props.empleado.handleChange}/>
         </div>
         <Divider align="left">
             <div className="inline-flex align-items-center">
@@ -68,15 +79,15 @@ export const Datos = (props) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Correo Electronico:</span> 
-            <InputText type="text" className='inputForm' value={datos.correo_electronico}></InputText> 
+            <InputText name='correo_electronico' type="text" className='inputForm' value={props.empleado.values.correo_electronico} onChange={props.empleado.handleChange}></InputText> 
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Celular:</span> 
-            <InputText type="text" className='inputForm' value={datos.celular}></InputText> 
+            <InputText name='celular' type="text" className='inputForm' value={props.empleado.values.celular} onChange={props.empleado.handleChange}></InputText> 
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Telefono Fijo:</span> 
-            <InputText type="text" className='inputForm' value={datos.telefono_fijo}></InputText> 
+            <InputText name='telefono_fijo' type="text" className='inputForm' value={props.empleado.values.telefono_fijo} onChange={props.empleado.handleChange}></InputText> 
         </div>
     </div>
   )

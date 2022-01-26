@@ -8,6 +8,9 @@ import { Datos } from './tabMenu/Datos';
 import { Empresa } from './tabMenu/Empresa';
 import { Extras } from './tabMenu/Extras';
 import { Riesgo } from './tabMenu/Riesgo';
+import classNames from 'classnames';
+
+
 
 export const Usuario = (params) => {
 
@@ -15,14 +18,29 @@ export const Usuario = (params) => {
 
     const [loading, setLoading] = useState(true);
     
+
+
     useEffect(() => {
         const empleadoService = new EmpleadoService()
         empleadoService.getEmpleado(params.idUsuario).then(res=>{
             setEmpleado(res.data)
+            params.formik.setValues({...res.data,datos:''})
+            params.setEmpleadoDialog(res.data)
             setLoading(false)
         })
-    }, [params.idUsuario]);
-    
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(()=>{
+        params.setEmpleadoDialog(empleado)
+    },[params.empleadoDialog]) // eslint-disable-line react-hooks/exhaustive-deps
+
+    const isFormFieldValid = (name) => !!(params.formik.touched[name] && params.formik.errors[name]);
+
+    const headerTab = (label, errorItem) =>{
+        return (
+            <span className={classNames({ 'p-error font-bold': isFormFieldValid(errorItem) })}><i className={isFormFieldValid('datos')?"pi pi-exclamation-circle":'pi pi-user'}/>{label}</span>
+        )
+    }
 
   return (
     <>
@@ -34,20 +52,22 @@ export const Usuario = (params) => {
             <div className="col-12 xl:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
                 <div className="card">
-                    <TabView>
-                        <TabPanel header="Datos" leftIcon="pi pi-user">
-                            <Datos empleado={empleado}/>
-                        </TabPanel>
-                        <TabPanel header="Empresa" leftIcon="pi pi-building">
-                            <Empresa empleado={empleado}/>
-                        </TabPanel>
-                        <TabPanel header="Extras" leftIcon="pi pi-paperclip">
-                            <Extras empleado={empleado}/>
-                        </TabPanel>
-                        <TabPanel header="Riesgos" leftIcon="pi pi-heart-fill">
-                            <Riesgo empleado={empleado}/>
-                        </TabPanel>
-                    </TabView>
+                    <form onSubmit={params.formik.handleSubmit}>
+                        <TabView>
+                            <TabPanel header={headerTab('Datos','datos')}>
+                                <Datos empleado={params.formik}/>
+                            </TabPanel>
+                            <TabPanel header="Empresa" leftIcon="pi pi-building">
+                                <Empresa empleado={params.formik}/>
+                            </TabPanel>
+                            <TabPanel header="Extras" leftIcon="pi pi-paperclip">
+                                <Extras empleado={params.formik}/>
+                            </TabPanel>
+                            <TabPanel header="Riesgos" leftIcon="pi pi-heart-fill">
+                                <Riesgo empleado={params.formik}/>
+                            </TabPanel>
+                        </TabView>
+                    </form>
                 </div>
             </div>
             <div className="col-12 xl:col-4">

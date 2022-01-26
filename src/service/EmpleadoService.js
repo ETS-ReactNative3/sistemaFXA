@@ -24,4 +24,8 @@ export class EmpleadoService {
         return axios.get(`${API}/${id}`)
     }
 
+    updateEmpleado(id, data){
+        return axios.put(`${API}/${id}`, data)
+    }
+
 }

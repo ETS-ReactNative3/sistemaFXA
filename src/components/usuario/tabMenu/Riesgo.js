@@ -1,6 +1,7 @@
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import React from 'react';
+import { DefaultSelect } from '../items/DefaultSelect';
 
 export const Riesgo = (props) => {
   return (
@@ -12,35 +13,35 @@ export const Riesgo = (props) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>EPS:</span>
-            <InputText type="text" className='inputForm' value={props.empleado.ep.nombre_eps}></InputText> 
+            <DefaultSelect name='eps_fk' id_def="id_eps" nombre_def="nombre_eps" serviceName="EpsService" id={props.empleado.values.eps_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>ARL:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.arl.nombre_arl}></InputText> 
+            <DefaultSelect name='arl_fk' id_def="id_arl" nombre_def="nombre_arl" serviceName="ArlService" id={props.empleado.values.arl_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Pensión:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.pension.nombre_pension}></InputText> 
+            <DefaultSelect name='pension_fk' id_def="id_pension" nombre_def="nombre_pension" serviceName="PensionService" id={props.empleado.values.pension_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Cesantias:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.cesantia.nombre_cesantias}></InputText> 
+            <DefaultSelect name='cesantias_fk' id_def="id_cesantias" nombre_def="nombre_cesantias" serviceName="CesantiasService" id={props.empleado.values.cesantias_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Caja Compensasión:</span>
-            <InputText type="text" className='inputForm' value={props.empleado.caja_compensacion.nombre_caja_comp}></InputText> 
+            <DefaultSelect name='ccf_fk' id_def="id_caja_comp" nombre_def="nombre_caja_comp" serviceName="CajaCompService" id={props.empleado.values.ccf_fk} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Direccion:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.direccion}></InputText> 
+            <InputText name='direccion' type="text" className='inputForm' value={props.empleado.values.direccion} onChange={props.empleado.handleChange}></InputText> 
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Fecha Expedición Documento:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.fecha_expedicion_doc}></InputText> 
+            <InputText name='fecha_expedicion_doc' type="text" className='inputForm' value={props.empleado.values.fecha_expedicion_doc} onChange={props.empleado.handleChange}></InputText> 
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Lugar Expedición Documento:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.lugar_exp_doc.nombre_ciudad}></InputText> 
+            <DefaultSelect name='lugar_exp_doc_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_exp_doc_fk} onChange={props.empleado.handleChange}/>
         </div>
         <Divider align="left">
             <div className="inline-flex align-items-center">
@@ -49,11 +50,11 @@ export const Riesgo = (props) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Nombre:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.contacto_emergencia}></InputText> 
+            <InputText name='contacto_emergencia' type="text" className='inputForm' value={props.empleado.values.contacto_emergencia} onChange={props.empleado.handleChange}></InputText> 
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Telefono Contacto:</span> 
-            <InputText type="text" className='inputForm' value={props.empleado.tel_contacto_emergencia}></InputText> 
+            <InputText name='tel_contacto_emergencia' type="text" className='inputForm' value={props.empleado.values.tel_contacto_emergencia} onChange={props.empleado.handleChange}></InputText> 
         </div>
     </div>
   )

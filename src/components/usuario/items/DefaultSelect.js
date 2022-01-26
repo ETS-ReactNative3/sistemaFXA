@@ -8,6 +8,10 @@ export const DefaultSelect = (params) => {
     const [items, setitems] = useState(null);
 
 
+    useEffect(()=>{
+      setItemSeleccionado(params.id)
+    }, [params.id])
+
     useEffect(() => {
         const ItemService  = require(`../../../service/${params.serviceName}`);
         const itemService = new ItemService.default()
@@ -18,11 +22,12 @@ export const DefaultSelect = (params) => {
     
     const onChange = (e) => {
         setItemSeleccionado(e.value);
+        params.onChange(e)
     }
 
   return (
-    <Dropdown className='inputForm' dropdownIcon={null} value={itemSeleccionado} options={items} onChange={onChange} optionLabel={params.nombre_def} optionValue={params.id_def} filter filterBy="nombre_ciudad" placeholder=""
-    emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados"/>
+    <Dropdown className={params.className} name={params.name} dropdownIcon={null} value={itemSeleccionado} options={items} onChange={onChange} optionLabel={params.nombre_def} optionValue={params.id_def} filter filterBy="nombre_ciudad" placeholder=""
+    emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
   );
 
 };

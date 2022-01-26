@@ -1,14 +1,16 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { Toast } from 'primereact/toast';
 import { EmpleadoService } from '../../service/EmpleadoService';
 import './DataTableDemo.css';
 import { Usuario } from './Usuario';
+import FormikEmp from './formikUsuario';
 
 export const Usuarios = () => {
     const [empleados, setEmpleados] = useState(null);
@@ -17,6 +19,15 @@ export const Usuarios = () => {
     const [loading1, setLoading1] = useState(true);
 
     const empleadoService = new EmpleadoService();
+
+    const [toatsEmpelado, setToatsEmpelado] = useState({});
+    const toast = useRef(null);
+    useEffect(()=>{
+        if(toatsEmpelado.severity){
+            toast.current.show(toatsEmpelado);
+        }
+    },[toatsEmpelado])
+
 
     useEffect(() => {
         empleadoService.getEmpleados().then(res => { setEmpleados(res.data); setLoading1(false) });
@@ -128,8 +139,43 @@ export const Usuarios = () => {
     }
 
     const header1 = renderHeader1();
+
+    const formikUsuario = new FormikEmp()
+    const empleadoFormik = formikUsuario.formikUsuario({setToatsEmpelado:setToatsEmpelado, hideModal:hideModal})
+
+
+    const [empleadoDialog, setEmpleadoDialog] = useState({});
+    
+
+    const [buttonsDialog, setButtonsDialog] = useState(false);
+
+    useEffect(()=>{
+        if(empleadoDialog.id_empleado){
+            setButtonsDialog(true)
+        }else{
+            setButtonsDialog(false)
+        }
+    }, [empleadoFormik.values]) // eslint-disable-line react-hooks/exhaustive-deps
+
+    const handleButtonSubmit = () =>{
+        empleadoFormik.handleSubmit()
+    }
+
+    const dialogHeader = () =>{
+        return (
+            <div className='flex justify-content-end'>
+                <div className={buttonsDialog?'block':'hidden'}>
+                    <Button onClick={() => {empleadoFormik.setValues(empleadoDialog); setEmpleadoDialog({}) }} icon="pi pi-replay" className="p-button-rounded p-button-outlined mx-2" />
+                    <Button type="button" onClick={handleButtonSubmit} icon="pi pi-check" className="p-button-rounded p-button-outlined mx-2" />
+                </div>
+                <Button onClick={hideModal} icon="pi pi-times" className="p-button-rounded p-button-outlined mx-2" />
+            </div>
+        )
+    }
+
     return (
         <div className="datatable-filter-demo">
+            <Toast ref={toast} position="bottom-right"/>
             <div className="card">
                 {renderHeadTable()}
                 {dataView === false &&
@@ -158,8 +204,8 @@ export const Usuarios = () => {
                         <Column header="Opciones" style={{ minWidth: '8rem' }} body={accionesBody}/>
                     </DataTable>
                 }
-                <Dialog position='top' blockScroll={true} visible={modalUsuario} style={{ width: '50vw', minHeight:'95%' }} onHide={hideModal}>
-                    <Usuario idUsuario={idUsuario}/>
+                <Dialog header={dialogHeader} closable={false} draggable={false} position='top' blockScroll={true} visible={modalUsuario} style={{ width: '50vw', minHeight:'95%' }} onHide={hideModal}>
+                    <Usuario idUsuario={idUsuario} formik={empleadoFormik} empleadoDialog={empleadoDialog} setEmpleadoDialog={setEmpleadoDialog}/>
                 </Dialog>
             </div>
 
