@@ -11,6 +11,7 @@ import { EmpleadoService } from '../../service/EmpleadoService';
 import './DataTableDemo.css';
 import { Usuario } from './Usuario';
 import FormikEmp from './formikUsuario';
+import NewUsuario from './NewUsuario';
 
 export const Usuarios = () => {
     const [empleados, setEmpleados] = useState(null);
@@ -22,6 +23,7 @@ export const Usuarios = () => {
 
     const [toatsEmpelado, setToatsEmpelado] = useState({});
     const toast = useRef(null);
+
     useEffect(()=>{
         if(toatsEmpelado.severity){
             toast.current.show(toatsEmpelado);
@@ -70,13 +72,13 @@ export const Usuarios = () => {
         return (
             <div className='grid  my-4'>
                 <div className='col-10 hidden xl:block lg:block'>
-                    <Button icon="pi pi-plus" className="p-button-rounded mx-4"></Button>
+                    <Button onClick={showModalNewUsu} icon="pi pi-plus" className="p-button-rounded mx-4"></Button>
                     <Button icon="pi pi-user-plus" iconPos="right" label="Agregar Varios" className="p-button-rounded p-button-outlined mx-2" />
                     <Button icon="pi pi-file-pdf" iconPos="right" label="Generar Reporte" className="p-button-rounded p-button-outlined mx-2" />
                     <Button icon="pi pi-download" iconPos="right" label="Generar CSV" className="p-button-rounded p-button-outlined mx-2" />
                 </div>
                 <div className='col-8 md:col-10 block xl:hidden lg:hidden'>
-                    <Button icon="pi pi-plus" className="p-button-rounded mx-3 my-1"></Button>
+                    <Button onClick={showModalNewUsu} icon="pi pi-plus" className="p-button-rounded mx-3 my-1"></Button>
                     <Button icon="pi pi-user-plus" iconPos="right" className="p-button-rounded p-button-outlined mx-3 my-1" />
                     <Button icon="pi pi-file-pdf" iconPos="right" className="p-button-rounded p-button-outlined mx-3 my-1" />
                     <Button icon="pi pi-download" iconPos="right" className="p-button-rounded p-button-outlined mx-3 my-1" />
@@ -134,15 +136,27 @@ export const Usuarios = () => {
         setModalUsuario(true)
     }
 
+    const showModalNewUsu = () =>{
+        empleadoFormik.resetForm()
+        empleadoFormik.setValues({
+            nombres:'',
+            apellidos:'',
+            id_tipo_identificacion_fk:'',
+            numero_identificacion:'',
+            genero:0
+        })
+        setNewUsuDialog(true)
+    }
+
     const hideModal = () =>{
         setModalUsuario(false)
+        setNewUsuDialog(false)
     }
 
     const header1 = renderHeader1();
 
     const formikUsuario = new FormikEmp()
     const empleadoFormik = formikUsuario.formikUsuario({setToatsEmpelado:setToatsEmpelado, hideModal:hideModal})
-
 
     const [empleadoDialog, setEmpleadoDialog] = useState({});
     
@@ -172,6 +186,8 @@ export const Usuarios = () => {
             </div>
         )
     }
+
+    const [newUsuDialog, setNewUsuDialog] = useState(false);
 
     return (
         <div className="datatable-filter-demo">
@@ -204,8 +220,11 @@ export const Usuarios = () => {
                         <Column header="Opciones" style={{ minWidth: '8rem' }} body={accionesBody}/>
                     </DataTable>
                 }
-                <Dialog header={dialogHeader} closable={false} draggable={false} position='top' blockScroll={true} visible={modalUsuario} style={{ width: '50vw', minHeight:'95%' }} onHide={hideModal}>
+                <Dialog header={dialogHeader} closable={false} draggable={false} position='center' blockScroll={true} visible={modalUsuario} style={{ width: '52vw' }} breakpoints={{'1150px': '70vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
                     <Usuario idUsuario={idUsuario} formik={empleadoFormik} empleadoDialog={empleadoDialog} setEmpleadoDialog={setEmpleadoDialog}/>
+                </Dialog>
+                <Dialog header='Nuevo Empleado' draggable={false} position='center' blockScroll={true} visible={newUsuDialog} style={{ width: '50vw' }} breakpoints={{'1150px': '70vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
+                    <NewUsuario formik={empleadoFormik} />
                 </Dialog>
             </div>
 

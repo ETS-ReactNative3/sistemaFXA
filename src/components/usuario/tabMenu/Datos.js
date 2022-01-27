@@ -16,8 +16,19 @@ export const Datos = (props) => {
         return isFormFieldValid(name) && <small className="p-error">{props.empleado.errors[name]}</small>;
     };
 
-    props.empleado.values.fecha_nacimiento = new Date(props.empleado.values.fecha_nacimiento)
+    const setDateValue = (date) =>{
+        let fecha_nacimiento = date 
+        if(!date.getTime){
+        const [yyyy, mm, dd] = date.split('-')
     
+        fecha_nacimiento = new Date(`${mm}-${dd}-${yyyy}`)
+
+        }
+        return fecha_nacimiento
+    }
+
+    
+
     const monthNavigatorTemplate=(e)=> {
         return <Dropdown value={e.value} options={e.options} onChange={(event) => e.onChange(event.originalEvent, event.value)} style={{ lineHeight: 1 }} />;
     }
@@ -50,27 +61,30 @@ export const Datos = (props) => {
             <div>{getFormErrorMessage('id_tipo_identificacion_fk')}</div>
             <div>{getFormErrorMessage('numero_identificacion')}</div>
         </div>
-        <div className='text-left mb-2 grid' >
+        <div className='text-left mb-2' >
             <span className='text-800 font-medium'>Genero:</span> 
             <ToogleButton name='genero' id={props.empleado.values.genero} onChange={props.empleado.handleChange}/>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Fecha De Nacimiento:</span>
-            <InputText name='fecha_nacimiento' type="text" className='inputForm' value={props.empleado.values.fecha_nacimiento} onChange={props.empleado.handleChange}></InputText> 
-            <Calendar  name="fecha_nacimiento" yearRange={`${today.getFullYear()-90}:${today.getFullYear()-14}`} id="fecha_nacimiento" value={props.empleado.values.fecha_nacimiento} onChange={props.empleado.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_nacimiento') })}
-                readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/>
+            <Calendar name="fecha_nacimiento" yearRange={`${today.getFullYear()-90}:${today.getFullYear()-14}`} id="fecha_nacimiento" value={setDateValue(props.empleado.values.fecha_nacimiento)} onChange={props.empleado.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_nacimiento') }+' inputForm')}
+                readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/> 
+            <div>{getFormErrorMessage('fecha_nacimiento')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Lugar De Nacimiento:</span> 
-            <DefaultSelect name='lugar_nacimiento_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_nacimiento_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('lugar_nacimiento_fk') })+' inputForm'} name='lugar_nacimiento_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_nacimiento_fk} onChange={props.empleado.handleChange}/>
+            <div>{getFormErrorMessage('lugar_nacimiento_fk')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Nacionalidad:</span>
-            <DefaultSelect name='nacionalidad_fk' id_def="id_nacionalidad" nombre_def="nombre_nacionalidad" serviceName="NacionalidadService" id={props.empleado.values.nacionalidad_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('nacionalidad_fk') })+' inputForm'} name='nacionalidad_fk' id_def="id_nacionalidad" nombre_def="nombre_nacionalidad" serviceName="NacionalidadService" id={props.empleado.values.nacionalidad_fk} onChange={props.empleado.handleChange}/>
+            <div>{getFormErrorMessage('nacionalidad_fk')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Estado Civil:</span> 
-            <DefaultSelect name='estado_civil_fk' id_def="id_estado_civil" nombre_def="nombre_estado_civil" serviceName="EstadoCivilService" id={props.empleado.values.estado_civil_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('estado_civil_fk') })+' inputForm'} name='estado_civil_fk' id_def="id_estado_civil" nombre_def="nombre_estado_civil" serviceName="EstadoCivilService" id={props.empleado.values.estado_civil_fk} onChange={props.empleado.handleChange}/>
+            <div>{getFormErrorMessage('estado_civil_fk')}</div>
         </div>
         <Divider align="left">
             <div className="inline-flex align-items-center">
@@ -79,15 +93,18 @@ export const Datos = (props) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Correo Electronico:</span> 
-            <InputText name='correo_electronico' type="text" className='inputForm' value={props.empleado.values.correo_electronico} onChange={props.empleado.handleChange}></InputText> 
+            <InputText name='correo_electronico' type="text" className={classNames({ 'error-input': isFormFieldValid('correo_electronico') })+' inputForm'} value={props.empleado.values.correo_electronico} onChange={props.empleado.handleChange}></InputText> 
+            <div>{getFormErrorMessage('correo_electronico')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Celular:</span> 
-            <InputText name='celular' type="text" className='inputForm' value={props.empleado.values.celular} onChange={props.empleado.handleChange}></InputText> 
+            <InputText name='celular' type="text" className={classNames({ 'error-input': isFormFieldValid('celular') })+' inputForm'} value={props.empleado.values.celular} onChange={props.empleado.handleChange}></InputText> 
+            <div>{getFormErrorMessage('celular')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Telefono Fijo:</span> 
-            <InputText name='telefono_fijo' type="text" className='inputForm' value={props.empleado.values.telefono_fijo} onChange={props.empleado.handleChange}></InputText> 
+            <InputText name='telefono_fijo' type="text" className={classNames({ 'error-input': isFormFieldValid('telefono_fijo') })+' inputForm'} value={props.empleado.values.telefono_fijo} onChange={props.empleado.handleChange}></InputText> 
+            <div>{getFormErrorMessage('telefono_fijo')}</div>
         </div>
     </div>
   )

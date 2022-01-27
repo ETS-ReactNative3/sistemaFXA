@@ -26,7 +26,7 @@ export const DefaultSelect = (params) => {
     }
 
   return (
-    <Dropdown className={params.className} name={params.name} dropdownIcon={null} value={itemSeleccionado} options={items} onChange={onChange} optionLabel={params.nombre_def} optionValue={params.id_def} filter filterBy="nombre_ciudad" placeholder=""
+    <Dropdown className={params.className} name={params.name} dropdownIcon={null} value={itemSeleccionado} options={items} onChange={onChange} optionLabel={params.nombre_def} optionValue={params.id_def} filter filterBy={params.nombre_def} placeholder=""
     emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
   );
 

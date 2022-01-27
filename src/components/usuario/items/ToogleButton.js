@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { SelectButton } from 'primereact/selectbutton';
+import { ToggleButton } from 'primereact/togglebutton';
 
 
 export const ToogleButton = (params) => {
 
     const [itemSeleccionado, setItemSeleccionado] = useState(params.id);
-
-    const items = [
-        {optionLabel: 'Masculino', value: false},
-        {optionLabel: 'Femenino', value: true},
-    ]
 
     useEffect(()=>{
       setItemSeleccionado(params.id)
@@ -21,8 +16,7 @@ export const ToogleButton = (params) => {
     }
 
   return (
-    <SelectButton unselectable={false} id={params.name} value={itemSeleccionado} options={items} onChange={onChange} optionLabel='optionLabel'/>
-
+      <ToggleButton className='inputForm toggleButtonStyle' iconPos='right' id={params.name} checked={itemSeleccionado} onChange={onChange} onLabel="Femenino" offLabel="Masculino" onIcon="pi pi-moon" offIcon="pi pi-sun" />
   );
 
 };
