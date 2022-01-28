@@ -20,12 +20,24 @@ export class EmpleadoService {
         return axios.get(API)
     }
     
+    getEmpleadosInactivos(){
+        return axios.get(`${API}/inactivos`)
+    }
+    
     getEmpleado(id){
         return axios.get(`${API}/${id}`)
     }
 
     updateEmpleado(id, data){
         return axios.put(`${API}/${id}`, data)
+    }
+
+    createEmpleado(data){
+        return axios.post(API, data)
+    }
+
+    changeState(id, action){
+        return axios.put(`${API}/${action}/${id}`)
     }
 
 }

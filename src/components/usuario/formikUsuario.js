@@ -255,6 +255,11 @@ class FormikEmp {
                         options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                         options.hideModal()
                     })
+                }else{
+                    serviceEmpleado.createEmpleado(data).then(res=>{
+                        options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
+                        options.hideModal()
+                    })
                 }
             }
         })

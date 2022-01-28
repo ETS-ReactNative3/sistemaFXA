@@ -30,11 +30,23 @@ export const Usuarios = () => {
         }
     },[toatsEmpelado])
 
+    const [reload, setReload] = useState(0)
 
     useEffect(() => {
         empleadoService.getEmpleados().then(res => { setEmpleados(res.data); setLoading1(false) });
         initFilters1();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [reload]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const changeGetAll = () =>{
+        if(pageState===true){
+            empleadoService.getEmpleadosInactivos().then(res => { setEmpleados(res.data); setLoading1(false) });
+            setPageState(false)
+        }else{
+            empleadoService.getEmpleados().then(res => { setEmpleados(res.data); setLoading1(false) });
+            setPageState(true)
+        }
+        initFilters1();
+    }
 
     const clearFilter1 = () => {
         initFilters1();
@@ -68,6 +80,8 @@ export const Usuarios = () => {
         setDataView(i)
     }
 
+    const [pageState, setPageState] = useState(true)
+
     const renderHeadTable = () =>{
         return (
             <div className='grid  my-4'>
@@ -97,7 +111,7 @@ export const Usuarios = () => {
         return (
             <div className=" grid">
                 <div className='col-12 xl:col-7 lg:col-5 md:col-5 sm:col-4'>
-                    <h4>Usuarios Activos <i className="pi pi-arrow-circle-right text-xl mx-3 cursor-pointer" /></h4>
+                    <h4>Usuarios {pageState?'Activos':'Inactivos'} <i onClick={changeGetAll} className={(pageState?'pi pi-arrow-circle-right':'pi pi-arrow-circle-left')+' text-xl mx-3 cursor-pointer'}/></h4>
                     
                 </div>
                 <div className='col-12 xl:col-5 lg:col-7 md:col-7 sm:col-6'>
@@ -112,10 +126,27 @@ export const Usuarios = () => {
         )
     }
 
+    const [modalChangeState, setModalChangeState] = useState(false);
+    const [empleadoChangeState, setEmpleadoChangeState] = useState({})
+
+    const showModalChangeState = (data)=>{
+        setEmpleadoChangeState(data)
+        setModalChangeState(true)
+    }
+
     const accionesBody = rowData =>{
         return(
             <div className='w-full flex align-items-center justify-content-center'>
-                <Button onClick={()=>showModal(rowData.id_empleado)} icon="pi pi-eye" className="p-button-rounded p-button-outlined mx-2" />
+                {pageState &&
+                    <>
+                        <Button onClick={()=>showModal(rowData.id_empleado)} icon="pi pi-eye" className="p-button-rounded p-button-outlined" />
+                        <Button onClick={()=>showModalChangeState(rowData)} icon="pi pi-ban" className="p-button-rounded p-button-outlined mx-2" />
+                    </>
+                }
+                {!pageState &&
+                    <Button onClick={()=>showModalChangeState(rowData)} icon="pi pi-check-circle" className="p-button-rounded p-button-outlined mx-2" />
+                }
+            
             </div>
         )
     }
@@ -143,7 +174,22 @@ export const Usuarios = () => {
             apellidos:'',
             id_tipo_identificacion_fk:'',
             numero_identificacion:'',
-            genero:0
+            genero:0,
+            fecha_nacimiento:'',
+            correo_electronico:'',
+            celular:'',
+            telefono_fijo:'',
+            datos:'',
+            empresa:'',
+            extras:'',
+            fecha_ingreso:'',
+            jefe_zona_fk:0,
+            num_cuenta:'',
+            riesgo:'',
+            riesgos:'',
+            direccion:'',
+            contacto_emergencia:'',
+            tel_contacto_emergencia:''
         })
         setNewUsuDialog(true)
     }
@@ -151,6 +197,7 @@ export const Usuarios = () => {
     const hideModal = () =>{
         setModalUsuario(false)
         setNewUsuDialog(false)
+        setModalChangeState(false)
     }
 
     const header1 = renderHeader1();
@@ -187,7 +234,36 @@ export const Usuarios = () => {
         )
     }
 
+    const footerNewEmpleado = () =>{
+        return <>
+                <Button type="button" label='Crear' onClick={handleButtonSubmit} icon="pi pi-check" className="mx-2" />
+                <Button label='Cancelar' type="button" onClick={hideModal} icon="pi pi-times" className="mx-2" />
+        </>
+    }
+
     const [newUsuDialog, setNewUsuDialog] = useState(false);
+
+    const handleButtonChangeState = () =>{
+        if(pageState){
+            empleadoService.changeState(empleadoChangeState.id_empleado, 'inactivar').then(res=>{
+                toast.current.show({ severity: 'warn', summary: 'Todo Bien', detail: `El usuario ${empleadoChangeState.nombres} a sido inactivado con exito`, life: 3000 });
+            })
+        }else{
+            empleadoService.changeState(empleadoChangeState.id_empleado, 'activar').then(res=>{
+                toast.current.show({ severity: 'warn', summary: 'Todo Bien', detail: `El usuario ${empleadoChangeState.nombres} a sido activado con exito`, life: 3000 });
+            })
+        }
+        hideModal()
+        setPageState(true)
+        setReload(reload+1)
+    }
+
+    const footerChangeStateEmpleado = () =>{
+        return <>
+            <Button type="button" label='Aceptar' onClick={handleButtonChangeState} icon="pi pi-check" className="mx-2" />
+            <Button label='Cancelar' type="button" onClick={hideModal} icon="pi pi-times" className="mx-2" />
+        </>
+    }
 
     return (
         <div className="datatable-filter-demo">
@@ -223,8 +299,14 @@ export const Usuarios = () => {
                 <Dialog header={dialogHeader} closable={false} draggable={false} position='center' blockScroll={true} visible={modalUsuario} style={{ width: '52vw' }} breakpoints={{'1150px': '70vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
                     <Usuario idUsuario={idUsuario} formik={empleadoFormik} empleadoDialog={empleadoDialog} setEmpleadoDialog={setEmpleadoDialog}/>
                 </Dialog>
-                <Dialog header='Nuevo Empleado' draggable={false} position='center' blockScroll={true} visible={newUsuDialog} style={{ width: '50vw' }} breakpoints={{'1150px': '70vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
+                <Dialog header='Nuevo Empleado' footer={footerNewEmpleado} draggable={false} position='center' blockScroll={true} visible={newUsuDialog} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
                     <NewUsuario formik={empleadoFormik} />
+                </Dialog>
+                <Dialog header='Cambiar Estado Del Empleado' closable={false} footer={footerChangeStateEmpleado} draggable={false} position='center' blockScroll={true} visible={modalChangeState} style={{ width: '35vw' }} breakpoints={{'1150px': '45vw', '960px': '65vw', '640px': '100vw'}} onHide={hideModal}>
+                    <div className="flex align-items-center justify-content-center" style={{color:'var(--yellow-700)' }}>
+                        <i className="pi pi-exclamation-triangle mr-3 " style={{ fontSize: '3rem' }} />
+                        <span>¿Está seguro de cambiar el estado a <b>{empleadoChangeState.nombres}</b>?</span>
+                    </div>
                 </Dialog>
             </div>
 

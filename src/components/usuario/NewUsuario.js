@@ -2,6 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import { TabPanel, TabView } from 'primereact/tabview';
 import Datos from './tabMenuNew/Datos';
+import Empresa from './tabMenuNew/Empresa';
+import Extras from './tabMenuNew/Extras';
+import Riesgos from './tabMenuNew/Riesgos';
 
 const NewUsuario = (params) => {
   
@@ -22,13 +25,13 @@ const NewUsuario = (params) => {
                                 <Datos formik={params.formik}/>
                             </TabPanel>
                             <TabPanel header={headerTab('Empresa','empresa','pi pi-building')}>
-                                {/* <Empresa empleado={params.formik}/> */}
+                                <Empresa formik={params.formik}/>
                             </TabPanel>
                             <TabPanel header={headerTab('Complementarios','extras','pi pi-paperclip')}>
-                               {/*  <Extras empleado={params.formik}/> */}
+                               <Extras formik={params.formik}/>
                             </TabPanel>
                             <TabPanel header={headerTab('Riesgos','riesgos','pi pi-heart-fill')}>
-                               {/*  <Riesgo empleado={params.formik}/> */}
+                               <Riesgos formik={params.formik}/>
                             </TabPanel>
                         </TabView>
                         <TabView className='block xl:hidden lg:hidden md:hidden sm:hidden'>

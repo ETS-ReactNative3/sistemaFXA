@@ -27,46 +27,89 @@ const Datos = (props) => {
 
   return (
     <div className='grid w-full'>
-        <div className="col-12 md:col-4 mt-4">
+        <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <InputText name='nombres' type="text" className={classNames({ 'error-input': isFormFieldValid('nombres') })+' w-full'} value={props.formik.values.nombres} onChange={props.formik.handleChange}></InputText> 
+                <InputText name='nombres' type="text" className={classNames({ 'p-invalid': isFormFieldValid('nombres') })+' w-full'} value={props.formik.values.nombres} onChange={props.formik.handleChange}></InputText> 
                 <label>Nombres:</label>
-                <div>{getFormErrorMessage('nombres')}</div>
             </span>
+            <div>{getFormErrorMessage('nombres')}</div>
         </div>
-        <div className="col-12 md:col-4 mt-4">
+        <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <InputText name='apellidos' type="text" className={classNames({ 'error-input': isFormFieldValid('apellidos') })+' w-full'} value={props.formik.values.apellidos} onChange={props.formik.handleChange}></InputText> 
+                <InputText name='apellidos' type="text" className={classNames({ 'p-invalid': isFormFieldValid('apellidos') })+' w-full'} value={props.formik.values.apellidos} onChange={props.formik.handleChange}></InputText> 
                 <label>Apellidos:</label>
-                <div>{getFormErrorMessage('apellidos')}</div>
             </span>
+            <div>{getFormErrorMessage('apellidos')}</div>
         </div>
-        <div className="col-12 md:col-4 mt-4">
+        <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('id_tipo_identificacion_fk') })+' w-full'} name='id_tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.formik.values.id_tipo_identificacion_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_tipo_identificacion_fk') })+' w-full'} name='id_tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.formik.values.id_tipo_identificacion_fk} onChange={props.formik.handleChange}/>
                 <label>Tipo Identificacion:</label>
-                <div>{getFormErrorMessage('id_tipo_identificacion_fk')}</div>
             </span>
+            <div>{getFormErrorMessage('id_tipo_identificacion_fk')}</div>
         </div>
-        <div className="col-12 md:col-4 mt-4">
+        <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <InputText name='numero_identificacion' type="text" className={classNames({ 'error-input': isFormFieldValid('numero_identificacion') })+' w-full'} value={props.formik.values.numero_identificacion} onChange={props.formik.handleChange}></InputText> 
+                <InputText name='numero_identificacion' type="text" className={classNames({ 'p-invalid': isFormFieldValid('numero_identificacion') })+' w-full'} value={props.formik.values.numero_identificacion} onChange={props.formik.handleChange}></InputText> 
                 <label>Número Documento:</label>
-                <div>{getFormErrorMessage('numero_identificacion')}</div>
             </span>
+            <div>{getFormErrorMessage('numero_identificacion')}</div>
         </div>
-        <div className="col-12 md:col-4 mt-4">
+        <div className="col-12 md:col-6 mt-4">
                 <span className='text-800 font-medium'>Genero:</span> 
                 <ToogleButton name='genero' id={props.formik.values.genero} onChange={props.formik.handleChange}/>
         </div> 
-        <div className="col-12 md:col-4 mt-4">
+        <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <Calendar name="fecha_nacimiento" yearRange={`${today.getFullYear()-90}:${today.getFullYear()-14}`} id="fecha_nacimiento" value={props.formik.values.fecha_nacimiento} onChange={props.formik.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_nacimiento') }+' inputForm')}
+                <Calendar name="fecha_nacimiento" yearRange={`${today.getFullYear()-90}:${today.getFullYear()-14}`} id="fecha_nacimiento" value={props.formik.values.fecha_nacimiento} onChange={props.formik.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_nacimiento') }+' w-full')}
                     readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/> 
-                <div>{getFormErrorMessage('fecha_nacimiento')}</div>
                 <label>Fecha Nacimiento:</label>
             </span>
+            <div>{getFormErrorMessage('fecha_nacimiento')}</div>
         </div>
+        <div className="col-12 md:col-6 mt-4">
+            <span className="p-float-label">
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('lugar_nacimiento_fk') })+' w-full'} name='lugar_nacimiento_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.formik.values.lugar_nacimiento_fk} onChange={props.formik.handleChange}/>
+                <label>Lugar Nacimiento:</label>
+            </span>
+            <div>{getFormErrorMessage('lugar_nacimiento_fk')}</div>
+        </div>
+        <div className="col-12 md:col-6 mt-4">
+            <span className="p-float-label">
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('nacionalidad_fk') })+' w-full'} name='nacionalidad_fk' id_def="id_nacionalidad" nombre_def="nombre_nacionalidad" serviceName="NacionalidadService" id={props.formik.values.nacionalidad_fk} onChange={props.formik.handleChange}/>
+                <label>Nacionalidad:</label>
+            </span>
+            <div>{getFormErrorMessage('nacionalidad_fk')}</div>
+        </div>
+        <div className="col-12 md:col-6 mt-4">
+            <span className="p-float-label">
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('estado_civil_fk') })+' w-full'} name='estado_civil_fk' id_def="id_estado_civil" nombre_def="nombre_estado_civil" serviceName="EstadoCivilService" id={props.formik.values.estado_civil_fk} onChange={props.formik.handleChange}/>
+                <label>Estado Civil:</label>
+            </span>
+            <div>{getFormErrorMessage('estado_civil_fk')}</div>
+        </div>
+        <div className="col-12 md:col-6 mt-4">
+            <span className="p-float-label">
+                <InputText name='correo_electronico' type="text" className={classNames({ 'p-invalid': isFormFieldValid('correo_electronico') })+' w-full'} value={props.formik.values.correo_electronico} onChange={props.formik.handleChange}></InputText> 
+                <label>Correo Electronico:</label>
+            </span>
+            <div>{getFormErrorMessage('correo_electronico')}</div>
+        </div>
+        <div className="col-12 md:col-6 mt-4">
+            <span className="p-float-label">
+                <InputText name='celular' type="text" className={classNames({ 'p-invalid': isFormFieldValid('celular') })+' w-full'} value={props.formik.values.celular} onChange={props.formik.handleChange}></InputText> 
+                <label>Celular:</label>
+            </span>
+            <div>{getFormErrorMessage('celular')}</div>
+        </div>
+        <div className="col-12 md:col-6 mt-4">
+            <span className="p-float-label">
+                <InputText name='telefono_fijo' type="text" className={classNames({ 'p-invalid': isFormFieldValid('telefono_fijo') })+' w-full'} value={props.formik.values.telefono_fijo} onChange={props.formik.handleChange}></InputText> 
+                <label>Telefono Fijo:</label>
+            </span>
+            <div>{getFormErrorMessage('telefono_fijo')}</div>
+        </div>
+        
 
     </div>
   )
