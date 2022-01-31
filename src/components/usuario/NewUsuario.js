@@ -39,13 +39,13 @@ const NewUsuario = (params) => {
                                 <Datos formik={params.formik}/>
                             </TabPanel>
                             <TabPanel header={headerTab('','empresa','pi pi-building')}>
-                                {/* <Empresa empleado={params.formik}/> */}
+                                <Empresa formik={params.formik}/>
                             </TabPanel>
                             <TabPanel header={headerTab('','extras','pi pi-paperclip')}>
-                               {/*  <Extras empleado={params.formik}/> */}
+                                <Extras formik={params.formik}/>
                             </TabPanel>
                             <TabPanel header={headerTab('','riesgos','pi pi-heart-fill')}>
-                               {/*  <Riesgo empleado={params.formik}/> */}
+                                <Riesgos formik={params.formik}/>
                             </TabPanel>
                         </TabView>
             </form>

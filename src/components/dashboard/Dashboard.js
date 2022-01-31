@@ -32,7 +32,6 @@ export const Dashboard = (props) => {
         })
         empleadoService.getPorcentajeEmpleado().then(items=>{
             setPorcentajeEmpleados(items.data)
-            console.log(items.data)
         })
     }, []);
 

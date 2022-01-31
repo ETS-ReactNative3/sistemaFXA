@@ -7,6 +7,9 @@ import { HashRouter } from 'react-router-dom'
 import ScrollToTop from './ScrollToTop';
 import { addLocale, locale } from 'primereact/api';
 
+import './service/AxiosConfig'
+
+
 addLocale('es', {
     firstDayOfWeek: 1,
     dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
@@ -23,7 +26,7 @@ locale('es');
 ReactDOM.render(
     <HashRouter>
         <ScrollToTop>
-            <App></App>
+            <App/>
         </ScrollToTop>
     </HashRouter>,
     document.getElementById('root')
