@@ -34,7 +34,7 @@ class FormikLogin {
                         localStorage.setItem('token', res.data.tokenlog)
                         axios.defaults.headers.common['token-login'] = localStorage.getItem('token')
                         if(res.data.tipoUsuario==='Empleado'){
-                            params.history.push('/dash/inicio')
+                            params.history.push('/dash/perfil')
                         }else{
                             params.history.push('/dash')
                         }

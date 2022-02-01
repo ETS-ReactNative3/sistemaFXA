@@ -7,7 +7,6 @@ export class MenuApp {
                     {
                         label: 'Principal',
                         items: [
-                            {label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/dash/inicio'},
                             {label: 'Perfil', icon: 'pi pi-fw pi-user', to: '/dash/perfil'},
                             {label: 'Documentos', icon: 'pi pi-fw pi-file-pdf', to: '/dash/documentos'},
                             {label: 'Generar Certificado', icon: 'pi pi-fw pi-download', to: '/dash/certificado'},
@@ -130,7 +129,6 @@ export class MenuApp {
                     {
                         label: 'Principal',
                         items: [
-                            {label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/dash/inicio'},
                             {label: 'Perfil', icon: 'pi pi-fw pi-user', to: '/dash/perfil'},
                             {label: 'Documentos', icon: 'pi pi-fw pi-file-pdf', to: '/dash/documentos'},
                             {label: 'Generar Certificado', icon: 'pi pi-fw pi-download', to: '/dash/certificado'},
@@ -151,7 +149,6 @@ export class MenuApp {
                     {
                         label: 'Principal',
                         items: [
-                            {label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/dash/inicio'},
                             {label: 'Perfil', icon: 'pi pi-fw pi-user', to: '/dash/perfil'},
                             {label: 'Documentos', icon: 'pi pi-fw pi-file-pdf', to: '/dash/documentos'},
                             {label: 'Generar Certificado', icon: 'pi pi-fw pi-download', to: '/dash/certificado'},

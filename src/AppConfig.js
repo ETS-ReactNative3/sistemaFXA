@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RadioButton } from 'primereact/radiobutton';
-import { InputSwitch } from 'primereact/inputswitch';
 import classNames from 'classnames';
 import {Button} from "primereact/button";
 
@@ -133,9 +132,6 @@ export const AppConfig = (props) => {
                     <Button icon="pi pi-plus" onClick={incrementScale} className="p-button-text" disabled={scale === scales[scales.length - 1]} />
                 </div>
 
-                <h5>Ripple Effect</h5>
-                <InputSwitch checked={props.rippleEffect} onChange={props.onRippleEffect} />
-
                 <h5>Tipo Menu</h5>
                 <div className="p-formgroup-inline">
                     <div className="field-radiobutton">
@@ -150,65 +146,23 @@ export const AppConfig = (props) => {
 
                 <h5>Temas</h5>
                 <div className="grid free-themes">
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'saga-blue', 'light')}>
-                            <img src="assets/layout/images/themes/saga-blue.png" alt="Saga Blue"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'saga-green', 'light')}>
-                            <img src="assets/layout/images/themes/saga-green.png" alt="Saga Green"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'saga-orange', 'light')}>
-                            <img src="assets/layout/images/themes/saga-orange.png" alt="Saga Orange"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
+                    <div className="col-12">
                         <button className="p-link" onClick={e => changeTheme(e, 'saga-purple', 'light')}>
                             <img src="assets/layout/images/themes/saga-purple.png" alt="Saga Purple"/>
                         </button>
+                        <span className='text-xl mx-3'>Claro</span>
                     </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'vela-blue', 'dim')}>
-                            <img src="assets/layout/images/themes/vela-blue.png" alt="Vela Blue"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'vela-green', 'dim')}>
-                            <img src="assets/layout/images/themes/vela-green.png" alt="Vela Green"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'vela-orange', 'dim')}>
-                            <img src="assets/layout/images/themes/vela-orange.png" alt="Vela Orange"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
+                    <div className="col-12">
                         <button className="p-link" onClick={e => changeTheme(e, 'vela-purple', 'dim')}>
                             <img src="assets/layout/images/themes/vela-purple.png" alt="Vela Purple"/>
                         </button>
+                        <span className='text-xl mx-3'>Profundo</span>
                     </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'arya-blue', 'dark')}>
-                            <img src="assets/layout/images/themes/arya-blue.png" alt="Arya Blue"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'arya-green', 'dark')}>
-                            <img src="assets/layout/images/themes/arya-green.png" alt="Arya Green"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
-                        <button className="p-link" onClick={e => changeTheme(e, 'arya-orange', 'dark')}>
-                            <img src="assets/layout/images/themes/arya-orange.png" alt="Arya Orange"/>
-                        </button>
-                    </div>
-                    <div className="col-3 text-center">
+                    <div className="col-12">
                         <button className="p-link" onClick={e => changeTheme(e, 'arya-purple', 'dark')}>
                             <img src="assets/layout/images/themes/arya-purple.png" alt="Arya Purple"/>
                         </button>
+                        <span className='text-xl mx-3'>Oscuro</span>
                     </div>
                 </div>
 

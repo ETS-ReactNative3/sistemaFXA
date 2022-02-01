@@ -47,7 +47,7 @@ import './assets/layout/layout.scss';
 import './App.scss';
 import Login from './components/login/Login';
 import Permisos from './components/permisos/Permisos';
-import LoadingPage from './LoadingPage';
+import { Perfil } from './components/perfil/Perfil';
 
 const App = () => {
 
@@ -192,16 +192,8 @@ const App = () => {
         'layout-theme-light': layoutColorMode === 'light'
     });
 
-    const [loading, setLoading] = useState(false)
-
-    useEffect(()=>{
-        setLoading(sessionStorage.getItem('loading'))
-    },[sessionStorage.getItem('loading')])
-
     return (
         <>
-        {loading && <LoadingPage/>}
-        {!loading &&
         <div className={wrapperClass} onClick={onWrapperClick}>
             <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
@@ -219,6 +211,7 @@ const App = () => {
                             <Route path="/dash/" exact render={() => <Dashboard colorMode={layoutColorMode} />} />
                             <Route path="/dash/usuarios" render={()=> <Usuarios/>} />
                             <Route path="/dash/permisos" render={()=> <Permisos/>} />
+                            <Route path="/dash/perfil" render={()=> <Perfil/>} />
                             <Route path="/dash/formlayout" component={FormLayoutDemo} />
                             <Route path="/dash/input" component={InputDemo} />
                             <Route path="/dash/floatlabel" component={FloatLabelDemo} />
@@ -259,7 +252,6 @@ const App = () => {
             </CSSTransition>
 
         </div>
-        }
         </>
     );
 

@@ -40,4 +40,15 @@ export class EmpleadoService {
         return axios.put(`${API}/${action}/${id}`)
     }
 
+    getEmpleadosPermisos(){
+        return axios.get(`${API}/permisos`)
+    }
+
+    updateRol(idUsu,idRol){
+        return axios.put(`${API}/cambio-rol/${idUsu}`, {idRol})
+    }
+
+    getInfoPerfil(idUsu){
+        return axios.get(`${API}/info-perfil/${idUsu}`)
+    }
 }

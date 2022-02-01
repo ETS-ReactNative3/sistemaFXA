@@ -4,6 +4,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { EmpleadoService } from '../../service/EmpleadoService';
 import { useHistory } from 'react-router-dom';
+import CredencialService from '../../service/CredencialService';
 
 require('./dashboard.css')
 
@@ -21,9 +22,11 @@ export const Dashboard = (props) => {
         },
         card2:[{},{},{}]
     });
+    const [sesionData, setSesionData] = useState({})
 
     useEffect(() => {
         const empleadoService = new EmpleadoService()
+        const credencialService = new CredencialService()
         empleadoService.getEmpleadosDash().then(items=> {
             setEmpleadosNuevos(items.data) 
         })
@@ -33,6 +36,11 @@ export const Dashboard = (props) => {
         empleadoService.getPorcentajeEmpleado().then(items=>{
             setPorcentajeEmpleados(items.data)
         })
+        
+        credencialService.getDatatopbar().then(res=>{
+            setSesionData(res.data)
+        })
+
     }, []);
 
     const handleRedireccionUsu = () =>{
@@ -43,7 +51,7 @@ export const Dashboard = (props) => {
         <div className="grid">
             <div className="col-12 lg:col-6 xl:col-5">
                 <div className="card mb-0">
-                    <span className="block text-xl font-medium mb-3">Bienvenido "nombre"</span>
+                    <span className="block text-xl font-medium mb-3">¡Bienvenido {sesionData.nombre}!</span>
                     <div className="text-600 font-medium mb-3">Para ver tus datos personales ve a la sección de perfil.</div>
                     <Button label="Ver Perfil" className="p-button-link text-pink-300 font-medium"></Button>
                 </div>
@@ -123,7 +131,7 @@ export const Dashboard = (props) => {
                 <div className="card">
                     <div className='flex justify-content-between alinig-items-center mb-5'>
                         <h5>Nuevos Empleados:</h5>
-                        <Button label="Ver Todos" className="p-button-outlined" />
+                        <Button label="Ver Todos" onClick={handleRedireccionUsu} className="p-button-outlined" />
                     </div>
                
                     <DataTable value={empleadosNuevos} rows={5} paginator responsiveLayout="scroll">

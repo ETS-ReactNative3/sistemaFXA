@@ -247,15 +247,16 @@ export const Usuarios = () => {
         if(pageState){
             empleadoService.changeState(empleadoChangeState.id_empleado, 'inactivar').then(res=>{
                 toast.current.show({ severity: 'warn', summary: 'Todo Bien', detail: `El usuario ${empleadoChangeState.nombres} a sido inactivado con exito`, life: 3000 });
+                setReload(reload+1)
             })
         }else{
             empleadoService.changeState(empleadoChangeState.id_empleado, 'activar').then(res=>{
                 toast.current.show({ severity: 'warn', summary: 'Todo Bien', detail: `El usuario ${empleadoChangeState.nombres} a sido activado con exito`, life: 3000 });
+                setReload(reload+1)
             })
         }
         hideModal()
         setPageState(true)
-        setReload(reload+1)
     }
 
     const footerChangeStateEmpleado = () =>{
