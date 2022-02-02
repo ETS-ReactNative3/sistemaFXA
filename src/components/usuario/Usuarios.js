@@ -12,6 +12,7 @@ import './DataTableDemo.css';
 import { Usuario } from './Usuario';
 import FormikEmp from './formikUsuario';
 import NewUsuario from './NewUsuario';
+import GenerarReporte from './GenerarReporte';
 
 export const Usuarios = () => {
     const [empleados, setEmpleados] = useState(null);
@@ -82,13 +83,19 @@ export const Usuarios = () => {
 
     const [pageState, setPageState] = useState(true)
 
+    const [dialogExport, setDialogExport] = useState(true)
+    
+    const showDialogExport = () =>{
+        setDialogExport(true)
+    }
+
     const renderHeadTable = () =>{
         return (
             <div className='grid  my-4'>
                 <div className='col-10 hidden xl:block lg:block'>
                     <Button onClick={showModalNewUsu} icon="pi pi-plus" className="p-button-rounded mx-4"></Button>
                     <Button icon="pi pi-user-plus" iconPos="right" label="Agregar Varios" className="p-button-rounded p-button-outlined mx-2" />
-                    <Button icon="pi pi-file-pdf" iconPos="right" label="Generar Reporte" className="p-button-rounded p-button-outlined mx-2" />
+                    <Button icon="pi pi-file-pdf" onClick={showDialogExport} iconPos="right" label="Generar Reporte" className="p-button-rounded p-button-outlined mx-2" />
                     <Button icon="pi pi-download" iconPos="right" label="Generar CSV" className="p-button-rounded p-button-outlined mx-2" />
                 </div>
                 <div className='col-8 md:col-10 block xl:hidden lg:hidden'>
@@ -198,6 +205,7 @@ export const Usuarios = () => {
         setModalUsuario(false)
         setNewUsuDialog(false)
         setModalChangeState(false)
+        setDialogExport(false)
     }
 
     const header1 = renderHeader1();
@@ -302,6 +310,9 @@ export const Usuarios = () => {
                 </Dialog>
                 <Dialog header='Nuevo Empleado' footer={footerNewEmpleado} draggable={false} position='center' blockScroll={true} visible={newUsuDialog} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
                     <NewUsuario formik={empleadoFormik} />
+                </Dialog>
+                <Dialog header='Generar Reporte' /* footer={footerNewEmpleado} */ draggable={false} position='center' blockScroll={true} visible={dialogExport} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
+                    <GenerarReporte/>
                 </Dialog>
                 <Dialog header='Cambiar Estado Del Empleado' closable={false} footer={footerChangeStateEmpleado} draggable={false} position='center' blockScroll={true} visible={modalChangeState} style={{ width: '35vw' }} breakpoints={{'1150px': '45vw', '960px': '65vw', '640px': '100vw'}} onHide={hideModal}>
                     <div className="flex align-items-center justify-content-center" style={{color:'var(--yellow-700)' }}>

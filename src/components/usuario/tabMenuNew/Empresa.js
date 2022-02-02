@@ -26,10 +26,10 @@ const Empresa = (props) => {
     <div className='grid w-full'>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_empresa_fk') })+' w-full'} name='id_empresa_fk' id_def="id_empresa" nombre_def="nombre_empresa" serviceName="EmpresaService" id={props.formik.values.id_empresa_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('empresa_fk') })+' w-full'} name='empresa_fk' id_def="id_empresa" nombre_def="nombre_empresa" serviceName="EmpresaService" id={props.formik.values.empresa_fk} onChange={props.formik.handleChange}/>
                 <label>Empresa:</label>
             </span>
-            <div>{getFormErrorMessage('id_empresa_fk')}</div>
+            <div>{getFormErrorMessage('empresa_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">

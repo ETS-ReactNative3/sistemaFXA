@@ -44,8 +44,8 @@ export const Empresa = (props = {empleado:{}}) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Empresa:</span>
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('id_empresa_fk') })+' inputForm'} name='id_empresa_fk' id_def="id_empresa" nombre_def="nombre_empresa" serviceName="EmpresaService" id={props.empleado.values.id_empresa_fk} onChange={props.empleado.handleChange}/>
-            <div>{getFormErrorMessage('id_empresa_fk')}</div>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('empresa_fk') })+' inputForm'} name='empresa_fk' id_def="id_empresa" nombre_def="nombre_empresa" serviceName="EmpresaService" id={props.empleado.values.empresa_fk} onChange={props.empleado.handleChange}/>
+            <div>{getFormErrorMessage('empresa_fk')}</div>
         </div>
        <div className='text-left mb-2'>
             <span className='text-800 font-medium'>NIT:</span> 

@@ -150,90 +150,24 @@ export const Dashboard = (props) => {
                     <h5 className='mb-5'>Porcentaje De Empleados Por Empresa</h5>
                         
                     <ul className="list-none p-0 m-0">
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">{porcentajeEmpleados[0].nombre_empresa}</span>
-                                <div className="mt-1 text-600">{porcentajeEmpleados[0].total_empleados} empleados</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
-                                    <div className="bg-orange-500 h-full" style={{width: `${porcentajeEmpleados[0].porcentaje}%`}}/>
-                                </div>
-                                <span className="text-orange-500 ml-3 font-medium">%{Math.trunc(porcentajeEmpleados[0].porcentaje)}</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">{porcentajeEmpleados[1].nombre_empresa}</span>
-                                <div className="mt-1 text-600">{porcentajeEmpleados[1].total_empleados} empleados</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
-                                    <div className="bg-cyan-500 h-full" style={{width: `${porcentajeEmpleados[1].porcentaje}%`}}/>
-                                </div>
-                                <span className="text-cyan-500 ml-3 font-medium">%{Math.trunc(porcentajeEmpleados[1].porcentaje)}</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">{porcentajeEmpleados[2].nombre_empresa}</span>
-                                <div className="mt-1 text-600">{porcentajeEmpleados[2].total_empleados} empleados</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
-                                    <div className="bg-pink-500 h-full" style={{width: `${porcentajeEmpleados[2].porcentaje}%`}}/>
-                                </div>
-                                <span className="text-pink-500 ml-3 font-medium">%{Math.trunc(porcentajeEmpleados[2].porcentaje)}</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">{porcentajeEmpleados[3].nombre_empresa}</span>
-                                <div className="mt-1 text-600">{porcentajeEmpleados[3].total_empleados} empleados</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
-                                    <div className="bg-green-500 h-full" style={{width: `${porcentajeEmpleados[3].porcentaje}%`}}/>
-                                </div>
-                                <span className="text-pink-400 ml-3 font-medium">%{Math.trunc(porcentajeEmpleados[3].porcentaje)}</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">{porcentajeEmpleados[4].nombre_empresa}</span>
-                                <div className="mt-1 text-600">{porcentajeEmpleados[4].total_empleados} empleados</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
-                                    <div className="bg-purple-500 h-full" style={{width: `${porcentajeEmpleados[4].porcentaje}%`}}/>
-                                </div>
-                                <span className="text-purple-500 ml-3 font-medium">%{Math.trunc(porcentajeEmpleados[4].porcentaje)}</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">{porcentajeEmpleados[5].nombre_empresa}</span>
-                                <div className="mt-1 text-600">{porcentajeEmpleados[5].total_empleados} empleados</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
-                                    <div className="bg-teal-500 h-full" style={{width: `${porcentajeEmpleados[5].porcentaje}%`}}/>
-                                </div>
-                                <span className="text-teal-500 ml-3 font-medium">%{Math.trunc(porcentajeEmpleados[5].porcentaje)}</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-sm mr-2 mb-1 md:mb-0">{porcentajeEmpleados[6].nombre_empresa}</span>
-                                <div className="mt-1 text-600">{porcentajeEmpleados[6].total_empleados} empleados</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
-                                    <div className="bg-bluegray-500 h-full" style={{width: `${porcentajeEmpleados[6].porcentaje}%`}}/>
-                                </div>
-                                <span className="text-bluegray-500 ml-3 font-medium">%{Math.trunc(porcentajeEmpleados[6].porcentaje)}</span>
-                            </div>
-                        </li>
+                        {
+                            porcentajeEmpleados.map((el,id)=>{
+                                return(
+                                    <li key={id} className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                                        <div>
+                                            <span className="text-900 font-medium mr-2 mb-1 md:mb-0">{el.nombre_empresa}</span>
+                                            <div className="mt-1 text-600">{el.total_empleados} empleados</div>
+                                        </div>
+                                        <div className="mt-2 md:mt-0 flex align-items-center">
+                                            <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{height: '8px'}}>
+                                                <div className="bg-pink-500 h-full" style={{width: `${el.porcentaje}%`}}/>
+                                            </div>
+                                            <span className="text-pink-500 ml-3 font-medium">%{Math.trunc(el.porcentaje)}</span>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
                     </ul>
                 </div>
 

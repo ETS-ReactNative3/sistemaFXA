@@ -56,9 +56,9 @@ export const Datos = (props) => {
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Documento:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('id_tipo_identificacion_fk') })+' inputForm'} name='id_tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.empleado.values.id_tipo_identificacion_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('tipo_identificacion_fk') })+' inputForm'} name='tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.empleado.values.tipo_identificacion_fk} onChange={props.empleado.handleChange}/>
             <InputText name='numero_identificacion' type="text" className={classNames({ 'error-input': isFormFieldValid('numero_identificacion') })+' inputForm'} value={props.empleado.values.numero_identificacion} onChange={props.empleado.handleChange}></InputText> 
-            <div>{getFormErrorMessage('id_tipo_identificacion_fk')}</div>
+            <div>{getFormErrorMessage('tipo_identificacion_fk')}</div>
             <div>{getFormErrorMessage('numero_identificacion')}</div>
         </div>
         <div className='text-left mb-2' >

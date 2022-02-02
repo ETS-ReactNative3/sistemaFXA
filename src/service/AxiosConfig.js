@@ -11,7 +11,7 @@ axios.interceptors.response.use(config=>{
   }, err=> {
     // Do something with request error
     if ((err.response.status === 401 || err.response.status === 408) && prueba===0) {
-        /* localStorage.removeItem('token') */
+        localStorage.removeItem('token')
         alert(err.response.data.error)
         window.location.href = '/';
         prueba = 1

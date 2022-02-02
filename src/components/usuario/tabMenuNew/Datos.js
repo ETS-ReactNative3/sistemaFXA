@@ -43,10 +43,10 @@ const Datos = (props) => {
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_tipo_identificacion_fk') })+' w-full'} name='id_tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.formik.values.id_tipo_identificacion_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('tipo_identificacion_fk') })+' w-full'} name='tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.formik.values.tipo_identificacion_fk} onChange={props.formik.handleChange}/>
                 <label>Tipo Identificacion:</label>
             </span>
-            <div>{getFormErrorMessage('id_tipo_identificacion_fk')}</div>
+            <div>{getFormErrorMessage('tipo_identificacion_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">

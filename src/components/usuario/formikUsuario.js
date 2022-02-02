@@ -26,9 +26,9 @@ class FormikEmp {
                     errors.apellidos = 'Cantidad de caracteres de 3 a 25.'
                 }
 
-                if(!data.id_tipo_identificacion_fk){
-                    data.id_tipo_identificacion_fk = undefined
-                    errors.id_tipo_identificacion_fk = 'El tipo de identificacion es obligatorio.'
+                if(!data.tipo_identificacion_fk){
+                    data.tipo_identificacion_fk = undefined
+                    errors.tipo_identificacion_fk = 'El tipo de identificacion es obligatorio.'
                 }
 
                 if(!data.numero_identificacion){
@@ -78,13 +78,13 @@ class FormikEmp {
                     errors.telefono_fijo = 'Cantidad de caracteres de 3 a 20'
                 }
 
-                if(errors.nombres || errors.apellidos || errors.id_tipo_identificacion_fk || errors.numero_identificacion || errors.fecha_nacimiento || errors.lugar_nacimiento_fk || errors.nacionalidad_fk || errors.estado_civil_fk || errors.correo_electronico || errors.celular || errors.telefono_fijo){
+                if(errors.nombres || errors.apellidos || errors.tipo_identificacion_fk || errors.numero_identificacion || errors.fecha_nacimiento || errors.lugar_nacimiento_fk || errors.nacionalidad_fk || errors.estado_civil_fk || errors.correo_electronico || errors.celular || errors.telefono_fijo){
                     errors.datos = 'error'
                 }
 
-                if(!data.id_empresa_fk){
-                    data.id_empresa_fk = undefined
-                    errors.id_empresa_fk = 'La empresa es obligatoria.'
+                if(!data.empresa_fk){
+                    data.empresa_fk = undefined
+                    errors.empresa_fk = 'La empresa es obligatoria.'
                 }
 
                 if(!data.lugar_trabajo_fk){
@@ -126,7 +126,7 @@ class FormikEmp {
                     errors.jefe_zona_fk = 'Definir un jefe de zona es obligatorio.'
                 }
                 
-                if(errors.id_empresa_fk || errors.lugar_trabajo_fk || errors.centro_costo_fk || errors.cargo_fk || errors.tipo_contrato_fk || errors.tipo_tiempo_fk || errors.fecha_ingreso || errors.estado_contrato_fk || errors.jefe_zona_fk){
+                if(errors.empresa_fk || errors.lugar_trabajo_fk || errors.centro_costo_fk || errors.cargo_fk || errors.tipo_contrato_fk || errors.tipo_tiempo_fk || errors.fecha_ingreso || errors.estado_contrato_fk || errors.jefe_zona_fk){
                     errors.empresa = 'error'
                 }
 
