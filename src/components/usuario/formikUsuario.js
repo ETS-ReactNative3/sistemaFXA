@@ -78,7 +78,21 @@ class FormikEmp {
                     errors.telefono_fijo = 'Cantidad de caracteres de 3 a 20'
                 }
 
-                if(errors.nombres || errors.apellidos || errors.tipo_identificacion_fk || errors.numero_identificacion || errors.fecha_nacimiento || errors.lugar_nacimiento_fk || errors.nacionalidad_fk || errors.estado_civil_fk || errors.correo_electronico || errors.celular || errors.telefono_fijo){
+                if(!data.contacto_emergencia){
+                    errors.contacto_emergencia = 'Los contacto_emergencia Son Obligatorios.'
+                }else if(!/^[A-Za-zá-ýÁ-Ý ]+$/.test(data.contacto_emergencia)){
+                    errors.contacto_emergencia = 'El nombre solo acepta letras y espacios'
+                }else if(!(data.contacto_emergencia.length >= 3 && data.contacto_emergencia.length <=30)){
+                    errors.contacto_emergencia = 'Cantidad de caracteres de 3 a 30.'
+                }
+
+                if(!data.tel_contacto_emergencia){
+                    errors.tel_contacto_emergencia = 'El telefono es obligatorio.'
+                }else if(!(data.tel_contacto_emergencia.length >= 3 && data.tel_contacto_emergencia.length <=20)){
+                    errors.tel_contacto_emergencia = 'Cantidad de caracteres de 3 a 20'
+                }
+
+                if(errors.nombres || errors.apellidos || errors.tipo_identificacion_fk || errors.numero_identificacion || errors.fecha_nacimiento || errors.lugar_nacimiento_fk || errors.nacionalidad_fk || errors.estado_civil_fk || errors.correo_electronico || errors.celular || errors.telefono_fijo || errors.contacto_emergencia || errors.tel_contacto_emergencia){
                     errors.datos = 'error'
                 }
 
@@ -228,23 +242,11 @@ class FormikEmp {
                     errors.lugar_exp_doc_fk = 'El lugar de expedición del documenton es obligatorio.'
                 }
 
-                if(!data.contacto_emergencia){
-                    errors.contacto_emergencia = 'Los contacto_emergencia Son Obligatorios.'
-                }else if(!/^[A-Za-zá-ýÁ-Ý ]+$/.test(data.contacto_emergencia)){
-                    errors.contacto_emergencia = 'El nombre solo acepta letras y espacios'
-                }else if(!(data.contacto_emergencia.length >= 3 && data.contacto_emergencia.length <=30)){
-                    errors.contacto_emergencia = 'Cantidad de caracteres de 3 a 30.'
-                }
-
-                if(!data.tel_contacto_emergencia){
-                    errors.tel_contacto_emergencia = 'El telefono es obligatorio.'
-                }else if(!(data.tel_contacto_emergencia.length >= 3 && data.tel_contacto_emergencia.length <=20)){
-                    errors.tel_contacto_emergencia = 'Cantidad de caracteres de 3 a 20'
-                }
-
-                if(errors.eps_fk || errors.arl_fk || errors.pension_fk || errors.cesantias_fk || errors.ccf_fk || errors.direccion || errors.fecha_expedicion_doc || errors.lugar_exp_doc_fk || errors.contacto_emergencia || errors.tel_contacto_emergencia){
+                if(errors.eps_fk || errors.arl_fk || errors.pension_fk || errors.cesantias_fk || errors.ccf_fk || errors.direccion || errors.fecha_expedicion_doc || errors.lugar_exp_doc_fk ){
                     errors.riesgos = 'error'
                 }
+
+                console.log(errors);
 
                 return errors
 

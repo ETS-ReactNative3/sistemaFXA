@@ -49,9 +49,9 @@ export const Usuario = (params) => {
         }
         {!loading &&
         <div className='grid'>
-            <div className="col-12 xl:col-8 lg:col-8 md:col-8 sm:col-8 text-center">
+            <div className="col-12 xl:col-8 lg:col-8 md:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
-                <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden sm:hidden'>
+                <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
                     <img className='w-5' style={{maxWidth:'150px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
                 </div>
                 <div className="card">
@@ -66,7 +66,7 @@ export const Usuario = (params) => {
                             <TabPanel header={headerTab('Complementarios','extras','pi pi-paperclip')}>
                                 <Extras empleado={params.formik}/>
                             </TabPanel>
-                            <TabPanel header={headerTab('Riesgos','riesgos','pi pi-heart-fill')}>
+                            <TabPanel header={headerTab('Afiliaciones','riesgos','pi pi-heart-fill')}>
                                 <Riesgo empleado={params.formik}/>
                             </TabPanel>
                         </TabView>
@@ -87,8 +87,8 @@ export const Usuario = (params) => {
                     </form>
                 </div>
             </div>
-            <div className="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-4">
-                <div className='card hidden xl:block md:block lg:block sm:block'>
+            <div className="col-12 xl:col-4 lg:col-4 md:col-4">
+                <div className='card hidden xl:block md:block lg:block'>
                     <img className='w-full'  src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
                 </div>
                 <div className="card">

@@ -30,7 +30,7 @@ const NewUsuario = (params) => {
                             <TabPanel header={headerTab('Complementarios','extras','pi pi-paperclip')}>
                                <Extras formik={params.formik}/>
                             </TabPanel>
-                            <TabPanel header={headerTab('Riesgos','riesgos','pi pi-heart-fill')}>
+                            <TabPanel header={headerTab('Afiliaciones','riesgos','pi pi-heart-fill')}>
                                <Riesgos formik={params.formik}/>
                             </TabPanel>
                         </TabView>

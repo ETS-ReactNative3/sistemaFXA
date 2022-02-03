@@ -42,19 +42,6 @@ export const Riesgo = (props) => {
             <span className='text-800 font-medium'>Lugar Expedición Documento:</span> 
             {props.empleado.lugar_exp_doc.nombre_ciudad}
         </div>
-        <Divider align="left">
-            <div className="inline-flex align-items-center">
-                <b>Datos Contacto Emergencia</b>
-            </div>
-        </Divider>
-        <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Nombre:</span> 
-            {props.empleado.contacto_emergencia}
-        </div>
-        <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Telefono Contacto:</span> 
-            {props.empleado.tel_contacto_emergencia}
-        </div>
     </div>
   )
 };

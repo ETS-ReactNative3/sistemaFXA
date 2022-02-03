@@ -83,7 +83,7 @@ export const Usuarios = () => {
 
     const [pageState, setPageState] = useState(true)
 
-    const [dialogExport, setDialogExport] = useState(true)
+    const [dialogExport, setDialogExport] = useState(false)
     
     const showDialogExport = () =>{
         setDialogExport(true)
@@ -305,7 +305,7 @@ export const Usuarios = () => {
                         <Column header="Opciones" style={{ minWidth: '8rem' }} body={accionesBody}/>
                     </DataTable>
                 }
-                <Dialog header={dialogHeader} closable={false} draggable={false} position='center' blockScroll={true} visible={modalUsuario} style={{ width: '52vw' }} breakpoints={{'1150px': '70vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
+                <Dialog header={dialogHeader} closable={false} draggable={false} position='center' blockScroll={true} visible={modalUsuario} style={{ width: '55vw' }} breakpoints={{'1150px': '75vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
                     <Usuario idUsuario={idUsuario} formik={empleadoFormik} empleadoDialog={empleadoDialog} setEmpleadoDialog={setEmpleadoDialog}/>
                 </Dialog>
                 <Dialog header='Nuevo Empleado' footer={footerNewEmpleado} draggable={false} position='center' blockScroll={true} visible={newUsuDialog} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>

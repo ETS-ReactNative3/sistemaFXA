@@ -74,7 +74,7 @@ export const Riesgo = (props) => {
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Fecha Exp. Documento:</span> 
-            <Calendar name="fecha_expedicion_doc" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_expedicion_doc" value={setDateValue(props.empleado.values.fecha_expedicion_doc)} onChange={props.empleado.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_expedicion_doc') }+' inputForm')}
+            <Calendar dateFormat="dd/mm/yy" name="fecha_expedicion_doc" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_expedicion_doc" value={setDateValue(props.empleado.values.fecha_expedicion_doc)} onChange={props.empleado.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_expedicion_doc') }+' inputForm')}
                 readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/> 
             <div>{getFormErrorMessage('fecha_expedicion_doc')}</div>
         </div>
@@ -82,21 +82,6 @@ export const Riesgo = (props) => {
             <span className='text-800 font-medium'>Lugar Expedición Documento:</span> 
             <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('lugar_exp_doc_fk') })+' inputForm'} name='lugar_exp_doc_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_exp_doc_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('lugar_exp_doc_fk')}</div>
-        </div>
-        <Divider align="left">
-            <div className="inline-flex align-items-center">
-                <b>Datos Contacto Emergencia</b>
-            </div>
-        </Divider>
-        <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Nombre:</span> 
-            <InputText name='contacto_emergencia' type="text" className={classNames({ 'error-input': isFormFieldValid('contacto_emergencia') })+' inputForm'} value={props.empleado.values.contacto_emergencia} onChange={props.empleado.handleChange}></InputText> 
-            <div>{getFormErrorMessage('contacto_emergencia')}</div>
-        </div>
-        <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Telefono Contacto:</span> 
-            <InputText name='tel_contacto_emergencia' type="text" className={classNames({ 'error-input': isFormFieldValid('tel_contacto_emergencia') })+' inputForm'} value={props.empleado.values.tel_contacto_emergencia} onChange={props.empleado.handleChange}></InputText> 
-            <div>{getFormErrorMessage('tel_contacto_emergencia')}</div>
         </div>
     </div>
   )

@@ -68,7 +68,7 @@ const Riesgos = (props) => {
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <Calendar name="fecha_expedicion_doc" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_expedicion_doc" value={props.formik.values.fecha_expedicion_doc} onChange={props.formik.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_expedicion_doc') }+' w-full')}
+                <Calendar dateFormat="dd/mm/yy" name="fecha_expedicion_doc" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_expedicion_doc" value={props.formik.values.fecha_expedicion_doc} onChange={props.formik.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_expedicion_doc') }+' w-full')}
                     readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/> 
                 <div>{getFormErrorMessage('fecha_expedicion_doc')}</div>
                 <label>Fecha Expedicion Doc:</label>
@@ -81,20 +81,6 @@ const Riesgos = (props) => {
                 <label>Lugar Expedicion Doc:</label>
             </span>
             <div>{getFormErrorMessage('lugar_exp_doc_fk')}</div>
-        </div>
-        <div className="col-12 md:col-6 mt-4">
-            <span className="p-float-label">
-                <InputText name='contacto_emergencia' type="text" className={classNames({ 'p-invalid': isFormFieldValid('contacto_emergencia') })+' w-full'} value={props.formik.values.contacto_emergencia} onChange={props.formik.handleChange}></InputText> 
-                <label>Contacto Emergencia:</label>
-            </span>
-            <div>{getFormErrorMessage('contacto_emergencia')}</div>
-        </div>
-        <div className="col-12 md:col-6 mt-4">
-            <span className="p-float-label">
-                <InputText name='tel_contacto_emergencia' type="text" className={classNames({ 'p-invalid': isFormFieldValid('tel_contacto_emergencia') })+' w-full'} value={props.formik.values.tel_contacto_emergencia} onChange={props.formik.handleChange}></InputText> 
-                <label>Tel. Contacto Emergencia:</label>
-            </span>
-            <div>{getFormErrorMessage('tel_contacto_emergencia')}</div>
         </div>
     </div>
   )

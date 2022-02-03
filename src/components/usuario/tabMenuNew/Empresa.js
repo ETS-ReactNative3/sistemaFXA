@@ -68,7 +68,7 @@ const Empresa = (props) => {
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <Calendar name="fecha_ingreso" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_ingreso" value={props.formik.values.fecha_ingreso} onChange={props.formik.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_ingreso') }+' w-full')}
+                <Calendar dateFormat="dd/mm/yy" name="fecha_ingreso" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_ingreso" value={props.formik.values.fecha_ingreso} onChange={props.formik.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_ingreso') }+' w-full')}
                     readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/> 
                 <label>Fecha Ingreso:</label>
             </span>

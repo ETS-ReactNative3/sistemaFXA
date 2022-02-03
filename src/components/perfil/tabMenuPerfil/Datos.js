@@ -59,7 +59,20 @@ export const Datos = (props) => {
             <span className='text-800 font-medium'>Telefono Fijo:</span> 
             {props.empleado.telefono_fijo}
         </div>
-    </div>
+        <Divider align="left">
+            <div className="inline-flex align-items-center">
+                <b>Datos Contacto Emergencia</b>
+            </div>
+        </Divider>
+        <div className='text-left mb-2'>
+            <span className='text-800 font-medium'>Nombre:</span> 
+            {props.empleado.contacto_emergencia}
+        </div>
+        <div className='text-left mb-2'>
+            <span className='text-800 font-medium'>Telefono Contacto:</span> 
+            {props.empleado.tel_contacto_emergencia}
+        </div>
+    </div> 
   )
 };
 

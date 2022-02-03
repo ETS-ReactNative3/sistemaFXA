@@ -78,7 +78,7 @@ export const Empresa = (props = {empleado:{}}) => {
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Fecha Ingreso:</span> 
-            <Calendar name="fecha_ingreso" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_ingreso" value={setDateValue(props.empleado.values.fecha_ingreso)} onChange={props.empleado.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_ingreso') }+' inputForm')}
+            <Calendar dateFormat="dd/mm/yy" name="fecha_ingreso" yearRange={`${today.getFullYear()-80}:${today.getFullYear()}`} id="fecha_ingreso" value={setDateValue(props.empleado.values.fecha_ingreso)} onChange={props.empleado.handleChange}  monthNavigator yearNavigator className={classNames({ 'p-invalid': isFormFieldValid('fecha_ingreso') }+' inputForm')}
                 readOnlyInput monthNavigatorTemplate={monthNavigatorTemplate} yearNavigatorTemplate={yearNavigatorTemplate}/> 
             <div>{getFormErrorMessage('fecha_ingreso')}</div>
         </div>

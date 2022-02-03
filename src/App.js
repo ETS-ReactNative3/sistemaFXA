@@ -48,6 +48,7 @@ import './App.scss';
 import Login from './components/login/Login';
 import Permisos from './components/permisos/Permisos';
 import { Perfil } from './components/perfil/Perfil';
+import GenerarCertificado from './components/GenerarCertificado/GenerarCertificado';
 
 const App = () => {
 
@@ -212,6 +213,7 @@ const App = () => {
                             <Route path="/dash/usuarios" render={()=> <Usuarios/>} />
                             <Route path="/dash/permisos" render={()=> <Permisos/>} />
                             <Route path="/dash/perfil" render={()=> <Perfil/>} />
+                            <Route path="/dash/certificado" render={()=> <GenerarCertificado/>} />
                             <Route path="/dash/formlayout" component={FormLayoutDemo} />
                             <Route path="/dash/input" component={InputDemo} />
                             <Route path="/dash/floatlabel" component={FloatLabelDemo} />

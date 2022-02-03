@@ -20,7 +20,8 @@ export const Dashboard = (props) => {
             soporte:"",
             admin:""
         },
-        card2:[{},{},{}]
+        card2:[{},{},{}],
+        card3:[]
     });
     const [sesionData, setSesionData] = useState({})
 
@@ -46,6 +47,8 @@ export const Dashboard = (props) => {
     const handleRedireccionUsu = () =>{
         history.push('/dash/usuarios')
     }
+
+    const [todasCiudades, setTodasCiudades] = useState(false)
 
     return (
         <div className="grid">
@@ -126,6 +129,27 @@ export const Dashboard = (props) => {
                     <div className="text-900 font-medium mt-2">{datosCards.card2[2].total_empleados} Empleados</div>
                 </div>
             </div>
+            <div className="col-offset-5 col-7"><Button className='p-button-text' onClick={()=>setTodasCiudades(!todasCiudades)}>Mostrar todas las ciudades</Button></div>
+            {todasCiudades &&
+                datosCards.card3.map((el,id)=>{
+                    if(id>2)
+                    return(
+                        <div key={id} className="col-6 lg:col-2 xl:col-2 md:col-3 sm:col-3">
+                            <div className="card mb-0 cardHover" onClick={handleRedireccionUsu}>
+                                <div className="flex justify-content-between">
+                                    <div>
+                                        <div className="text-900 font-medium text-xl  mb-2">{el.nombre_ciudad}</div>
+                                        <span className="block text-500 font-medium">{el.total_empleados} Empleados</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+
+                    return true
+                })
+            }
+
 
             <div className="col-12 xl:col-7">
                 <div className="card">

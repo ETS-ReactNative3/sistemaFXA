@@ -41,9 +41,9 @@ export const Perfil = (params) => {
         }
         {!loading &&
         <div className='grid card'>
-            <div className="col-12 xl:col-9 lg:col-8 md:col-8 sm:col-8 text-center">
+            <div className="col-12 xl:col-9 lg:col-8 md:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
-                <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden sm:hidden'>
+                <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
                     <img className='w-5' style={{maxWidth:'150px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
                 </div>
                 <div className="card">
@@ -57,7 +57,7 @@ export const Perfil = (params) => {
                             <TabPanel header='Complementarios' leftIcon='pi pi-paperclip'>
                                <Extras empleado={empleado}/>
                             </TabPanel>
-                            <TabPanel header='Seguridad' leftIcon='pi pi-heart-fill'>
+                            <TabPanel header='Afiliaciones' leftIcon='pi pi-heart-fill'>
                                 <Riesgo empleado={empleado}/>
                             </TabPanel>
                         </TabView>
@@ -77,8 +77,8 @@ export const Perfil = (params) => {
                         </TabView>
                 </div>
             </div>
-            <div className="col-12 xl:col-3 lg:col-4 md:col-4 sm:col-4">
-                <div className='card hidden xl:block md:block lg:block sm:block'>
+            <div className="col-12 xl:col-3 lg:col-4 md:col-4">
+                <div className='card hidden xl:block md:block lg:block'>
                     <img className='w-full' style={{maxWidth:'180px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
                 </div>
                <div className="card">
