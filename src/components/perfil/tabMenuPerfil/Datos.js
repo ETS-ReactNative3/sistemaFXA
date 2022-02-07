@@ -2,6 +2,7 @@ import React from 'react';
 import { Divider } from 'primereact/divider';
 
 export const Datos = (props) => {
+    
   return (
     <div>
         <Divider align="left">

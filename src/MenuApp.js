@@ -18,6 +18,7 @@ export class MenuApp {
                             {label: 'Dashboard', icon: 'pi pi-fw pi-briefcase', to: '/dash'},
                             {label: 'Usuarios', icon: 'pi pi-fw pi-users', to: '/dash/usuarios'},
                             {label: 'Permisos', icon: 'pi pi-fw pi-shield', to: '/dash/permisos'},
+                            {label: 'Otros Datos', icon: 'pi pi-fw pi-paperclip', to: '/dash/tablas-extra'},
                         ]
                     },
                     {   label: 'Plantilla',

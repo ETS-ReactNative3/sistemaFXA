@@ -5,7 +5,6 @@ import jsPDF from 'jspdf'
 
 
 const GenerarCertificado = () => {
-    const [documento, setDocumento] = useState('')
     const GeneratePdf = () =>{
         
         let doc = new jsPDF('p','pt')
@@ -18,13 +17,12 @@ const GenerarCertificado = () => {
         doc.setFont('helvetica')
         doc.text(20, 100, 'This is the thrid title.')    
         
-        setDocumento(doc)
       /* 
         doc.save('demo.pdf') */
     }
   return <div onClick={GeneratePdf}>
       generar certificado
-      {documento}
+  {/*     {documento} */}
       </div>;
 };
 

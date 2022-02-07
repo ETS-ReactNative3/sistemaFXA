@@ -140,7 +140,7 @@ const Permisos = () => {
         globalFilterFields={['nombres', 'numero_identificacion']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontraron Empleados" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
             <Column filter showFilterMenu={false} field='nombres' header="Nombres" sortable style={{ minWidth: '10rem'}} />
             <Column filter showFilterMenu={false} header="Identificacion" style={{ minWidth: '12rem' }} sortable field='numero_identificacion'/>
-            <Column header="Tipo usuario" style={{ minWidth: '8rem' }} body={tipoUsuarioField} />
+            <Column bodyStyle={{ textAlign: 'center' }} headerStyle={{ textAlign: 'center'  }} header="Tipo usuario" style={{ minWidth: '8rem' }} body={tipoUsuarioField} />
         </DataTable>
         <Dialog header='Cambiar Rol Del Usuario' draggable={false} position='center' blockScroll={true} visible={modalChangeRol} style={{ width: '35vw' }} breakpoints={{'1150px': '45vw', '960px': '65vw', '640px': '100vw'}} onHide={hideModal}>
             {buttonsRol()}

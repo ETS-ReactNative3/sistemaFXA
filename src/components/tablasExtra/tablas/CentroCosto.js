@@ -1,0 +1,165 @@
+import { FilterMatchMode } from 'primereact/api';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
+import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
+import React, { useEffect, useRef, useState } from 'react';
+import CentroCostoService from '../../../service/CentroCostoService';
+import CiudadService from '../../../service/CiudadService';
+import { confirmPopup } from 'primereact/confirmpopup';
+import { Button } from 'primereact/button';
+import { OverlayPanel } from 'primereact/overlaypanel';
+
+const CentroCosto = (props) => {
+
+    const [globalFilterValue1, setGlobalFilterValue1] = useState('');
+    const [filters1, setFilters1] = useState(null);
+    const [loading1, setLoading1] = useState(true);
+    const [selectedProducts, setSelectedProducts] = useState([]);
+
+    const op = useRef(null);
+
+    const [data, setData] = useState([])
+    const [ciudades, setCiudades] = useState([])
+
+    const onGlobalFilterChange1 = (e) => {
+        const value = e.target.value;
+        let _filters1 = { ...filters1 };
+        _filters1['global'].value = value;
+
+        setFilters1(_filters1);
+        setGlobalFilterValue1(value);
+    }
+
+    const initFilters1 = () => {
+        setFilters1({
+            'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
+            });
+        setGlobalFilterValue1('');
+    }
+
+    const centroCostoService = new CentroCostoService()
+    const ciudadService = new CiudadService()
+
+    const [estadoPagina, setEstadoPagina] = useState(false)
+
+    useEffect(() => {
+        if(!props.centroCosto[0] || estadoPagina === true){
+            centroCostoService.getTableData().then(res=>{
+                props.setCentroCosto(res.data)
+                setData(res.data)
+                setLoading1(false)
+                setEstadoPagina(false)
+            })
+        }else{
+            setData(props.centroCosto)
+            setLoading1(false)
+        }
+
+        if(!props.ciudades[0]){
+            ciudadService.getAll().then(res=>{
+                props.setCiudades(res.data)
+                setCiudades(res.data)
+            })
+        }else{
+            setCiudades(props.ciudades)
+        }
+
+        initFilters1();
+    }, [estadoPagina]);
+    
+    const header1 = () => {
+        return (
+            <div className="grid">
+                <div className='col-12 xl:col-9 lg:col-8 md:col-8 sm:col-7'>
+                    <h5 className='inline-block mx-4'>Centro De Costo</h5>
+                    <Button onClick={(e) => op.current.toggle(e)} tooltip='Nuevo Centro De costo' className="p-button-text p-button-rounded p-button-outlined mb-3 inline-block"><i className='pi pi-plus'/></Button>
+                </div>
+                <div className='col-12 xl:col-3 lg:col-4 md:col-4 sm:col-5'>
+                    <span className="p-input-icon-left mb-2">
+                        <i className="pi pi-search" />
+                        <InputText value={globalFilterValue1} onChange={onGlobalFilterChange1} placeholder="Buscar" />
+                    </span>
+                </div>
+            </div>
+        )
+    }
+
+    const onRowEditComplete1 = (e) => {
+        let { newData } = e
+
+        if(!/^[A-Za-zá-ýÁ-Ý ]+$/.test(newData.nombre_centro_costo)){
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre solo permite letras y espacios', life: 3000 })
+        }else{
+            centroCostoService.updateCentroCosto(newData.id_centro_costo, newData).then(res=>{
+                props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: 'Actualizado Con Exito', life: 3000 })
+                setEstadoPagina(true)
+            }) 
+        }
+    }
+
+    
+    const confirm1 = (e) => {
+        confirmPopup({
+            message: '¿Está seguro de realiazar esta accion?',
+            icon: 'pi pi-exclamation-triangle',
+            accept:()=>onRowEditComplete1(e)
+        });
+    };
+
+    const textEditor = (options) => {
+        return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+    }
+
+    const ciudadEditor = (options) => {
+        return (
+            <Dropdown dropdownIcon={null} value={options.rowData.id_ciudad_fk} options={ciudades} onChange={(e) => options.editorCallback(e.value)} optionLabel='nombre_ciudad' optionValue='id_ciudad' filter filterBy={'nombre_ciudad'} placeholder=""
+            emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
+        );
+    }
+
+    const bodyCiudad = (rowData) =>{
+        return(
+            <span>{rowData.nombre_ciudad}</span>
+        )
+    }
+
+    const bodyEliminar = (rowData) =>{
+        return (
+            <Button onClick={()=>console.log('si')} className='p-button-secondary p-button-text p-button-rounded' /* disabled={(empleadoData.tipo_usuario_fk === 3)?true:false} */ icon='pi pi-trash'/>
+        )
+    }
+
+    return <div className='card'>
+       <DataTable selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)} editMode="row" onRowEditComplete={confirm1} value={data} paginator className="p-datatable-customers" rows={10}
+        dataKey="id" filters={filters1} rowsPerPageOptions={[10, 25, 50, 100, 200]} size="small" filterDisplay="menu" loading={loading1} responsiveLayout="scroll" 
+        globalFilterFields={['nombre_centro_costo', 'nombre_ciudad', 'empleados']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
+            <Column filter editor={(options) => textEditor(options)} showFilterMenu={false} field='nombre_centro_costo' style={{ minWidth: '12rem' }} header="Nombre" sortable/>
+            <Column field="id_ciudad_fk" body={bodyCiudad} header="Ciudad" editor={(options) => ciudadEditor(options)} style={{ width: '20%' }}></Column>
+            <Column filter showFilterMenu={false} header="Empleados" style={{ minWidth: '5rem' }} sortable field='empleados'/>
+            <Column rowEditor headerStyle={{ width: '10%', minWidth: '5rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
+            <Column body={bodyEliminar} editor={bodyEliminar} headerStyle={{ width: '10%', minWidth: '2rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
+        </DataTable>
+
+        <OverlayPanel ref={op} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
+            <div className="col-12 md:col-6 mt-4">
+                <span className="p-float-label">
+                    <InputText name='nombres' type="text"/*  className={classNames({ 'p-invalid': isFormFieldValid('nombres') })+' w-full'}  value={props.formik.values.nombres} onChange={props.formik.handleChange}*/></InputText> 
+                    <label>Nombres:</label>
+                </span>
+               {/*  <div>{getFormErrorMessage('nombres')}</div> */}
+               </div>
+            <div className="col-12 md:col-6 mt-4">
+                <span className="p-float-label">
+                    <InputText name='apellidos' type="text" /* className={classNames({ 'p-invalid': isFormFieldValid('apellidos') })+' w-full'}  value={props.formik.values.apellidos} onChange={props.formik.handleChange}*/></InputText> 
+                    <label>Apellidos:</label>
+                </span>
+                {/* <div>{getFormErrorMessage('apellidos')}</div> */}
+            </div>
+            
+            <Button onClick={()=>console.log('si')} label='Guardar' className='mt-2 mx-4'/>
+        </OverlayPanel>
+    </div>;
+};
+
+export default CentroCosto;

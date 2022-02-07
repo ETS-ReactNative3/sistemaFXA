@@ -8,6 +8,14 @@ class CentroCostoService {
         return axios.get(`${API}`)
     }
 
+    getTableData(){
+        return axios.get(`${API}/tableData`)
+    }
+
+    updateCentroCosto(id,data){
+        return axios.put(`${API}/${id}`,data)
+    }
+
 }
 
 export default CentroCostoService
