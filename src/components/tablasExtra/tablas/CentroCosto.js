@@ -9,6 +9,9 @@ import CiudadService from '../../../service/CiudadService';
 import { confirmPopup } from 'primereact/confirmpopup';
 import { Button } from 'primereact/button';
 import { OverlayPanel } from 'primereact/overlaypanel';
+import { DefaultSelect } from '../../usuario/items/DefaultSelect';
+import classNames from 'classnames';
+import CentroCostoFormik from './CentroCostoFormik';
 
 const CentroCosto = (props) => {
 
@@ -89,7 +92,9 @@ const CentroCosto = (props) => {
         let { newData } = e
 
         if(!/^[A-Za-zá-ýÁ-Ý ]+$/.test(newData.nombre_centro_costo)){
-            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre solo permite letras y espacios', life: 3000 })
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre es obligatorio, ademas solo permite letras y espacios', life: 3000 })
+        }else if(!(data.nombre_centro_costo.length >= 3 && data.nombre_centro_costo.length <= 25)){
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre debe tener de 3 a 25 caracteres', life: 3000 })
         }else{
             centroCostoService.updateCentroCosto(newData.id_centro_costo, newData).then(res=>{
                 props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: 'Actualizado Con Exito', life: 3000 })
@@ -97,7 +102,6 @@ const CentroCosto = (props) => {
             }) 
         }
     }
-
     
     const confirm1 = (e) => {
         confirmPopup({
@@ -130,6 +134,15 @@ const CentroCosto = (props) => {
         )
     }
 
+    const formikCentroCosto = new CentroCostoFormik()
+    const formik = formikCentroCosto.formik({/* setToatsEmpelado:setToatsEmpelado */})
+
+    const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
+
+    const getFormErrorMessage = (name) => {
+        return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
+    };
+
     return <div className='card'>
        <DataTable selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)} editMode="row" onRowEditComplete={confirm1} value={data} paginator className="p-datatable-customers" rows={10}
         dataKey="id" filters={filters1} rowsPerPageOptions={[10, 25, 50, 100, 200]} size="small" filterDisplay="menu" loading={loading1} responsiveLayout="scroll" 
@@ -141,23 +154,25 @@ const CentroCosto = (props) => {
             <Column body={bodyEliminar} editor={bodyEliminar} headerStyle={{ width: '10%', minWidth: '2rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
         </DataTable>
 
-        <OverlayPanel ref={op} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
-            <div className="col-12 md:col-6 mt-4">
-                <span className="p-float-label">
-                    <InputText name='nombres' type="text"/*  className={classNames({ 'p-invalid': isFormFieldValid('nombres') })+' w-full'}  value={props.formik.values.nombres} onChange={props.formik.handleChange}*/></InputText> 
-                    <label>Nombres:</label>
-                </span>
-               {/*  <div>{getFormErrorMessage('nombres')}</div> */}
-               </div>
-            <div className="col-12 md:col-6 mt-4">
-                <span className="p-float-label">
-                    <InputText name='apellidos' type="text" /* className={classNames({ 'p-invalid': isFormFieldValid('apellidos') })+' w-full'}  value={props.formik.values.apellidos} onChange={props.formik.handleChange}*/></InputText> 
-                    <label>Apellidos:</label>
-                </span>
-                {/* <div>{getFormErrorMessage('apellidos')}</div> */}
+        <OverlayPanel ref={op} onHide={formik.resetForm} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
+            <div className='w-full text-center'>
+                <h5>Nuevo Centro De Costo</h5>
             </div>
-            
-            <Button onClick={()=>console.log('si')} label='Guardar' className='mt-2 mx-4'/>
+                <div className="col-12 mt-5">
+                    <span className="p-float-label">
+                        <InputText name='nombre_centro_costo' type="text"  className={classNames({ 'p-invalid': isFormFieldValid('nombre_centro_costo') })+' w-full'}  value={formik.values.nombre_centro_costo} onChange={formik.handleChange}></InputText> 
+                        <label>Nombre Centro Costo:</label>
+                    </span>
+                    <div>{getFormErrorMessage('nombre_centro_costo')}</div>
+                </div>
+                <div className="col-12 mt-4">
+                    <span className="p-float-label">
+                        <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_ciudad_fk') })+' w-full'} name='id_ciudad_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService"  id={formik.values.tipo_identificacion_fk} onChange={formik.handleChange} />
+                        <label>Ciudad:</label>
+                    </span>
+                    <div>{getFormErrorMessage('id_ciudad_fk')}</div>
+                </div> 
+                <Button onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </div>;
 };

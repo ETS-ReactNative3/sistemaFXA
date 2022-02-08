@@ -16,6 +16,10 @@ class CentroCostoService {
         return axios.put(`${API}/${id}`,data)
     }
 
+    createCentroCosto(data){
+        return axios.post(`${API}`,data)
+    }
+
 }
 
 export default CentroCostoService

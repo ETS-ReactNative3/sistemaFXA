@@ -33,8 +33,8 @@ class FormikEmp {
 
                 if(!data.numero_identificacion){
                     errors.numero_identificacion = 'El número de identificación es obligatorio.'
-                }else if(!(data.numero_identificacion.length >= 5 && data.numero_identificacion.length <=20)){
-                    errors.numero_identificacion = 'Cantidad de caracteres de 5 a 20'
+                }else if(!(data.numero_identificacion.length >= 6 && data.numero_identificacion.length <=20)){
+                    errors.numero_identificacion = 'Cantidad de caracteres de 6 a 20'
                 }else if(!/^\d{0,25}$/.test(data.numero_identificacion)){
                     errors.numero_identificacion = 'El número de identificación debe ser un número'
                 }
@@ -42,6 +42,7 @@ class FormikEmp {
                 if(!data.fecha_nacimiento){
                     errors.fecha_nacimiento = 'La fecha de nacimiento es obligatoria'
                 }
+                console.log(data.fecha_nacimiento)
 
                 if(!data.lugar_nacimiento_fk){
                     data.lugar_nacimiento_fk = undefined
@@ -261,6 +262,8 @@ class FormikEmp {
                     serviceEmpleado.createEmpleado(data).then(res=>{
                         options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                         options.hideModal()
+                    }).catch(err=>{
+                        console.log(err.response.data);
                     })
                 }
             }

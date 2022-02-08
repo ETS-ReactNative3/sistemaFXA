@@ -19,4 +19,5 @@ axios.interceptors.response.use(config=>{
         alert(err.response.data.error)
         window.location.href = '/#/dash/inicio';
     }
+    console.log(err.response.data);
   });
