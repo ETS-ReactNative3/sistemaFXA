@@ -5,7 +5,7 @@ const centroCostoService = new CentroCostoService()
 
 class CentroCostoFormik {
 
-    formik(params){     
+    formik(options){     
         let formik = useFormik({
             initialValues: {
                 nombre_centro_costo:'',
@@ -31,7 +31,13 @@ class CentroCostoFormik {
             },
             onSubmit: data =>{
                 centroCostoService.createCentroCosto(data).then(res=>{
-                    alert(res.data)
+                    if(res.status===201){
+                        options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
+                        options.reload()
+                        options.cloceOverlayNew()
+                    }else{
+                        options.setToatsEmpelado({ severity: 'error', summary: 'Error', detail: res.data, life: 3000 })
+                    }
                 })
             }
         })

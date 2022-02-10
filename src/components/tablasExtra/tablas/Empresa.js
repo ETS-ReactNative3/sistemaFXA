@@ -2,19 +2,16 @@ import { FilterMatchMode } from 'primereact/api';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
 import React, { useEffect, useRef, useState } from 'react';
-import CentroCostoService from '../../../service/CentroCostoService';
-import CiudadService from '../../../service/CiudadService';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 import { OverlayPanel } from 'primereact/overlaypanel';
-import { DefaultSelect } from '../../usuario/items/DefaultSelect';
 import classNames from 'classnames';
-import CentroCostoFormik from './CentroCostoFormik';
+import EmpresaFormik from './EmpresaFormik';
 import { Toast } from 'primereact/toast';
+import EmpresaService from '../../../service/EmpresaService';
 
-const CentroCosto = (props) => {
+const Empresa = (props) => {
 
     const toast = useRef(null);
 
@@ -25,7 +22,6 @@ const CentroCosto = (props) => {
 
     const op = useRef(null);
     const [data, setData] = useState([])
-    const [ciudades, setCiudades] = useState([])
 
     const onGlobalFilterChange1 = (e) => {
         const value = e.target.value;
@@ -43,31 +39,22 @@ const CentroCosto = (props) => {
         setGlobalFilterValue1('');
     }
 
-    const centroCostoService = new CentroCostoService()
-    const ciudadService = new CiudadService()
+    /* const empresaService = new empresaService() */
+    const empresaService = new EmpresaService()
 
     const [estadoPagina, setEstadoPagina] = useState(false)
 
     useEffect(() => {
-        if(!props.centroCosto[0] || estadoPagina === true){
-            centroCostoService.getTableData().then(res=>{
-                props.setCentroCosto(res.data)
+        if(!props.empresa[0] || estadoPagina === true){
+            empresaService.getTableData().then(res=>{
+                props.setEmpresa(res.data)
                 setData(res.data)
                 setLoading1(false)
                 setEstadoPagina(false)
             })
         }else{
-            setData(props.centroCosto)
+            setData(props.empresa)
             setLoading1(false)
-        }
-
-        if(!props.ciudades[0]){
-            ciudadService.getAll().then(res=>{
-                props.setCiudades(res.data)
-                setCiudades(res.data)
-            })
-        }else{
-            setCiudades(props.ciudades)
         }
 
         initFilters1();
@@ -77,8 +64,8 @@ const CentroCosto = (props) => {
         return (
             <div className="grid">
                 <div className='col-12 xl:col-9 lg:col-8 md:col-8 sm:col-7'>
-                    <h5 className='inline-block mx-4'>Centro De Costo</h5>
-                    <Button onClick={(e) => op.current.toggle(e)} tooltip='Nuevo Centro De costo' className="p-button-text p-button-rounded p-button-outlined mb-3 inline-block"><i className='pi pi-plus'/></Button>
+                    <h5 className='inline-block mx-4'>Empresa</h5>
+                    <Button onClick={(e) => op.current.toggle(e)} tooltip='Nueva Empresa' className="p-button-text p-button-rounded p-button-outlined mb-3 inline-block"><i className='pi pi-plus'/></Button>
                 </div>
                 <div className='col-12 xl:col-3 lg:col-4 md:col-4 sm:col-5'>
                     <span className="p-input-icon-left mb-2 w-full">
@@ -93,12 +80,16 @@ const CentroCosto = (props) => {
     const onRowEditComplete1 = (e) => {
         let { newData } = e
 
-        if(!/^[A-Za-zá-ýÁ-Ý ]+$/.test(newData.nombre_centro_costo)){
+        if(!/^[A-Za-zá-ýÁ-Ý ._-]+$/.test(newData.nombre_empresa)){
             props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre es obligatorio, ademas solo permite letras y espacios', life: 3000 })
-        }else if(!(newData.nombre_centro_costo.length >= 3 && newData.nombre_centro_costo.length <= 25)){
-            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre debe tener de 3 a 25 caracteres', life: 3000 })
+        }else if(!(newData.nombre_empresa.length >= 4 && newData.nombre_empresa.length <= 50)){
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre debe tener de 4 a 50 caracteres', life: 3000 })
+        }else if(!/^[\d-]+$/.test(newData.nit)){
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nit solo acepta números y .-_', life: 3000 })
+        }else if(!(newData.nit.length >= 6 && newData.nit.length <= 15)){
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre debe tener de 6 a 15 caracteres', life: 3000 })
         }else{
-            centroCostoService.updateCentroCosto(newData.id_centro_costo, newData).then(res=>{
+            empresaService.updateEmpresa(newData.id_empresa, newData).then(res=>{
                 if(res.status===201){
                     props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                 }else{
@@ -121,33 +112,21 @@ const CentroCosto = (props) => {
         return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
     }
 
-    const ciudadEditor = (options) => {
-        return (
-            <Dropdown dropdownIcon={null} value={options.rowData.id_ciudad_fk} options={ciudades} onChange={(e) => options.editorCallback(e.value)} optionLabel='nombre_ciudad' optionValue='id_ciudad' filter filterBy={'nombre_ciudad'} placeholder=""
-            emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
-        );
-    }
 
-    const bodyCiudad = (rowData) =>{
-        return(
-            <span>{rowData.nombre_ciudad}</span>
-        )
-    }
-
-    const borrarCentro = (id) =>{
-        centroCostoService.deleteCentroCosto(id).then(res=>{
-            props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: "Centro de costo borrado con exito", life: 4000 })
+    const borrarEmpresa = (id) =>{
+        empresaService.deleteEmpresa(id).then(res=>{
+            props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: "Empresa borrada con exito", life: 4000 })
             setEstadoPagina(true)
         })
     }
 
     const eliminarData = (rowData) =>{
         if(rowData.empleados > 0){
-            props.toast.current.show({ severity: 'error', summary: 'Error', detail: "No se puede borrar un centro de costo que ya tiene empleados relacionados", life: 4000 })
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: "No se puede borrar una empresa que ya tiene empleados relacionados", life: 4000 })
         }else{
             confirmDialog({
             header: '¿Está seguro de realizar esta acción?',
-            accept:()=>borrarCentro(rowData.id_centro_costo),
+            accept:()=>borrarEmpresa(rowData.id_empresa),
             acceptLabel:'Seguro!'
             })
         }
@@ -180,8 +159,8 @@ const CentroCosto = (props) => {
         op.current.toggle(false)
     }
 
-    const formikCentroCosto = new CentroCostoFormik()
-    const formik = formikCentroCosto.formik({setToatsEmpelado:setToatsEmpelado, reload:reload, cloceOverlayNew:cloceOverlayNew})
+    const formikEmpresa = new EmpresaFormik()
+    const formik = formikEmpresa.formik({setToatsEmpelado:setToatsEmpelado, reload:reload, cloceOverlayNew:cloceOverlayNew})
 
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
 
@@ -193,35 +172,36 @@ const CentroCosto = (props) => {
         <Toast ref={toast} position="bottom-right"/>
        <DataTable selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)} editMode="row" onRowEditComplete={confirm1} value={data} paginator className="p-datatable-customers" rows={10}
         dataKey="id" filters={filters1} rowsPerPageOptions={[10, 25, 50, 100, 200]} size="small" filterDisplay="menu" loading={loading1} responsiveLayout="scroll" 
-        globalFilterFields={['nombre_centro_costo', 'nombre_ciudad', 'empleados']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
-            <Column filter editor={(options) => textEditor(options)} showFilterMenu={false} field='nombre_centro_costo' header="Nombre" sortable/>
-            <Column filter sortable showFilterMenu={false} field="id_ciudad_fk" body={bodyCiudad} header="Ciudad" editor={(options) => ciudadEditor(options)}></Column>
-            <Column filter showFilterMenu={false} header="Empleados" style={{ minWidth: '5rem' }} sortable field='empleados'/>
+        globalFilterFields={['nombre_empresa', 'nit', 'empleados']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
+            <Column filter editor={(options) => textEditor(options)} showFilterMenu={false} field='nombre_empresa' header="Nombre" sortable/>
+            <Column filter editor={(options) => textEditor(options)} showFilterMenu={false} field='nit' header="Nit" sortable/>
+            <Column filter showFilterMenu={false} header="Empleados" sortable field='empleados'/>
             <Column rowEditor headerStyle={{ width: '10%', minWidth: '5rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
             <Column body={bodyEliminar} editor={bodyEliminarD} headerStyle={{ width: '10%', minWidth: '2rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
         </DataTable>
 
         <OverlayPanel ref={op} onHide={formik.resetForm} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
             <div className='w-full text-center'>
-                <h5>Nuevo Centro De Costo</h5>
+                <h5>Nueva Empresa</h5>
             </div>
                 <div className="col-12 mt-5">
                     <span className="p-float-label">
-                        <InputText name='nombre_centro_costo' type="text"  className={classNames({ 'p-invalid': isFormFieldValid('nombre_centro_costo') })+' w-full'}  value={formik.values.nombre_centro_costo} onChange={formik.handleChange}></InputText> 
-                        <label>Nombre Centro Costo:</label>
+                        <InputText name='nombre_empresa' type="text"  className={classNames({ 'p-invalid': isFormFieldValid('nombre_empresa') })+' w-full'}  value={formik.values.nombre_empresa} onChange={formik.handleChange}></InputText> 
+                        <label>Nombre Empresa:</label>
                     </span>
-                    <div>{getFormErrorMessage('nombre_centro_costo')}</div>
+                    <div>{getFormErrorMessage('nombre_empresa')}</div>
                 </div>
-                <div className="col-12 mt-4">
+                <div className="col-12 mt-5">
                     <span className="p-float-label">
-                        <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_ciudad_fk') })+' w-full'} name='id_ciudad_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService"  id={formik.values.tipo_identificacion_fk} onChange={formik.handleChange} />
-                        <label>Ciudad:</label>
+                        <InputText name='nit' type="text"  className={classNames({ 'p-invalid': isFormFieldValid('nit') })+' w-full'}  value={formik.values.nit} onChange={formik.handleChange}></InputText> 
+                        <label>Nit:</label>
                     </span>
-                    <div>{getFormErrorMessage('id_ciudad_fk')}</div>
-                </div> 
+                    <div>{getFormErrorMessage('nit')}</div>
+                </div>
+                
                 <Button onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </div>;
 };
 
-export default CentroCosto;
+export default Empresa;

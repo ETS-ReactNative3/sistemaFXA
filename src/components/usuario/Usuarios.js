@@ -211,7 +211,7 @@ export const Usuarios = () => {
     const header1 = renderHeader1();
 
     const formikUsuario = new FormikEmp()
-    const empleadoFormik = formikUsuario.formikUsuario({setToatsEmpelado:setToatsEmpelado, hideModal:hideModal})
+    const empleadoFormik = formikUsuario.formikUsuario({setToatsEmpelado:setToatsEmpelado, hideModal:hideModal, reloadPage:()=>setReload(reload+1)})
 
     const [empleadoDialog, setEmpleadoDialog] = useState({});
     

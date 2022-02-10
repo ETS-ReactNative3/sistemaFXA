@@ -42,7 +42,6 @@ class FormikEmp {
                 if(!data.fecha_nacimiento){
                     errors.fecha_nacimiento = 'La fecha de nacimiento es obligatoria'
                 }
-                console.log(data.fecha_nacimiento)
 
                 if(!data.lugar_nacimiento_fk){
                     data.lugar_nacimiento_fk = undefined
@@ -257,15 +256,19 @@ class FormikEmp {
                     serviceEmpleado.updateEmpleado(data.id_empleado, data).then(res=>{
                         options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                         options.hideModal()
+                        options.reloadPage()
                     })
                 }else{
+                    console.log(data);
+                    console.log(1)
                     serviceEmpleado.createEmpleado(data).then(res=>{
+                        console.log(2)
                         options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                         options.hideModal()
-                    }).catch(err=>{
-                        console.log(err.response.data);
+                        options.reloadPage()
                     })
-                }
+                    console.log(3)
+                } 
             }
         })
     }

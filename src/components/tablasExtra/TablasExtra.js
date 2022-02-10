@@ -2,11 +2,15 @@ import { TabPanel, TabView } from 'primereact/tabview';
 import { Toast } from 'primereact/toast';
 import React, { useRef, useState } from 'react';
 import CentroCosto from './tablas/CentroCosto';
+import DefaultData from './tablas/DefaultData';
+import Empresa from './tablas/Empresa';
 
 const TablasExtra = () => {
 
     const [centroCosto, setCentroCosto] = useState({})
+    const [empresa, setEmpresa] = useState({})
     const [ciudades, setCiudades] = useState({})
+    const [cargo, setCargo] = useState({})
 
     const toast = useRef(null);
 
@@ -18,12 +22,10 @@ const TablasExtra = () => {
                <CentroCosto toast={toast} setCentroCosto={setCentroCosto} centroCosto={centroCosto} setCiudades={setCiudades} ciudades={ciudades}/> 
             </TabPanel>
             <TabPanel header="Empresa">
-                
+                <Empresa toast={toast} setEmpresa={setEmpresa} empresa={empresa}/>
             </TabPanel>
-            <TabPanel header="Header III">
-                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-                cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-            Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+            <TabPanel header="Cargo">
+                <DefaultData name='Cargo' nombre='cargo' data={cargo} setData={setCargo}/>
             </TabPanel>
         </TabView>
     </div>

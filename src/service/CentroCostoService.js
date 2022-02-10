@@ -9,7 +9,7 @@ class CentroCostoService {
     }
 
     getTableData(){
-        return axios.get(`${API}/tableData`)
+        return axios.get(`${API}/table-data`)
     }
 
     updateCentroCosto(id,data){
@@ -18,6 +18,10 @@ class CentroCostoService {
 
     createCentroCosto(data){
         return axios.post(`${API}`,data)
+    }
+
+    deleteCentroCosto(id){
+        return axios.delete(`${API}/${id}`)
     }
 
 }

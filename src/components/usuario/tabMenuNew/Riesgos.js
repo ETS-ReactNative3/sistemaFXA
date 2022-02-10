@@ -73,7 +73,7 @@ const Riesgos = (props) => {
                 <div>{getFormErrorMessage('fecha_expedicion_doc')}</div>
                 <label>Fecha Expedicion Doc:</label>
             </span>
-            <div>{getFormErrorMessage('riesgo')}</div>
+            <div>{getFormErrorMessage('fecha_expedicion_doc')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
