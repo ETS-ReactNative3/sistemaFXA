@@ -13,9 +13,10 @@ export const DefaultSelect = (params) => {
     }, [params.id])
 
     useEffect(() => {
-        const ItemService  = require(`../../../service/${params.serviceName}`);
-        const itemService = new ItemService.default()
-        itemService.getAll().then(res=>{
+        const ItemService  = require(`../../../service/DefaultService`);
+        const itemService = ItemService.default(params.serviceName)
+        const service = new itemService()
+        service.getAll().then(res=>{
             setitems(res.data)
             })
     }, [params.serviceName]); 

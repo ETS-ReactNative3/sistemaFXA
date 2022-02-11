@@ -56,7 +56,7 @@ export const Datos = (props) => {
         </div> 
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Documento:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('tipo_identificacion_fk') })+' inputForm'} name='tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="TipoIdentificacionService" id={props.empleado.values.tipo_identificacion_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('tipo_identificacion_fk') })+' inputForm'} name='tipo_identificacion_fk' id_def="id_tipo_identificacion" nombre_def="nombre_tipo_identificacion" serviceName="tipo-identificacion" id={props.empleado.values.tipo_identificacion_fk} onChange={props.empleado.handleChange}/>
             <InputText name='numero_identificacion' type="text" className={classNames({ 'error-input': isFormFieldValid('numero_identificacion') })+' inputForm'} value={props.empleado.values.numero_identificacion} onChange={props.empleado.handleChange}></InputText> 
             <div>{getFormErrorMessage('tipo_identificacion_fk')}</div>
             <div>{getFormErrorMessage('numero_identificacion')}</div>
@@ -73,17 +73,17 @@ export const Datos = (props) => {
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Lugar De Nacimiento:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('lugar_nacimiento_fk') })+' inputForm'} name='lugar_nacimiento_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_nacimiento_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('lugar_nacimiento_fk') })+' inputForm'} name='lugar_nacimiento_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="ciudad" id={props.empleado.values.lugar_nacimiento_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('lugar_nacimiento_fk')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Nacionalidad:</span>
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('nacionalidad_fk') })+' inputForm'} name='nacionalidad_fk' id_def="id_nacionalidad" nombre_def="nombre_nacionalidad" serviceName="NacionalidadService" id={props.empleado.values.nacionalidad_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('nacionalidad_fk') })+' inputForm'} name='nacionalidad_fk' id_def="id_nacionalidad" nombre_def="nombre_nacionalidad" serviceName="nacionalidad" id={props.empleado.values.nacionalidad_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('nacionalidad_fk')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Estado Civil:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('estado_civil_fk') })+' inputForm'} name='estado_civil_fk' id_def="id_estado_civil" nombre_def="nombre_estado_civil" serviceName="EstadoCivilService" id={props.empleado.values.estado_civil_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('estado_civil_fk') })+' inputForm'} name='estado_civil_fk' id_def="id_estado_civil" nombre_def="nombre_estado_civil" serviceName="estado-civil" id={props.empleado.values.estado_civil_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('estado_civil_fk')}</div>
         </div>
         <Divider align="left">

@@ -7,13 +7,11 @@ import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import classNames from 'classnames';
-import EmpresaFormik from './EmpresaFormik';
 import { Toast } from 'primereact/toast';
-
+import DefaultFormik from './DefaultFormik';
 
 const DefaultData = (props) => {
    
-    const {Service} = require(`../../../service/${props.name}Service`)
     const toast = useRef(null);
 
     const [globalFilterValue1, setGlobalFilterValue1] = useState('');
@@ -40,8 +38,9 @@ const DefaultData = (props) => {
         setGlobalFilterValue1('');
     }
 
-    /* const service = new service() */
-    const service = new Service()
+    const ItemService  = require(`../../../service/DefaultService`);
+    const itemService = ItemService.default(props.model||props.nombre)
+    const service = new itemService()
 
     const [estadoPagina, setEstadoPagina] = useState(false)
 
@@ -66,7 +65,7 @@ const DefaultData = (props) => {
             <div className="grid">
                 <div className='col-12 xl:col-9 lg:col-8 md:col-8 sm:col-7'>
                     <h5 className='inline-block mx-4'>{props.name}</h5>
-                    <Button onClick={(e) => op.current.toggle(e)} tooltip={'Nueva '+props.name} className="p-button-text p-button-rounded p-button-outlined mb-3 inline-block"><i className='pi pi-plus'/></Button>
+                    <Button id='nuevoRegistroButton' onClick={(e) => op.current.toggle(e)} tooltip={'Nuevo Registro'} className="p-button-text p-button-rounded p-button-outlined mb-3 inline-block"><i className='pi pi-plus'/></Button>
                 </div>
                 <div className='col-12 xl:col-3 lg:col-4 md:col-4 sm:col-5'>
                     <span className="p-input-icon-left mb-2 w-full">
@@ -80,17 +79,13 @@ const DefaultData = (props) => {
 
     const onRowEditComplete1 = (e) => {
         let { newData } = e
-
-        if(!/^[A-Za-zá-ýÁ-Ý ._-]+$/.test(newData.nombre_[props.nombre])){
+        let newDataArray = Object.values(newData)
+        if(!/^[A-Za-zá-ýÁ-Ý ._-]+$/.test(newDataArray[1])){
             props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre es obligatorio, ademas solo permite letras y espacios', life: 3000 })
-        }else if(!(newData.nombre_[props.nombre].length >= 4 && newData.nombre_[props.nombre].length <= 50)){
-            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre debe tener de 4 a 50 caracteres', life: 3000 })
-        }else if(!/^[\d-]+$/.test(newData.nit)){
-            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nit solo acepta números y .-_', life: 3000 })
-        }else if(!(newData.nit.length >= 6 && newData.nit.length <= 15)){
-            props.toast.current.show({ severity: 'error', summary: 'Error', detail: 'El nombre debe tener de 6 a 15 caracteres', life: 3000 })
+        }else if(!(newDataArray[1].length >= props.minMax[0] && newDataArray[1].length <= props.minMax[1])){
+            props.toast.current.show({ severity: 'error', summary: 'Error', detail: `El nombre debe tener de ${props.minMax[0]} a ${props.minMax[1]} caracteres`, life: 3000 })
         }else{
-            service.updateEmpresa(newData.id_empresa, newData).then(res=>{
+            service.update(newDataArray[0], {nombre:newDataArray[1]}).then(res=>{
                 if(res.status===201){
                     props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                 }else{
@@ -115,8 +110,8 @@ const DefaultData = (props) => {
 
 
     const borrarEmpresa = (id) =>{
-        service.deleteEmpresa(id).then(res=>{
-            props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: `${props.name} borrada con exito`, life: 4000 })
+        service.delete(id).then(res=>{
+            props.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: `Registro borrado con exito`, life: 4000 })
             setEstadoPagina(true)
         })
     }
@@ -125,9 +120,10 @@ const DefaultData = (props) => {
         if(rowData.empleados > 0){
             props.toast.current.show({ severity: 'error', summary: 'Error', detail: `No se puede borrar una ${props.name} que ya tiene empleados relacionados`, life: 4000 })
         }else{
+            rowData = Object.values(rowData)
             confirmDialog({
             header: '¿Está seguro de realizar esta acción?',
-            accept:()=>borrarEmpresa(rowData.id_empresa),
+            accept:()=>borrarEmpresa(rowData[0]),
             acceptLabel:'Seguro!'
             })
         }
@@ -144,24 +140,24 @@ const DefaultData = (props) => {
         )
     }
 
-    const [toatsEmpelado, setToatsEmpelado] = useState({});
+    const [showToast, setShowToast] = useState({});
 
     useEffect(()=>{
-        if(toatsEmpelado.severity){
-            toast.current.show(toatsEmpelado);
+        if(showToast.severity){
+            toast.current.show(showToast);
         }
-    },[toatsEmpelado])
+    },[showToast])
 
     const reload = () =>{
         setEstadoPagina(true)
     }
 
     const cloceOverlayNew = () =>{
-        op.current.toggle(false)
+        op.current.hide()
     }
 
-    const formikEmpresa = new EmpresaFormik()
-    const formik = formikEmpresa.formik({setToatsEmpelado:setToatsEmpelado, reload:reload, cloceOverlayNew:cloceOverlayNew})
+    const formikEmpresa = new DefaultFormik()
+    const formik = formikEmpresa.formik({setShowToast:setShowToast, reload:reload, cloceOverlayNew:cloceOverlayNew, minMax:props.minMax, name:props.model||props.nombre})
 
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
 
@@ -173,7 +169,7 @@ const DefaultData = (props) => {
         <Toast ref={toast} position="bottom-right"/>
        <DataTable selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)} editMode="row" onRowEditComplete={confirm1} value={data} paginator className="p-datatable-customers" rows={10}
         dataKey="id" filters={filters1} rowsPerPageOptions={[10, 25, 50, 100, 200]} size="small" filterDisplay="menu" loading={loading1} responsiveLayout="scroll" 
-        globalFilterFields={[`nombre_${props.nombre}`, 'empleados']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
+        header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
             <Column filter editor={(options) => textEditor(options)} showFilterMenu={false} field={`nombre_${props.nombre}`} header="Nombre" sortable/>
             <Column filter showFilterMenu={false} header="Empleados" sortable field='empleados'/>
             <Column rowEditor headerStyle={{ width: '10%', minWidth: '5rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
@@ -182,24 +178,16 @@ const DefaultData = (props) => {
 
         <OverlayPanel ref={op} onHide={formik.resetForm} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
             <div className='w-full text-center'>
-                <h5>Nueva {props.name}</h5>
+                <h5>Nuevo Registro</h5>
             </div>
                 <div className="col-12 mt-5">
                     <span className="p-float-label">
-                        <InputText name={`nombre_${props.nombre}`} type="text"  className={classNames({ 'p-invalid': isFormFieldValid(`nombre_${props.nombre}`) })+' w-full'}  value={formik.values.nombre_+`${props.nombre}`} onChange={formik.handleChange}></InputText> 
+                        <InputText name={`nombre`} type="text"  className={classNames({ 'p-invalid': isFormFieldValid(`nombre`) })+' w-full'}  value={formik.values.nombre} onChange={formik.handleChange}></InputText> 
                         <label>Nombre {props.name}:</label>
                     </span>
-                    <div>{getFormErrorMessage(`nombre_${props.nombre}`)}</div>
+                    <div>{getFormErrorMessage(`nombre`)}</div>
                 </div>
-                <div className="col-12 mt-5">
-                    <span className="p-float-label">
-                        <InputText name='nit' type="text"  className={classNames({ 'p-invalid': isFormFieldValid('nit') })+' w-full'}  value={formik.values.nit} onChange={formik.handleChange}></InputText> 
-                        <label>Nit:</label>
-                    </span>
-                    <div>{getFormErrorMessage('nit')}</div>
-                </div>
-                
-                <Button onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
+                <Button type='button' onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </div>;
 };

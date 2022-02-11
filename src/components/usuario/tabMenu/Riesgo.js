@@ -44,27 +44,27 @@ export const Riesgo = (props) => {
         </Divider>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>EPS:</span>
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('eps_fk') })+' inputForm'} name='eps_fk' id_def="id_eps" nombre_def="nombre_eps" serviceName="EpsService" id={props.empleado.values.eps_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('eps_fk') })+' inputForm'} name='eps_fk' id_def="id_eps" nombre_def="nombre_eps" serviceName="eps" id={props.empleado.values.eps_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('eps_fk')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>ARL:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('arl_fk') })+' inputForm'} name='arl_fk' id_def="id_arl" nombre_def="nombre_arl" serviceName="ArlService" id={props.empleado.values.arl_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('arl_fk') })+' inputForm'} name='arl_fk' id_def="id_arl" nombre_def="nombre_arl" serviceName="arl" id={props.empleado.values.arl_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('arl_fk')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Pensión:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('pension_fk') })+' inputForm'} name='pension_fk' id_def="id_pension" nombre_def="nombre_pension" serviceName="PensionService" id={props.empleado.values.pension_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('pension_fk') })+' inputForm'} name='pension_fk' id_def="id_pension" nombre_def="nombre_pension" serviceName="pension" id={props.empleado.values.pension_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('pension_fk')}</div>
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Cesantias:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('cesantias_fk') })+' inputForm'} name='cesantias_fk' id_def="id_cesantias" nombre_def="nombre_cesantias" serviceName="CesantiasService" id={props.empleado.values.cesantias_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('cesantias_fk') })+' inputForm'} name='cesantias_fk' id_def="id_cesantias" nombre_def="nombre_cesantias" serviceName="cesantias" id={props.empleado.values.cesantias_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('cesantias_fk')}</div>
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Caja Compensasión:</span>
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('ccf_fk') })+' inputForm'} name='ccf_fk' id_def="id_caja_comp" nombre_def="nombre_caja_comp" serviceName="CajaCompService" id={props.empleado.values.ccf_fk} onChange={props.empleado.handleChange}/>
+            <span className='text-800 font-medium'>Caja Compensación:</span>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('ccf_fk') })+' inputForm'} name='ccf_fk' id_def="id_caja_comp" nombre_def="nombre_caja_comp" serviceName="caja-compensacion" id={props.empleado.values.ccf_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('ccf_fk')}</div>
         </div>
         <div className='text-left mb-2'>
@@ -80,7 +80,7 @@ export const Riesgo = (props) => {
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Lugar Expedición Documento:</span> 
-            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('lugar_exp_doc_fk') })+' inputForm'} name='lugar_exp_doc_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.empleado.values.lugar_exp_doc_fk} onChange={props.empleado.handleChange}/>
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('lugar_exp_doc_fk') })+' inputForm'} name='lugar_exp_doc_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="ciudad" id={props.empleado.values.lugar_exp_doc_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('lugar_exp_doc_fk')}</div>
         </div>
     </div>

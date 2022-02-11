@@ -8,11 +8,20 @@ export class CargoService {
         return axios.get(`${API}`)
     }
 
-}
-export class Service {
-    
     getTableData(){
-        return axios.get(`${API}`)
+        return axios.get(`${API}/default/table-data`)
+    }
+
+    update(id,data){
+        return axios.put(`${API}/${id}`, data)
+    }
+
+    create(data){
+        return axios.post(`${API}`, data)
+    } 
+
+    delete(id){
+        return axios.delete(`${API}/${id}`)
     }
 }
 

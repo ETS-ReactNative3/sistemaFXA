@@ -26,42 +26,42 @@ const Empresa = (props) => {
     <div className='grid w-full'>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('empresa_fk') })+' w-full'} name='empresa_fk' id_def="id_empresa" nombre_def="nombre_empresa" serviceName="EmpresaService" id={props.formik.values.empresa_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('empresa_fk') })+' w-full'} name='empresa_fk' id_def="id_empresa" nombre_def="nombre_empresa" serviceName="empresa" id={props.formik.values.empresa_fk} onChange={props.formik.handleChange}/>
                 <label>Empresa:</label>
             </span>
             <div>{getFormErrorMessage('empresa_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('lugar_trabajo_fk') })+' w-full'} name='lugar_trabajo_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService" id={props.formik.values.lugar_trabajo_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('lugar_trabajo_fk') })+' w-full'} name='lugar_trabajo_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="ciudad" id={props.formik.values.lugar_trabajo_fk} onChange={props.formik.handleChange}/>
                 <label>Lugar De Trabajo:</label>
             </span>
             <div>{getFormErrorMessage('lugar_trabajo_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('centro_costo_fk') })+' w-full'} name='centro_costo_fk' id_def="id_centro_costo" nombre_def="nombre_centro_costo" serviceName="CentroCostoService" id={props.formik.values.centro_costo_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('centro_costo_fk') })+' w-full'} name='centro_costo_fk' id_def="id_centro_costo" nombre_def="nombre_centro_costo" serviceName="centro-costo" id={props.formik.values.centro_costo_fk} onChange={props.formik.handleChange}/>
                 <label>Centro Costo:</label>
             </span>
             <div>{getFormErrorMessage('centro_costo_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('cargo_fk') })+' w-full'} name='cargo_fk' id_def="id_cargo" nombre_def="nombre_cargo" serviceName="CargoService" id={props.formik.values.cargo_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('cargo_fk') })+' w-full'} name='cargo_fk' id_def="id_cargo" nombre_def="nombre_cargo" serviceName="cargo" id={props.formik.values.cargo_fk} onChange={props.formik.handleChange}/>
                 <label>Cargo:</label>
             </span>
             <div>{getFormErrorMessage('cargo_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('tipo_contrato_fk') })+' w-full'} name='tipo_contrato_fk' id_def="id_tipo_contrato" nombre_def="nombre_tipo_contrato" serviceName="TipoContratoService" id={props.formik.values.tipo_contrato_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('tipo_contrato_fk') })+' w-full'} name='tipo_contrato_fk' id_def="id_tipo_contrato" nombre_def="nombre_tipo_contrato" serviceName="tipo-contrato" id={props.formik.values.tipo_contrato_fk} onChange={props.formik.handleChange}/>
                 <label>Tipo Contrato:</label>
             </span>
             <div>{getFormErrorMessage('tipo_contrato_fk')}</div>
         </div> 
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('tipo_tiempo_fk') })+' w-full'} name='tipo_tiempo_fk' id_def="id_tiempo" nombre_def="nombre_tiempo" serviceName="TipoTiempoService" id={props.formik.values.tipo_tiempo_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('tipo_tiempo_fk') })+' w-full'} name='tipo_tiempo_fk' id_def="id_tiempo" nombre_def="nombre_tiempo" serviceName="tiempo" id={props.formik.values.tipo_tiempo_fk} onChange={props.formik.handleChange}/>
                 <label>Tiempo:</label>
             </span>
             <div>{getFormErrorMessage('tipo_tiempo_fk')}</div>
@@ -76,7 +76,7 @@ const Empresa = (props) => {
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('estado_contrato_fk') })+' w-full'} name='estado_contrato_fk' id_def="id_estado_contrato" nombre_def="nombre_estado_contrato" serviceName="EstadoContratoService" id={props.formik.values.estado_contrato_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('estado_contrato_fk') })+' w-full'} name='estado_contrato_fk' id_def="id_estado_contrato" nombre_def="nombre_estado_contrato" serviceName="estado-contrato" id={props.formik.values.estado_contrato_fk} onChange={props.formik.handleChange}/>
                 <label>Estado Contrato:</label>
             </span>
             <div>{getFormErrorMessage('estado_contrato_fk')}</div>

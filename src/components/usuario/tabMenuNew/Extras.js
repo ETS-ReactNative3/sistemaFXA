@@ -17,28 +17,28 @@ const Extras = (props) => {
     <div className='grid w-full'>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('salario_fk') })+' w-full'} name='salario_fk' id_def="id_salario" nombre_def="monto_salario" serviceName="SalarioService" id={props.formik.values.salario_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('salario_fk') })+' w-full'} name='salario_fk' id_def="id_salario" nombre_def="monto_salario" serviceName="salario" id={props.formik.values.salario_fk} onChange={props.formik.handleChange}/>
                 <label>Salario:</label>
             </span>
             <div>{getFormErrorMessage('salario_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('aux_movilidad_fk') })+' w-full'} name='aux_movilidad_fk' id_def="id_aux_movilidad" nombre_def="monto_aux_movilidad" serviceName="AuxMovilidadService" id={props.formik.values.aux_movilidad_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('aux_movilidad_fk') })+' w-full'} name='aux_movilidad_fk' id_def="id_aux_movilidad" nombre_def="monto_aux_movilidad" serviceName="aux-movilidad" id={props.formik.values.aux_movilidad_fk} onChange={props.formik.handleChange}/>
                 <label>Aux. Movilidad:</label>
             </span>
             <div>{getFormErrorMessage('aux_movilidad_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-            <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('banco_fk') })+' w-full'} name='banco_fk' id_def="id_banco" nombre_def="nombre_banco" serviceName="BancoService" id={props.formik.values.banco_fk} onChange={props.formik.handleChange}/>
+            <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('banco_fk') })+' w-full'} name='banco_fk' id_def="id_banco" nombre_def="nombre_banco" serviceName="banco" id={props.formik.values.banco_fk} onChange={props.formik.handleChange}/>
             <label>Banco:</label>
             </span>
             <div>{getFormErrorMessage('banco_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('tipo_cuenta_fk') })+' w-full'} name='tipo_cuenta_fk' id_def="id_tipo_cuenta" nombre_def="nombre_tipo_cuenta" serviceName="TipoCuentaService" id={props.formik.values.tipo_cuenta_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('tipo_cuenta_fk') })+' w-full'} name='tipo_cuenta_fk' id_def="id_tipo_cuenta" nombre_def="nombre_tipo_cuenta" serviceName="tipo-cuenta" id={props.formik.values.tipo_cuenta_fk} onChange={props.formik.handleChange}/>
                 <label>Tipo Cuenta:</label>
             </span>
             <div>{getFormErrorMessage('tipo_cuenta_fk')}</div>
@@ -59,28 +59,28 @@ const Extras = (props) => {
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('estudios_fk') })+' w-full'} name='estudios_fk' id_def="id_estudios" nombre_def="nombre_estudios" serviceName="EstudiosService" id={props.formik.values.estudios_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('estudios_fk') })+' w-full'} name='estudios_fk' id_def="id_estudios" nombre_def="nombre_estudios" serviceName="estudios-realizados" id={props.formik.values.estudios_fk} onChange={props.formik.handleChange}/>
                 <label>Estudios:</label>
             </span>
             <div>{getFormErrorMessage('estudios_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('talla_camisa_fk') })+' w-full'} name='talla_camisa_fk' id_def="id_talla_camisa" nombre_def="nombre_talla_camisa" serviceName="TallaCamisaService" id={props.formik.values.talla_camisa_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('talla_camisa_fk') })+' w-full'} name='talla_camisa_fk' id_def="id_talla_camisa" nombre_def="nombre_talla_camisa" serviceName="talla-camisa" id={props.formik.values.talla_camisa_fk} onChange={props.formik.handleChange}/>
                 <label>Talla Camisa:</label>
             </span>
             <div>{getFormErrorMessage('talla_camisa_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('talla_pantalon_fk') })+' w-full'} name='talla_pantalon_fk' id_def="id_talla_pantalon" nombre_def="nombre_talla_pantalon" serviceName="TallaPantalonService" id={props.formik.values.talla_pantalon_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('talla_pantalon_fk') })+' w-full'} name='talla_pantalon_fk' id_def="id_talla_pantalon" nombre_def="nombre_talla_pantalon" serviceName="talla-pantalon" id={props.formik.values.talla_pantalon_fk} onChange={props.formik.handleChange}/>
                 <label>Talla Pantalon:</label>
             </span>
             <div>{getFormErrorMessage('talla_pantalon_fk')}</div>
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('talla_calzado_fk') })+' w-full'} name='talla_calzado_fk' id_def="id_talla_calzado" nombre_def="nombre_talla_calzado" serviceName="TallaCalzadoService" id={props.formik.values.talla_calzado_fk} onChange={props.formik.handleChange}/>
+                <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('talla_calzado_fk') })+' w-full'} name='talla_calzado_fk' id_def="id_talla_calzado" nombre_def="nombre_talla_calzado" serviceName="talla-calzado" id={props.formik.values.talla_calzado_fk} onChange={props.formik.handleChange}/>
                 <label>Talla Calzado:</label>
             </span>
             <div>{getFormErrorMessage('talla_calzado_fk')}</div>

@@ -27,7 +27,7 @@ export const Riesgo = (props) => {
             {props.empleado.cesantia.nombre_cesantias}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Caja Compensasión:</span>
+            <span className='text-800 font-medium'>Caja Compensación:</span>
             {props.empleado.caja_compensacion.nombre_caja_comp}
         </div>
         <div className='text-left mb-2'>

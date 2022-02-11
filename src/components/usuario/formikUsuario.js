@@ -245,9 +245,6 @@ class FormikEmp {
                 if(errors.eps_fk || errors.arl_fk || errors.pension_fk || errors.cesantias_fk || errors.ccf_fk || errors.direccion || errors.fecha_expedicion_doc || errors.lugar_exp_doc_fk ){
                     errors.riesgos = 'error'
                 }
-
-                console.log(errors);
-
                 return errors
 
             },
@@ -259,15 +256,11 @@ class FormikEmp {
                         options.reloadPage()
                     })
                 }else{
-                    console.log(data);
-                    console.log(1)
                     serviceEmpleado.createEmpleado(data).then(res=>{
-                        console.log(2)
                         options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                         options.hideModal()
                         options.reloadPage()
                     })
-                    console.log(3)
                 } 
             }
         })

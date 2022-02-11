@@ -5,7 +5,6 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import React, { useEffect, useRef, useState } from 'react';
 import CentroCostoService from '../../../service/CentroCostoService';
-import CiudadService from '../../../service/CiudadService';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 import { OverlayPanel } from 'primereact/overlaypanel';
@@ -44,7 +43,10 @@ const CentroCosto = (props) => {
     }
 
     const centroCostoService = new CentroCostoService()
-    const ciudadService = new CiudadService()
+    
+    const ItemServiceCiudad  = require(`../../../service/DefaultService`);
+    const itemServiceCiudad = ItemServiceCiudad.default('ciudad')
+    const ciudadService = new itemServiceCiudad()
 
     const [estadoPagina, setEstadoPagina] = useState(false)
 
@@ -214,7 +216,7 @@ const CentroCosto = (props) => {
                 </div>
                 <div className="col-12 mt-4">
                     <span className="p-float-label">
-                        <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_ciudad_fk') })+' w-full'} name='id_ciudad_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="CiudadService"  id={formik.values.tipo_identificacion_fk} onChange={formik.handleChange} />
+                        <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_ciudad_fk') })+' w-full'} name='id_ciudad_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="ciudad"  id={formik.values.tipo_identificacion_fk} onChange={formik.handleChange} />
                         <label>Ciudad:</label>
                     </span>
                     <div>{getFormErrorMessage('id_ciudad_fk')}</div>

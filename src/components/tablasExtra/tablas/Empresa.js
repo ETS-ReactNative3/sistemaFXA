@@ -143,13 +143,13 @@ const Empresa = (props) => {
         )
     }
 
-    const [toatsEmpelado, setToatsEmpelado] = useState({});
+    const [showToast, setShowToast] = useState({});
 
     useEffect(()=>{
-        if(toatsEmpelado.severity){
-            toast.current.show(toatsEmpelado);
+        if(showToast.severity){
+            toast.current.show(showToast);
         }
-    },[toatsEmpelado])
+    },[showToast])
 
     const reload = () =>{
         setEstadoPagina(true)
@@ -160,7 +160,7 @@ const Empresa = (props) => {
     }
 
     const formikEmpresa = new EmpresaFormik()
-    const formik = formikEmpresa.formik({setToatsEmpelado:setToatsEmpelado, reload:reload, cloceOverlayNew:cloceOverlayNew})
+    const formik = formikEmpresa.formik({setShowToast:setShowToast, reload:reload, cloceOverlayNew:cloceOverlayNew})
 
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
 
