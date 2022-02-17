@@ -28,6 +28,10 @@ export class EmpleadoService {
         return axios.get(`${API}/${id}`)
     }
 
+    getInfoCertificado(){
+        return axios.get(`${API}/default/certificado-lab`)
+    }
+
     updateEmpleado(id, data){
         return axios.put(`${API}/${id}`, data)
     }

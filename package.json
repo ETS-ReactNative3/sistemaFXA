@@ -17,6 +17,7 @@
         "file-saver": "^2.0.5",
         "formik": "^2.2.9",
         "jspdf": "^2.5.1",
+        "numero-a-letras": "^1.0.6",
         "primeflex": "3.1.0",
         "primeicons": "^5.0.0",
         "primereact": "7.1.0",

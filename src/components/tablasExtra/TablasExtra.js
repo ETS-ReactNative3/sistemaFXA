@@ -4,8 +4,10 @@ import { TabPanel, TabView } from 'primereact/tabview';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import CentroCosto from './tablas/CentroCosto';
 import DefaultData from './tablas/DefaultData';
+import DefaultData2 from './tablas/DefaultData2';
 import DefaultData3 from './tablas/DefaultData3';
 import Empresa from './tablas/Empresa';
+import Ciudad from './tablas/Ciudad';
 
 const TablasExtra = () => {
 
@@ -30,6 +32,8 @@ const TablasExtra = () => {
     const [tallaCamisa, setTallaCamisa] = useState({})
     const [tallaPantalon, setTallaPantalon] = useState({})
     const [tallaCalzado, setTallaCalzado] = useState({})
+    const [salario, setSalario] = useState({})
+    const [auxMovilidad, setAuxMovilidad] = useState({})
 
     const toast = useRef(null);
 
@@ -44,7 +48,7 @@ const TablasExtra = () => {
                         <DefaultData toast={toast} name='Tipo Identificación' nombre='tipo_identificacion' model='tipo-identificacion' data={tipoIdentificacion} setData={setTipoIdentificacion} minMax={[2,20]}/>
                     </TabPanel> 
                     <TabPanel header="Ciudad">
-                        <DefaultData toast={toast} name='Ciudad' nombre='ciudad' data={ciudad} setData={setCiudad} minMax={[3,25]}/>
+                        <Ciudad toast={toast} name='Ciudad' nombre='ciudad' data={ciudad} setData={setCiudad} minMax={[3,25]}/>
                     </TabPanel> 
                     <TabPanel header="Nacionalidad">
                         <DefaultData toast={toast} name='Nacionalidad' nombre='nacionalidad' data={nacionalidad} setData={setNacionalidad} minMax={[3,25]}/>
@@ -52,6 +56,15 @@ const TablasExtra = () => {
                     <TabPanel header="Estado Civil">
                         <DefaultData toast={toast} name='Estado Civil' model='estado-civil' nombre='estado_civil' data={estadoCivil} setData={setEstadoCivil} minMax={[3,25]}/>
                     </TabPanel> 
+                    <TabPanel header='Talla Camisa'>
+                        <DefaultData3 toast={toast} name='Talla Camisa' model='talla-camisa' nombre='talla_camisa' data={tallaCamisa} setData={setTallaCamisa} minMax={[1,10]}/>
+                    </TabPanel>
+                    <TabPanel header='Talla Pantalon'>
+                        <DefaultData3 toast={toast} name='Talla Pantalon' model='talla-pantalon' nombre='talla_pantalon' data={tallaPantalon} setData={setTallaPantalon} minMax={[1,10]}/>
+                    </TabPanel>
+                    <TabPanel header='Talla Calzado'>
+                        <DefaultData3 toast={toast} name='Talla Calzado' model='talla-calzado' nombre='talla_calzado' data={tallaCalzado} setData={setTallaCalzado} minMax={[1,10]}/>
+                    </TabPanel>
                 </TabView>
             </AccordionTab>
             <AccordionTab header="Datos Empresa">
@@ -78,6 +91,12 @@ const TablasExtra = () => {
             </AccordionTab>
             <AccordionTab header='Datos Complementarios'>
                 <TabView>
+                    <TabPanel header='Salario'>
+                        <DefaultData2 toast={toast} name='Salario' nombre='monto_salario' model='salario' data={salario} setData={setSalario} minMax={[3,25]}/>
+                    </TabPanel>
+                    <TabPanel header='Aux Movilidad'>
+                        <DefaultData2 toast={toast} name='Aux Movilidad' nombre='monto_aux_movilidad' model='aux-movilidad' data={auxMovilidad} setData={setAuxMovilidad} minMax={[3,25]}/>
+                    </TabPanel>
                     <TabPanel header='Banco'>
                         <DefaultData toast={toast} name='Banco' nombre='banco' data={banco} setData={setBanco} minMax={[3,25]}/>
                     </TabPanel>
@@ -86,15 +105,6 @@ const TablasExtra = () => {
                     </TabPanel>
                     <TabPanel header='Estudios Realizados'>
                         <DefaultData toast={toast} name='Estudios Realizados' model='estudios-realizados' nombre='estudios' data={estudiosRelaizados} setData={setEstudiosRelaizados} minMax={[3,25]}/>
-                    </TabPanel>
-                    <TabPanel header='Talla Camisa'>
-                        <DefaultData3 toast={toast} name='Talla Camisa' model='talla-camisa' nombre='talla_camisa' data={tallaCamisa} setData={setTallaCamisa} minMax={[1,10]}/>
-                    </TabPanel>
-                    <TabPanel header='Talla Pantalon'>
-                        <DefaultData3 toast={toast} name='Talla Pantalon' model='talla-pantalon' nombre='talla_pantalon' data={tallaPantalon} setData={setTallaPantalon} minMax={[1,10]}/>
-                    </TabPanel>
-                    <TabPanel header='Talla Calzado'>
-                        <DefaultData3 toast={toast} name='Talla Calzado' model='talla-calzado' nombre='talla_calzado' data={tallaCalzado} setData={setTallaCalzado} minMax={[1,10]}/>
                     </TabPanel>
                 </TabView>
             </AccordionTab>
