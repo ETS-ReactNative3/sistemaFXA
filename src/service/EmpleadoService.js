@@ -32,6 +32,18 @@ export class EmpleadoService {
         return axios.get(`${API}/default/certificado-lab`)
     }
 
+    getDatosEmpDocs(){
+        return axios.get(`${API}/default/data-emp-docs`)
+    }
+
+    genReporte(data){
+        return axios.post(`${API}/generar-reporte`,data)
+    }
+
+    updateFechaCertificado(id){
+        return axios.put(`${API}/certificado-lab-new-date/${id}`)
+    }
+
     updateEmpleado(id, data){
         return axios.put(`${API}/${id}`, data)
     }

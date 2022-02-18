@@ -1,9 +1,13 @@
 import { Checkbox } from 'primereact/checkbox';
 import { Divider } from 'primereact/divider';
+import { Button } from 'primereact/button';
 import { InputSwitch } from 'primereact/inputswitch';
 import React, { useState } from 'react';
+import { EmpleadoService } from '../../service/EmpleadoService';
 
 const GenerarReporte = () => {
+
+    const serviceEmpleado = new EmpleadoService()
 
     const [datosExcel, setDatosExcel] = useState({})
 
@@ -30,15 +34,62 @@ const GenerarReporte = () => {
     const [checkboxValue, setCheckboxValue] = useState([]);
     const [switchValue, setSwitchValue] = useState(true);
 
+    const consultarDatos = () =>{
+        let campos = []
+        let foraneas = []
+        if(!checkboxValue[0]){
+            console.log("Seleccione Un Valor")
+        }
+        checkboxValue.forEach(el => {
+            let data = el.split("-")
+            switch (data[1]) {
+                case 0:
+                    campos.push(data[0])
+                    break;
+
+                case 1:
+                    foraneas.push(data[0])
+                    break;
+            
+                default:
+                    break;
+            }
+        });
+        serviceEmpleado.genReporte({campos,foraneas}).then(res=>{
+            console.log(res.data)
+        })
+    }
+
+    const [dataCampos, setDataCampos] = useState([])
+    const [dataForaneas, setDataForaneas] = useState([])
 
     const onCheckboxChange = (e) => {
         let selectedValue = [...checkboxValue];
-        if (e.checked)
+        if (e.checked){
             selectedValue.push(e.value);
-        else
+        }else{
             selectedValue.splice(selectedValue.indexOf(e.value), 1);
-        
-        console.log(checkboxValue)
+        }
+        let campos = []
+        let foraneas = []
+        selectedValue.forEach(el => {
+            let data = el.split("-")
+            switch (data[1]) {
+                case 0:
+                    campos.push(data[0])
+                    break;
+
+                case 1:
+                    foraneas.push(data[0])
+                    break;
+            
+                default:
+                    break;
+            }
+        });
+        setDataCampos(campos)
+        setDataForaneas(foraneas)
+        console.log(dataCampos)
         setCheckboxValue(selectedValue);
     };
 
@@ -59,18 +110,18 @@ const GenerarReporte = () => {
     }
 
     const valuesDatosBasicos = [
-        {value:'nombres', label:'Nombres', tipo:'campo'},
-        {value:'apellidos', label:'Apellidos', tipo:'campo'},
-        {value:'tipo_identificacion', label:'Tipo Identificacion', tipo:'foranea'},
-        {value:'numero_identificacion', label:'Numero Identificacion'},
-        {value:'genero', label:'Genero'},
-        {value:'fecha_nacimiento', label:'Fecha Nacimiento'},
-        {value:'lugar_nacimiento', label:'Lugar Nacimiento'},
-        {value:'nacionalidad', label:'Nacionalidad'},
-        {value:'estado_civil', label:'Estado Civil'},
-        {value:'correo_electronico', label:'Correo Electronico'},
-        {value:'celular', label:'Celular'},
-        {value:'telefono_fijo', label:'Telefono Fijo'},
+        {value:'nombres-0', label:'Nombres', tipo:'campo'},
+        {value:'apellidos-0', label:'Apellidos', tipo:'campo'},
+        {value:'tipo_identificacion-1', label:'Tipo Identificacion', tipo:'foranea'},
+        {value:'numero_identificacion-0', label:'Numero Identificacion'},
+        {value:'genero-0', label:'Genero'},
+        {value:'fecha_nacimiento-0', label:'Fecha Nacimiento'},
+        {value:'lugar_nacimiento-0', label:'Lugar Nacimiento'},
+        {value:'nacionalidad-1', label:'Nacionalidad'},
+        {value:'estado_civil-1', label:'Estado Civil'},
+        {value:'correo_electronico-0', label:'Correo Electronico'},
+        {value:'celular-0', label:'Celular'},
+        {value:'telefono_fijo-0', label:'Telefono Fijo'},
     ]
 
     const valuesEmpresa = [
@@ -115,7 +166,7 @@ const GenerarReporte = () => {
 
         
         <h5>Exportar todo</h5>
-        <InputSwitch checked={switchValue} onChange={(e) => setSwitchValue(e.value)} />
+        <InputSwitch checked={switchValue} className="block mb-4" onChange={(e) => setSwitchValue(e.value)} />
         {!switchValue &&
             <>
                 <h5>Seleccione Los campos para exportar</h5>
@@ -123,7 +174,7 @@ const GenerarReporte = () => {
                 <Divider align="left">
                     <div className="inline-flex align-items-center">
                         <b>Datos Basicos</b>
-                        <Checkbox className='mx-3' inputId="DatosBasicosCheck" name="option"  value={"datosBasicosCheck"} checked={checkboxValue.indexOf("datosBasicosCheck") !== -1} onChange={(e) => onCheckboxChangeGrup(e,['datosBasicosCheck','nombres','apellidos','tipo_identificacion','numero_identificacion','genero','fecha_nacimiento','lugar_nacimiento','nacionalidad','estado_civil','correo_electronico','celular','telefono_fijo'])} />
+                        <Checkbox className='mx-3' inputId="DatosBasicosCheck" name="option"  value={"datosBasicosCheck"} checked={checkboxValue.indexOf("datosBasicosCheck") !== -1} onChange={(e) => onCheckboxChangeGrup(e,['datosBasicosCheck','nombres-0','apellidos-0','tipo_identificacion-1','numero_identificacion-0','genero-0','fecha_nacimiento-0','lugar_nacimiento-0','nacionalidad-1','estado_civil-1','correo_electronico-0','celular-0','telefono_fijo-0'])} />
                     </div>
                 </Divider>
                     
@@ -133,7 +184,7 @@ const GenerarReporte = () => {
                                 return(
                                 <div key={id} className="col-12 md:col-4">
                                     <div className="field-checkbox">
-                                        <Checkbox inputId={"checkOption"+id} name="option" value={el.value} checked={checkboxValue.indexOf(el.value) !== -1} onChange={onCheckboxChange} />
+                                        <Checkbox inputId={"checkOption"+id} name="option" value={el.value} checked={checkboxValue.indexOf(el.value) !== -1 } onChange={onCheckboxChange} />
                                         <label htmlFor={"checkOption"+id}>{el.label}</label>
                                     </div>
                                 </div>
@@ -206,6 +257,7 @@ const GenerarReporte = () => {
                     </div>
             </>
             }
+            <Button label="Generar" onClick={consultarDatos} className="p-button-outlined mr-2 mb-2" />
     </div>;
 };
 

@@ -2,12 +2,11 @@ import React from 'react';
 
 export const AppFooter = (props) => {
 
-    const logo1 = require('./assets/images/version_principal_negro.png')
-    const logo2 = require('./assets/images/version_principal_blanco.png')
+    const logo = require('./assets/images/logo-fxa-version-principal.svg')
 
     return (
         <div className="layout-footer">
-            <img src={props.layoutColorMode === 'light' ? logo1 : logo2} alt="Logo" height="20" className="mr-2" />
+            <img src={logo} alt="Logo" height="20" className="mr-2" />
             by
             <span className="font-medium ml-2">Fuxia</span>
         </div>

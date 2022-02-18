@@ -9,8 +9,7 @@ import './DashTopbar.css'
 export const AppTopbar = (props) => {
     const history = new useHistory()
 
-    const logo1 = require('./assets/images/version-principal.png')
-    const logo2 = require('./assets/images/version-principal-sin-contorno.png')
+    const logo = require('./assets/images/logo-fxa-version-principal.svg')
     
     const [infoTopBar, setInfoTopBar] = useState({
         roles:[]
@@ -79,7 +78,7 @@ export const AppTopbar = (props) => {
     return (
         <div className="layout-topbar">
             <Link to="/" className="layout-topbar-logo">
-                <img src={props.layoutColorMode === 'light' ? logo2 : logo1} alt="logo"/>
+                <img src={logo} alt="logo"/>
                 <small className='mx-4'>Recursos Humanos</small>
             </Link>
 

@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { EmpleadoService } from '../../service/EmpleadoService';
 import { TabView, TabPanel } from 'primereact/tabview';
 
-import { Button } from 'primereact/button';/* 
-import { Datos } from './tabMenu/Datos';
-import { Empresa } from './tabMenu/Empresa';
-import { Extras } from './tabMenu/Extras';
-import { Riesgo } from './tabMenu/Riesgo';*/
+import { Button } from 'primereact/button';
 import CredencialService from '../../service/CredencialService';
 import { Datos } from './tabMenuPerfil/Datos';
 import { Empresa } from './tabMenuPerfil/Empresa';
 import { Extras } from './tabMenuPerfil/Extras';
 import { Riesgo } from './tabMenuPerfil/Riesgo';
+import { useHistory } from 'react-router-dom';
 
 export const Perfil = (params) => {
+
+    const history = new useHistory()
 
     const [empleado, setEmpleado] = useState({});
 
@@ -83,7 +82,7 @@ export const Perfil = (params) => {
                 </div>
                <div className="card">
                     <div className="mb-6">
-                        <h5>Documentos:<i className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
+                        <h5>Documentos:<i onClick={()=>history.push("/dash/documentos")} className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
                         <Button label="ejemplo-de-un-pdf.pdf" className="p-button-link text-sm"></Button>
                         <Button label="nomina-de-ejemplo.pdf" className="p-button-link text-sm"></Button>
                         <Button label="hoja-de-vida.pdf" className="p-button-link text-sm"></Button>
