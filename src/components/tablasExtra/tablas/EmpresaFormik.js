@@ -36,11 +36,11 @@ class EmpresaFormik {
             onSubmit: data =>{
                 empresaService.createEmpresa(data).then(res=>{
                     if(res.status===201){
-                        options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
+                        options.setShowToast({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
                         options.reload()
                         options.cloceOverlayNew()
                     }else{
-                        options.setToatsEmpelado({ severity: 'error', summary: 'Error', detail: res.data, life: 3000 })
+                        options.setShowToast({ severity: 'error', summary: 'Error', detail: res.data, life: 3000 })
                     }
                 }) 
             }
