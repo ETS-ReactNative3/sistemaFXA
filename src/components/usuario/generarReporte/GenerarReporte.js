@@ -3,9 +3,11 @@ import { Divider } from 'primereact/divider';
 import { Button } from 'primereact/button';
 import { InputSwitch } from 'primereact/inputswitch';
 import React, { useState } from 'react';
-import { EmpleadoService } from '../../service/EmpleadoService';
+import { EmpleadoService } from '../../../service/EmpleadoService';
+import { Message } from 'primereact/message';
+import FiltrarInformacion from './FiltrarInformacion';
 
-const GenerarReporte = () => {
+const GenerarReporte = (params) => {
 
     const serviceEmpleado = new EmpleadoService()
 
@@ -31,18 +33,31 @@ const GenerarReporte = () => {
     }
 
     const [checkboxValue, setCheckboxValue] = useState([]);
-    const [switchValue, setSwitchValue] = useState(true);
+    const [switchValue, setSwitchValue] = useState(false);
+    const [switchValue2, setSwitchValue2] = useState(false);
+
+    const [ loading, setLoading ] = useState(false)
 
     const consultarDatos = () =>{
-        serviceEmpleado.genReporte({campos:dataCampos,foraneas:dataForaneas,ciudad:dataCiudad, montos:dataMontos}).then(res=>{
-            exportExcel(res.data)
-        })
+        console.log(condiciones)
+        if(!dataCampos[0] && !dataForaneas[0] && !dataCiudad[0] && !dataMontos[0] && !dataJefeZona){
+            params.toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se puede generar un reporte si no se selecciona algun campo', life: 3000 })
+        }else{
+            setLoading(true)
+            serviceEmpleado.genReporte({campos:dataCampos,foraneas:dataForaneas,ciudad:dataCiudad, montos:dataMontos, jefe_zona:dataJefeZona,condiciones:condiciones}).then(res=>{
+                exportExcel(res.data)
+                setLoading(false)
+                params.hideModal()
+                params.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: 'El Reporte se genero con exito', life: 3000 })
+            })
+        }
     }
 
     const [dataCampos, setDataCampos] = useState([])
     const [dataForaneas, setDataForaneas] = useState([])
     const [dataCiudad, setCiudad] = useState([])
     const [dataMontos, setMontos] = useState([])
+    const [dataJefeZona, setDataJefeZona] = useState(false)
 
     const onCheckboxChange = (e) => {
         let selectedValue = [...checkboxValue];
@@ -55,6 +70,7 @@ const GenerarReporte = () => {
         let foraneas = []
         let ciudad = []
         let montos = []
+        let jefe_zona = false
         selectedValue.forEach(el => {
             let data = el.split("-")
             switch (parseInt(data[1])) {
@@ -64,7 +80,7 @@ const GenerarReporte = () => {
 
                 case 1:
                     if(data[2])
-                        foraneas.push([data[0],data[2]])
+                        foraneas.push([data[0],data[2],data[3]])
                     else
                         foraneas.push(data[0])
                     break;
@@ -76,6 +92,10 @@ const GenerarReporte = () => {
                 case 3:
                     montos.push(data[0])
                     break;
+
+                case 4:
+                    jefe_zona = true
+                    break;
             
                 default:
                     break;
@@ -85,6 +105,7 @@ const GenerarReporte = () => {
         setDataForaneas(foraneas)
         setCiudad(ciudad)
         setMontos(montos)
+        setDataJefeZona(jefe_zona)
         setCheckboxValue(selectedValue);
     };
 
@@ -106,6 +127,7 @@ const GenerarReporte = () => {
         let foraneas = []
         let ciudad = []
         let montos = []
+        let jefe_zona = false
         selectedValue.forEach(el => {
             let data = el.split("-")
             switch (parseInt(data[1])) {
@@ -115,7 +137,7 @@ const GenerarReporte = () => {
 
                 case 1:
                     if(data[2])
-                        foraneas.push([data[0],data[2]])
+                        foraneas.push([data[0],data[2],data[3]])
                     else
                         foraneas.push(data[0])
                     break;
@@ -127,6 +149,10 @@ const GenerarReporte = () => {
                 case 3:
                     montos.push(data[0])
                     break;
+                
+                case 4:
+                    jefe_zona = true
+                    break;
             
                 default:
                     break;
@@ -136,6 +162,7 @@ const GenerarReporte = () => {
         setDataForaneas(foraneas)
         setCiudad(ciudad)
         setMontos(montos)
+        setDataJefeZona(jefe_zona)
         setCheckboxValue(selectedValue);
     }
 
@@ -160,10 +187,10 @@ const GenerarReporte = () => {
         {value:'centro_costo-1', label:'Centro Costo'},
         {value:'cargo-1', label:'Cargo'},
         {value:'tipo_contrato-1', label:'Tipo Contrato'},
-        {value:'tiempo-1', label:'Tiempo'},
+        {value:'tiempo-1-tipo_tiempo-tiempo', label:'Tiempo'},
         {value:'fecha_ingreso-0', label:'Fecha Ingreso'},
         {value:'estado_contrato-1', label:'Estado Contrato'},
-        {value:'jefe_zona-1', label:'Jefe Zona'},
+        {value:'jefe_zona-4', label:'Jefe Zona'},
     ]
 
     const valuesComplementarios = [
@@ -173,7 +200,7 @@ const GenerarReporte = () => {
         {value:'tipo_cuenta-1', label:'Tipo_Cuenta'},
         {value:'num_cuenta-0', label:'Num Cuenta'},
         {value:'riesgo-0', label:'Riesgo'},
-        {value:'estudios_realizados-1-estudios', label:'Estudios Realizados'},
+        {value:'estudios_realizados-1-estudios-estudios', label:'Estudios Realizados'},
         {value:'talla_camisa-1', label:'Talla Camisa'},
         {value:'talla_pantalon-1', label:'Talla Pantalon'},
         {value:'talla_calzado-1', label:'Talla Calzado'},
@@ -184,7 +211,7 @@ const GenerarReporte = () => {
         {value:'arl-1', label:'Arl'},
         {value:'pension-1', label:'Pension'},
         {value:'cesantias-1', label:'Cesantias'},
-        {value:'caja_compensacion-1-caja_comp', label:'Caja_compensacion'},
+        {value:'caja_compensacion-1-ccf-caja_comp', label:'Caja_compensacion'},
         {value:'direccion-0', label:'Direccion'},
         {value:'fecha_expedicion_doc-0', label:'Fecha Expedicion Doc'},
         {value:'lugar_exp_doc-2', label:'Lugar Exp Doc'},
@@ -192,11 +219,39 @@ const GenerarReporte = () => {
         {value:'tel_contacto_emergencia-0', label:'Tel Contacto Emergencia'},
     ]
 
-  return <div className='h-30rem'>
+    const switchExportAll = (value) =>{
+        if(value){
+            setDataCampos(['nombres','apellidos','numero_identificacion','genero','fecha_nacimiento','correo_electronico','celular','telefono_fijo','fecha_ingreso','num_cuenta','riesgo','direccion','fecha_expedicion_doc','contacto_emergencia','tel_contacto_emergencia'])
+            setDataForaneas(['tipo_identificacion','nacionalidad','estado_civil','empresa','centro_costo','cargo','tipo_contrato',['tiempo','tipo_tiempo','tiempo'],'estado_contrato','banco','tipo_cuenta',['estudios_realizados','estudios','estudios'],'talla_camisa','talla_pantalon','talla_calzado','eps','arl','pension','cesantias',['caja_compensacion','ccf','caja_comp']])
+            setCiudad(['lugar_nacimiento','lugar_trabajo','lugar_exp_doc'])
+            setMontos(['salario','aux_movilidad'])
+            setDataJefeZona(true) 
+        }else{
+            setDataCampos([])
+            setDataForaneas([])
+            setCiudad([])
+            setMontos([])
+            setMontos([])
+            setDataJefeZona(false)
+        }
+        setSwitchValue(value)
+    }
 
+    const [ condiciones, setCondiciones] = useState([])
+
+  return <div className='h-30rem'>
+        {loading&&<div className='fixed top-0 right-0 w-screen h-screen z-5 flex justify-content-center align-items-center' style={{background:'rgba(1,1,1,0.1)'}}>
+            <div className="card">
+                Cargando 
+                <i className='pi pi-spin pi-spinner text-xl ml-3'/>
+            </div>
+        </div>}
+        <div className="card w-10 mx-6">
+            <p className='text-700 font-xl'>En el siguiente espacio podra generar una descarga de toda la información de los empleados que estan registrados en el sistema.</p>
+        </div>
         
         <h5>Exportar todo</h5>
-        <InputSwitch checked={switchValue} className="block mb-4" onChange={(e) => setSwitchValue(e.value)} />
+        <InputSwitch checked={switchValue} className="block mb-4" onChange={(e) => switchExportAll(e.value)} />
         {!switchValue &&
             <>
                 <h5>Seleccione Los campos para exportar</h5>
@@ -225,7 +280,7 @@ const GenerarReporte = () => {
                 <Divider align="left">
                     <div className="inline-flex align-items-center">
                         <b>Empresa</b>
-                        <Checkbox className='mx-3' inputId="EmpresaCheck" name="option"  value={"EmpresaCheck"} checked={checkboxValue.indexOf("empresaCheck") !== -1} onChange={(e)=>onCheckboxChangeGrup(e,['empresaCheck','empresa-1','lugar_trabajo-2','centro_costo-1','cargo-1','tipo_contrato-1','tiempo-1','fecha_ingreso-0','estado_contrato-1','jefe_zona-1'])} />
+                        <Checkbox className='mx-3' inputId="EmpresaCheck" name="option"  value={"EmpresaCheck"} checked={checkboxValue.indexOf("empresaCheck") !== -1} onChange={(e)=>onCheckboxChangeGrup(e,['empresaCheck','empresa-1','lugar_trabajo-2','centro_costo-1','cargo-1','tipo_contrato-1','tiempo-1-tipo_tiempo-tiempo','fecha_ingreso-0','estado_contrato-1','jefe_zona-4'])} />
                     </div>
                 </Divider>
                     
@@ -246,7 +301,7 @@ const GenerarReporte = () => {
                 <Divider align="left">
                     <div className="inline-flex align-items-center">
                         <b>Complementarios</b>
-                        <Checkbox className='mx-3' inputId="ComplementariosCheck" name="option"  value={"ComplementariosCheck"} checked={checkboxValue.indexOf("complementariosCheck") !== -1} onChange={(e)=>onCheckboxChangeGrup(e,['complementariosCheck','salario-3','aux_movilidad-3','banco-1','tipo_cuenta-1','num_cuenta-0','riesgo-0','estudios_realizados-1-estudios','talla_camisa-1','talla_pantalon-1','talla_calzado-1'])} />
+                        <Checkbox className='mx-3' inputId="ComplementariosCheck" name="option"  value={"ComplementariosCheck"} checked={checkboxValue.indexOf("complementariosCheck") !== -1} onChange={(e)=>onCheckboxChangeGrup(e,['complementariosCheck','salario-3','aux_movilidad-3','banco-1','tipo_cuenta-1','num_cuenta-0','riesgo-0','estudios_realizados-1-estudios-estudios','talla_camisa-1','talla_pantalon-1','talla_calzado-1'])} />
                     </div>
                 </Divider>
                     
@@ -267,7 +322,7 @@ const GenerarReporte = () => {
                 <Divider align="left">
                     <div className="inline-flex align-items-center">
                         <b>Afiliaciones</b>
-                        <Checkbox className='mx-3' inputId="AfiliacionesCheck" name="option"  value={"AfiliacionesCheck"} checked={checkboxValue.indexOf("afiliacionesCheck") !== -1} onChange={(e)=>onCheckboxChangeGrup(e,['afiliacionesCheck','eps-1','arl-1','pension-1','cesantias-1','caja_compensacion-1-caja_comp','direccion-0','fecha_expedicion_doc-0','lugar_exp_doc-2','contacto_emergencia-0','tel_contacto_emergencia-0'])} />
+                        <Checkbox className='mx-3' inputId="AfiliacionesCheck" name="option"  value={"AfiliacionesCheck"} checked={checkboxValue.indexOf("afiliacionesCheck") !== -1} onChange={(e)=>onCheckboxChangeGrup(e,['afiliacionesCheck','eps-1','arl-1','pension-1','cesantias-1','caja_compensacion-1-ccf-caja_comp','direccion-0','fecha_expedicion_doc-0','lugar_exp_doc-2','contacto_emergencia-0','tel_contacto_emergencia-0'])} />
                     </div>
                 </Divider>
                     
@@ -287,7 +342,15 @@ const GenerarReporte = () => {
                     </div>
             </>
             }
-            <Button label="Generar" onClick={consultarDatos} className="p-button-outlined mr-2 mb-2" />
+            <h5>Filtrar Información</h5>
+            <InputSwitch checked={switchValue2} className="block mb-4" onChange={(e) => setSwitchValue2(e.value)} />
+            {switchValue2&&<>
+                <FiltrarInformacion condiciones={condiciones} setCondiciones={setCondiciones}/>
+            </>}
+
+            {(switchValue&&!switchValue2)&&<Message severity="info" className='w-full mb-4' text="Es recomendable filtrar la información, por tiempos de respuesta del servidor" />}
+
+            <Button label="Generar" loading={loading} onClick={consultarDatos} className="p-button-outlined mr-2 mb-2 block" />
     </div>;
 };
 

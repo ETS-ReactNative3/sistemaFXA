@@ -12,7 +12,7 @@ import './DataTableDemo.css';
 import { Usuario } from './Usuario';
 import FormikEmp from './formikUsuario';
 import NewUsuario from './NewUsuario';
-import GenerarReporte from './GenerarReporte';
+import GenerarReporte from './generarReporte/GenerarReporte';
 
 export const Usuarios = () => {
     const [empleados, setEmpleados] = useState(null);
@@ -311,8 +311,8 @@ export const Usuarios = () => {
                 <Dialog header='Nuevo Empleado' footer={footerNewEmpleado} draggable={false} position='center' blockScroll={true} visible={newUsuDialog} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
                     <NewUsuario formik={empleadoFormik} />
                 </Dialog>
-                <Dialog header='Generar Reporte' /* footer={footerNewEmpleado} */ draggable={false} position='center' blockScroll={true} visible={dialogExport} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
-                    <GenerarReporte/>
+                <Dialog header='Generar Reporte' draggable={false} position='center' blockScroll={true} visible={dialogExport} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
+                    <GenerarReporte toast={toast} hideModal={hideModal}/>
                 </Dialog>
                 <Dialog header='Cambiar Estado Del Empleado' closable={false} footer={footerChangeStateEmpleado} draggable={false} position='center' blockScroll={true} visible={modalChangeState} style={{ width: '35vw' }} breakpoints={{'1150px': '45vw', '960px': '65vw', '640px': '100vw'}} onHide={hideModal}>
                     <div className="flex align-items-center justify-content-center" style={{color:'var(--yellow-700)' }}>

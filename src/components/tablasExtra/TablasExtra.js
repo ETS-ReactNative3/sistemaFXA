@@ -34,6 +34,7 @@ const TablasExtra = () => {
     const [tallaCalzado, setTallaCalzado] = useState({})
     const [salario, setSalario] = useState({})
     const [auxMovilidad, setAuxMovilidad] = useState({})
+    const [tipoDocumento, setTipoDocumento] = useState({})
 
     const toast = useRef(null);
 
@@ -126,6 +127,9 @@ const TablasExtra = () => {
                         <DefaultData toast={toast} name='Caja Compensación' model='caja-compensacion' nombre='caja_comp' data={cajaCompensacion} setData={setCajaCompensacion} minMax={[3,25]}/>
                     </TabPanel>
                 </TabView> 
+            </AccordionTab>
+            <AccordionTab header="Tipos Documento">
+                <DefaultData toast={toast} name='Tipos Documento' model='tipo-documento' nombre='tipo_documento' data={tipoDocumento} setData={setTipoDocumento} minMax={[3,25]}/>
             </AccordionTab>
         </Accordion>
     </div>
