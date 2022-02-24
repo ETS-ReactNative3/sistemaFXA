@@ -32,8 +32,8 @@ export class EmpleadoService {
         return axios.get(`${API}/default/certificado-lab`)
     }
 
-    getDatosEmpDocs(){
-        return axios.get(`${API}/default/data-emp-docs`)
+    getDatosEmpDocs(id){
+        return axios.get(`${API}/default/data-emp-docs/${id}`)
     }
 
     genReporte(data){

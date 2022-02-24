@@ -180,14 +180,14 @@ const DefaultData = (props) => {
             <div className='w-full text-center'>
                 <h5>Nuevo Registro</h5>
             </div>
-                <div className="col-12 mt-5">
-                    <span className="p-float-label">
-                        <InputText name={`nombre`} type="text"  className={classNames({ 'p-invalid': isFormFieldValid(`nombre`) })+' w-full'}  value={formik.values.nombre} onChange={formik.handleChange}></InputText> 
-                        <label>Nombre {props.name}:</label>
-                    </span>
-                    <div>{getFormErrorMessage(`nombre`)}</div>
-                </div>
-                <Button type='button' onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
+            <div className="col-12 mt-5">
+                <span className="p-float-label">
+                    <InputText name={`nombre`} type="text"  className={classNames({ 'p-invalid': isFormFieldValid(`nombre`) })+' w-full'}  value={formik.values.nombre} onChange={formik.handleChange}></InputText> 
+                    <label>Nombre {props.name}:</label>
+                </span>
+                <div>{getFormErrorMessage(`nombre`)}</div>
+            </div>
+            <Button type='button' onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </div>;
 };

@@ -15,9 +15,9 @@ const GenerarReporte = (params) => {
     const exportExcel = (datosExcel) => {
         import('xlsx').then(xlsx => {
             const worksheet = xlsx.utils.json_to_sheet(datosExcel);
-            const workbook = { Sheets: { 'DataFXA': worksheet }, SheetNames: ['DataFXA'] };
+            const workbook = { Sheets: { 'DatosFXA': worksheet }, SheetNames: ['DatosFXA'] };
             const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-            saveAsExcelFile(excelBuffer, 'ReporteFXA');
+            saveAsExcelFile(excelBuffer, 'ReporteEmpleadosFXA');
         });
     }
 
@@ -28,7 +28,7 @@ const GenerarReporte = (params) => {
             const data = new Blob([buffer], {
                 type: EXCEL_TYPE
             });
-            FileSaver.saveAs(data, fileName + '_' + new Date().getTime() + EXCEL_EXTENSION);
+            FileSaver.saveAs(data, fileName + '_' + new Date().getDate() + '-' + (new Date().getMonth()+1) + '-' + new Date().getFullYear() + EXCEL_EXTENSION);
         });
     }
 
@@ -39,9 +39,10 @@ const GenerarReporte = (params) => {
     const [ loading, setLoading ] = useState(false)
 
     const consultarDatos = () =>{
-        console.log(condiciones)
         if(!dataCampos[0] && !dataForaneas[0] && !dataCiudad[0] && !dataMontos[0] && !dataJefeZona){
             params.toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se puede generar un reporte si no se selecciona algun campo', life: 3000 })
+        }else if(switchValue2 && !condiciones[0]){
+            params.toast.current.show({ severity: 'error', summary: 'Error', detail: 'No ha seleccionado parametros para filtrar', life: 3000 })
         }else{
             setLoading(true)
             serviceEmpleado.genReporte({campos:dataCampos,foraneas:dataForaneas,ciudad:dataCiudad, montos:dataMontos, jefe_zona:dataJefeZona,condiciones:condiciones}).then(res=>{
@@ -345,12 +346,12 @@ const GenerarReporte = (params) => {
             <h5>Filtrar Información</h5>
             <InputSwitch checked={switchValue2} className="block mb-4" onChange={(e) => setSwitchValue2(e.value)} />
             {switchValue2&&<>
-                <FiltrarInformacion condiciones={condiciones} setCondiciones={setCondiciones}/>
+                <FiltrarInformacion condiciones={condiciones} setCondiciones={setCondiciones} toast={params.toast}/>
             </>}
 
             {(switchValue&&!switchValue2)&&<Message severity="info" className='w-full mb-4' text="Es recomendable filtrar la información, por tiempos de respuesta del servidor" />}
 
-            <Button label="Generar" loading={loading} onClick={consultarDatos} className="p-button-outlined mr-2 mb-2 block" />
+            <Button label="Generar" loading={loading} onClick={consultarDatos} className="p-button-outlined mr-2 mb-4 block" />
     </div>;
 };
 

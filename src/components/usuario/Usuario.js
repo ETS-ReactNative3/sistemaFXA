@@ -93,7 +93,7 @@ export const Usuario = (params) => {
                 </div>
                 <div className="card">
                     <div className="mb-6">
-                        <h5>Documentos:<i className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
+                        <h5>Documentos:<i onClick={()=>params.changeModal(0)}className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
                         <Button label="ejemplo-de-un-pdf.pdf" className="p-button-link text-sm"></Button>
                         <Button label="nomina-de-ejemplo.pdf" className="p-button-link text-sm"></Button>
                         <Button label="hoja-de-vida.pdf" className="p-button-link text-sm"></Button>

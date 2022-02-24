@@ -51,6 +51,7 @@ import { Perfil } from './components/perfil/Perfil';
 import GenerarCertificado from './components/GenerarCertificado/GenerarCertificado';
 import TablasExtra from './components/tablasExtra/TablasExtra';
 import { DocumentosEmp } from './components/documentosEmp/DocumentosEpm';
+import HomePage from './components/homePage/HomePage';
 
 const App = () => {
 
@@ -201,6 +202,10 @@ const App = () => {
             <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
             <Switch>
+                <Route exact path='/'>
+                    <HomePage/>
+                </Route>
+                
                 <Route path='/dash'>
                     <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode}
                         mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { EmpleadoService } from '../../service/EmpleadoService';
 
-import { Button } from 'primereact/button';
 import CredencialService from '../../service/CredencialService';
 import { useHistory } from 'react-router-dom';
 
@@ -20,7 +19,7 @@ export const DocumentosEmp = (params) => {
         const empleadoService = new EmpleadoService()
 
         credencialService.getDatatopbar().then(res=>{
-            empleadoService.getDatosEmpDocs().then(resp=>{
+            empleadoService.getDatosEmpDocs(res.data.id).then(resp=>{
                 setDataEmpleado(resp.data)
                 setLoading(false)
             })

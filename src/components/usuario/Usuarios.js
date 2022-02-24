@@ -13,6 +13,7 @@ import { Usuario } from './Usuario';
 import FormikEmp from './formikUsuario';
 import NewUsuario from './NewUsuario';
 import GenerarReporte from './generarReporte/GenerarReporte';
+import { Documentos } from './Documentos';
 
 export const Usuarios = () => {
     const [empleados, setEmpleados] = useState(null);
@@ -167,6 +168,7 @@ export const Usuarios = () => {
     }
 
     const [modalUsuario, setModalUsuario] = useState(false);
+    const [modalDocumentosUsuario, setModalDocumentosUsuario] = useState(false);
     const [idUsuario, setIdUsuario] = useState(null)
 
     const showModal = (id) =>{
@@ -206,6 +208,7 @@ export const Usuarios = () => {
         setNewUsuDialog(false)
         setModalChangeState(false)
         setDialogExport(false)
+        setModalDocumentosUsuario(false)
     }
 
     const header1 = renderHeader1();
@@ -274,6 +277,16 @@ export const Usuarios = () => {
         </>
     }
 
+    const changeModal = (mode) =>{
+        if(mode===0){
+            setModalUsuario(false)
+            setModalDocumentosUsuario(true)
+        }else if(mode===1){
+            setModalUsuario(true)
+            setModalDocumentosUsuario(false)
+        }
+    }
+
     return (
         <div className="datatable-filter-demo">
             <Toast ref={toast} position="bottom-right"/>
@@ -305,8 +318,11 @@ export const Usuarios = () => {
                         <Column header="Opciones" style={{ minWidth: '8rem' }} body={accionesBody}/>
                     </DataTable>
                 }
-                <Dialog header={dialogHeader} closable={false} draggable={false} position='center' blockScroll={true} visible={modalUsuario} style={{ width: '55vw' }} breakpoints={{'1150px': '75vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
-                    <Usuario idUsuario={idUsuario} formik={empleadoFormik} empleadoDialog={empleadoDialog} setEmpleadoDialog={setEmpleadoDialog}/>
+                <Dialog header={dialogHeader} closable={false} draggable={false} position='center' blockScroll={true} visible={modalDocumentosUsuario} style={{ width: '55vw' }} breakpoints={{'1150px': '75vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
+                    <Documentos idUsuario={idUsuario} changeModal={changeModal}/>
+                </Dialog>
+                <Dialog draggable={false} position='center' blockScroll={true} visible={modalUsuario} style={{ width: '55vw' }} breakpoints={{'1150px': '75vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
+                    <Usuario changeModal={changeModal} idUsuario={idUsuario} formik={empleadoFormik} empleadoDialog={empleadoDialog} setEmpleadoDialog={setEmpleadoDialog}/>
                 </Dialog>
                 <Dialog header='Nuevo Empleado' footer={footerNewEmpleado} draggable={false} position='center' blockScroll={true} visible={newUsuDialog} style={{ width: '40vw' }} breakpoints={{'1150px': '55vw', '960px': '75vw', '640px': '100vw'}} onHide={hideModal}>
                     <NewUsuario formik={empleadoFormik} />

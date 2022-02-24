@@ -82,7 +82,7 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
   return <div className='card'  >
         <h4 className='mb-5'>Generar Certificado Laboral</h4>
         <div className="grid">
-          <div className='col-7 card'>
+          <div className='col-12 md:col-7 card'>
             <p className='text-800 font-nomral'>En el siguiente espacio podra descargar su certificado laboral.</p>
             <p className='text-700 font-nomral'>Este certificado solo puede ser descargado 1 vez al mes. si requiere de dicho certificado más de una vez solicitelo al area de talento humano.</p>
             <p className='text-600 font-medium'>Ultimo certificado generado el día: <span className='text-800 font-medium'>{infoEmp.fecha_gen_certificado?infoEmp.fecha_gen_certificado:'No se ha generado ningun certificado hasta la fecha'}</span></p>
