@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { EmpleadoService } from '../../service/EmpleadoService';
 
-import { useHistory } from 'react-router-dom';
 import { Divider } from 'primereact/divider';
 import { Button } from 'primereact/button';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { Dropdown } from 'primereact/dropdown';
+import { confirmPopup } from 'primereact/confirmpopup';
+import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
 
 export const Documentos = (params) => {
 
@@ -37,6 +38,15 @@ export const Documentos = (params) => {
             setDataOption(res.data)
         })
     },[])// eslint-disable-line 
+    
+    const [documentosFaltantesData, setDocumentosFaltantesData] = useState([])
+    const [reloadData, setReloadData] = useState(0)
+
+    useEffect(()=>{
+        documentosFaltantesService.getByIdEmp(params.idUsuario).then(res=>{
+            setDocumentosFaltantesData(res.data)
+        })
+    },[reloadData])// eslint-disable-line 
 
     const [itemSeleccionado, setItemSeleccionado] = useState(null);
     const [dataOption, setDataOption] = useState([])
@@ -45,6 +55,42 @@ export const Documentos = (params) => {
         let value = e.value
         setItemSeleccionado(value);
     }
+ 
+    const documentosFaltantesService = new DocumentosFaltantesService()
+
+    const handleSubmitDoc = () =>{
+        if(!itemSeleccionado){
+            params.toast.current.show({ severity: 'warn', summary: 'Ciudado!', detail: 'No ha seleccionado ningun valor', life: 3000 });            
+        }else{
+            documentosFaltantesService.create({id_empleado_fk:params.idUsuario,id_tipo_documento_fk:itemSeleccionado.id_tipo_documento}).then(res=>{
+                if(res.status===201){
+                    params.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 });
+                    op.current.hide()
+                    setReloadData(reloadData+1)
+                }else{
+                    params.toast.current.show({ severity: 'error', summary: 'Error', detail: res.data, life: 3000 });
+                }
+            })
+        }
+    }
+
+    const DeleteDocumentoFaltante = (idDoc) =>{
+        documentosFaltantesService.deleteDoc({id_empleado_fk:params.idUsuario,id_tipo_documento_fk:idDoc}).then(res=>{
+            params.toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 });
+            setReloadData(reloadData+1)
+        })
+    }
+
+    const confirmDeleteDocumento = (event,idDoc) => {
+        confirmPopup({
+            target: event.currentTarget,
+            message: '¿Quitar documento faltante?',
+            acceptLabel: 'Seguro!',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => DeleteDocumentoFaltante(idDoc),
+        });
+    }
+    
 
   return (
     <>
@@ -68,9 +114,21 @@ export const Documentos = (params) => {
                     <Divider align="left">
                         <div className="inline-flex align-items-center">
                             <b>Faltantes</b>
-                            <Button icon="pi pi-plus" onClick={(e) => op.current.toggle(e)} className="p-button-text p-button-rounded mr-2 mb-2"></Button>
+                            <Button icon="pi pi-plus" onClick={(e) => op.current.toggle(e)} className="p-button-text p-button-rounded mb-2"></Button>
                         </div>
                     </Divider>
+                    {!documentosFaltantesData[0] && <div className='text-600 font-medium mb-2'>El empelado no cuenta con documentos faltantes</div>}
+                    {
+                        documentosFaltantesData.map((el,id)=>{
+                            return <div key={id}>
+                                <div className='text-600 font-medium mb-1'>
+                                    <i className='pi pi-exclamation-circle mr-2 text-yellow-600'/>
+                                    <span>{el.tipo_documento.nombre_tipo_documento}</span>
+                                    <Button icon="pi pi-check-circle" onClick={(e)=>confirmDeleteDocumento(e,el.id_tipo_documento_fk)} className="p-button-text p-button-rounded"></Button>
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
             </div>
             <div className="col-12 lg:col-4 md:col-4">
@@ -102,7 +160,7 @@ export const Documentos = (params) => {
                     <label>Tipo Documento Faltante:</label>
                 </span>
             </div>
-            <Button type='button' /* onClick={formik.handleSubmit} */ label='Guardar' className='mt-2 w-full'/>
+            <Button type='button' onClick={handleSubmitDoc} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </>
   )

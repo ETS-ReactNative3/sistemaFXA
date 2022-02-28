@@ -3,6 +3,8 @@ import { EmpleadoService } from '../../service/EmpleadoService';
 
 import CredencialService from '../../service/CredencialService';
 import { useHistory } from 'react-router-dom';
+import { Divider } from 'primereact/divider';
+import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
 
 export const DocumentosEmp = (params) => {
 
@@ -11,8 +13,10 @@ export const DocumentosEmp = (params) => {
     const [dataEmpleado, setDataEmpleado] = useState({});
 
     const [loading, setLoading] = useState(true);
-    
 
+    const documentosFaltantesService = new DocumentosFaltantesService()
+
+    const [documentosFaltantesData, setDocumentosFaltantesData] = useState([])
 
     useEffect(() => {
         const credencialService = new CredencialService()
@@ -22,6 +26,9 @@ export const DocumentosEmp = (params) => {
             empleadoService.getDatosEmpDocs(res.data.id).then(resp=>{
                 setDataEmpleado(resp.data)
                 setLoading(false)
+            })
+            documentosFaltantesService.getByIdEmp(res.data.id).then(res=>{
+            setDocumentosFaltantesData(res.data)
             })
         })
         
@@ -34,13 +41,33 @@ export const DocumentosEmp = (params) => {
         }
         {!loading &&
         <div className='grid card'>
-            <div className="col-12 xl:col-9 lg:col-8 md:col-8 text-center">
-                <h5>{dataEmpleado.nombres} {dataEmpleado.apellidos}</h5>
+            <div className="col-12 xl:col-9 lg:col-8 md:col-8">
+                <h5 className='text-center'>{dataEmpleado.nombres} {dataEmpleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
                     <img className='w-5' style={{maxWidth:'150px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
                 </div>
                 <div className="card">
-                        
+                    <Divider align="left">
+                        <div className="inline-flex align-items-center">
+                            <b>Subidos</b>
+                        </div>
+                    </Divider>
+                    <Divider align="left">
+                        <div className="inline-flex align-items-center">
+                            <b>Faltantes</b>
+                        </div>
+                    </Divider>
+                    {!documentosFaltantesData[0] && <div className='text-600 font-medium mb-2'>No cuenta con documentos faltantes</div>}
+                    {
+                        documentosFaltantesData.map((el,id)=>{
+                            return <div key={id}>
+                                <div className='text-600 font-medium mb-2'>
+                                    <i className='pi pi-exclamation-circle mr-2 text-yellow-600'/>
+                                    <span>{el.tipo_documento.nombre_tipo_documento}</span>
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
             </div>
             <div className="col-12 xl:col-3 lg:col-4 md:col-4">

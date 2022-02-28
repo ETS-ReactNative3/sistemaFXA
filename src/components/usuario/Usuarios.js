@@ -319,7 +319,7 @@ export const Usuarios = () => {
                     </DataTable>
                 }
                 <Dialog header={dialogHeader} closable={false} draggable={false} position='center' blockScroll={true} visible={modalDocumentosUsuario} style={{ width: '55vw' }} breakpoints={{'1150px': '75vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
-                    <Documentos idUsuario={idUsuario} changeModal={changeModal}/>
+                    <Documentos idUsuario={idUsuario} changeModal={changeModal} toast={toast}/>
                 </Dialog>
                 <Dialog draggable={false} position='center' blockScroll={true} visible={modalUsuario} style={{ width: '55vw' }} breakpoints={{'1150px': '75vw', '960px': '80vw', '850px': '90vw', '760px':'97vw','700px': '100vw'}} onHide={hideModal}>
                     <Usuario changeModal={changeModal} idUsuario={idUsuario} formik={empleadoFormik} empleadoDialog={empleadoDialog} setEmpleadoDialog={setEmpleadoDialog}/>
