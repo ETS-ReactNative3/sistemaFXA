@@ -76,7 +76,7 @@ export const AppTopbar = (props) => {
 
 
     return (
-        <div className="layout-topbar">
+        <div className="layout-topbar"/*  style={{background:}} */>
             <Link to="/" className="layout-topbar-logo">
                 <img src={logo} alt="logo"/>
                 <small className='mx-4'>Recursos Humanos</small>

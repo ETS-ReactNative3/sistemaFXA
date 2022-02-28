@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import ChangeFotografia from './ChangeFotografia';
+import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
 
 export const Perfil = (params) => {
 
@@ -48,6 +49,14 @@ export const Perfil = (params) => {
         setChangeFotoModal(false)
     }
 
+    const documentosFaltantesService = new DocumentosFaltantesService()
+    const [documentosFaltantesData, setDocumentosFaltantesData] = useState([])
+
+    useEffect(()=>{
+        documentosFaltantesService.getByIdEmp(params.idUsuario).then(res=>{
+            setDocumentosFaltantesData(res.data)
+        })
+    },[])// eslint-disable-line 
 
   return (
     <>
@@ -107,8 +116,17 @@ export const Perfil = (params) => {
                         <Button label="hoja-de-vida.pdf" className="p-button-link text-sm"></Button>
                     </div>
                     <h6>Documentos Faltantes:</h6>
-                    <div className='text-yellow-500'><i className="pi pi-times-circle mx-1" />Contrato</div>
-                    <div className='text-yellow-500'><i className="pi pi-times-circle mx-1" />Cuenta</div>
+                    {!documentosFaltantesData[0] && <div className='text-600 font-medium text-sm mb-2'>No cuenta con documentos faltantes</div>}
+                    {
+                        documentosFaltantesData.map((el,id)=>{
+                            return <div key={id}>
+                                <div className='text-600 font-medium text-sm mb-1 text-yellow-600'>
+                                    <i className='pi pi-exclamation-circle mr-2'/>
+                                    <span>{el.tipo_documento.nombre_tipo_documento}</span>
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
             </div>
         </div>
