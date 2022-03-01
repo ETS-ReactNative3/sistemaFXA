@@ -1,3 +1,7 @@
+.layout-topbar{
+    opacity: .95;
+}
+
 .layout-topbar .p-button {
     margin-right: 0.5rem;
 }

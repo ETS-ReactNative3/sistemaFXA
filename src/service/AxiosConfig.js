@@ -13,7 +13,8 @@ axios.interceptors.response.use(config=>{
     if ((err.response.status === 401 || err.response.status === 408) && prueba===0) {
         localStorage.removeItem('token')
         alert(err.response.data.error)
-        window.location.href = '/';
+        window.location.href = '/#/log';
+        window.location.reload()
         prueba = 1
     }if (err.response.status === 403  && prueba===0) {
         alert(err.response.data.error)

@@ -215,6 +215,7 @@ const App = () => {
                     </div>
 
                     <div className="layout-main-container">
+                        
                         <div className="layout-main">
                             <Route path="/dash/" exact render={() => <Dashboard colorMode={layoutColorMode} />} />
                             <Route path="/dash/usuarios" render={()=> <Usuarios/>} />

@@ -118,6 +118,7 @@ export const AppMenu = (props) => {
     
     const menuApp = new MenuApp()
     let menu = menuApp.optionsMenu(userLog.Rol)
+
     
 
     return (

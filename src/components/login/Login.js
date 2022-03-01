@@ -14,6 +14,7 @@ const Login = () => {
     const toast = useRef(null);
 
     useEffect(()=>{
+        localStorage.removeItem('token')
         if(toastLog.severity){
             toast.current.show(toastLog);
         }

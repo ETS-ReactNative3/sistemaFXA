@@ -88,9 +88,9 @@ export const Empresa = (props = {empleado:{}}) => {
             <div>{getFormErrorMessage('estado_contrato_fk')}</div>
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Jefe De Zona:</span> 
-            <InputText name='jefe_zona_fk' type="text" className='inputForm' value={props.empleado.values.jefe_zona_fk}></InputText> 
-            <div>{getFormErrorMessage('jefe_zona_fk')}</div>
+            <span className='text-800 font-medium'>Jefe Directo:</span> 
+            <InputText name='jefe_directo_fk' type="text" className='inputForm' value={props.empleado.values.jefe_directo_fk}></InputText> 
+            <div>{getFormErrorMessage('jefe_directo_fk')}</div>
         </div> 
     </div>
   )

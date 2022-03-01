@@ -83,10 +83,10 @@ const Empresa = (props) => {
         </div>
         <div className="col-12 md:col-6 mt-4">
             <span className="p-float-label">
-                <InputText name='jefe_zona_fk' type="text" className={classNames({ 'p-invalid': isFormFieldValid('jefe_zona_fk') })+' w-full'} value={props.formik.values.jefe_zona_fk} onChange={props.formik.handleChange}></InputText> 
+                <InputText name='jefe_directo_fk' type="text" className={classNames({ 'p-invalid': isFormFieldValid('jefe_directo_fk') })+' w-full'} value={props.formik.values.jefe_directo_fk} onChange={props.formik.handleChange}></InputText> 
                 <label>Jefe De Zona:</label>
             </span>
-            <div>{getFormErrorMessage('jefe_zona_fk')}</div>
+            <div>{getFormErrorMessage('jefe_directo_fk')}</div>
         </div>
     </div>
   )
