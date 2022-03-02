@@ -48,8 +48,8 @@ export const Empresa = (props = {empleado:{}}) => {
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Jefe De Zona:</span> 
-            {props.empleado.jefe_zona.nombres} 
-            {props.empleado.jefe_zona.apellidos}
+            {props.empleado.jefe_directo.nombres} 
+            {props.empleado.jefe_directo.apellidos}
         </div> 
     </div>
   )

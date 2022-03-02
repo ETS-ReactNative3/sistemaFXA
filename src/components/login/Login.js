@@ -32,6 +32,9 @@ const Login = () => {
   return (
         <div className="flex align-items-center justify-content-center" style={{width: "100%", height: "100%", position: 'fixed'}}>
         <Toast ref={toast} position="bottom-right"/>
+
+        <i onClick={()=>history.push('/')} className='pi pi-home text-3xl absolute top-0 left-0 mt-4 ml-4 cursor-pointer'/>
+
         <div className="card p-4">
             <div className="flex align-items-center justify-content-center">
                     <form onSubmit={formik.handleSubmit} className="p-fluid relative">

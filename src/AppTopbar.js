@@ -44,15 +44,15 @@ export const AppTopbar = (props) => {
             label: infoTopBar.nombre,
 
             items:[
-
+                
             {
-                label:infoTopBar.Rol,
-                icon: 'pi pi-refresh'
+                label:'Inicio',
+                icon: 'pi pi-home',
+                command:()=>redireccionar('/')
             },
             {
                 label:"Cuenta",
                 icon: 'pi pi-tag',
-                command:()=>redireccionar('/')
             },
             {
                 label:"Perfil",
@@ -66,7 +66,7 @@ export const AppTopbar = (props) => {
             separator: true
         },
         {
-            label: 'Salir',
+            label: 'Cerrar Sesion',
             icon: 'pi pi-sign-out',
             command: cerrarSesion
         }

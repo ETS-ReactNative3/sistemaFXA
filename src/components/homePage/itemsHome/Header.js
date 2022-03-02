@@ -4,6 +4,7 @@ import { Button } from 'primereact/button'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import CredencialService from '../../../service/CredencialService'
+import { BreadCrumb } from 'primereact/breadcrumb'
 
 const Header = () => {
     
@@ -23,9 +24,38 @@ const Header = () => {
 
       credencialService.getDatatopbar().then(res=>{
           setInfoTopBar(res.data)
+          setOverlayMenuItems([
+              {
+
+                label: res.data.nombre,
+        
+                items:[
+                {
+                    label:"Cuenta",
+                    icon: 'pi pi-tag',
+                    command:()=>redireccionar('/')
+                },
+                {
+                    label:(res.data.Rol==='Soporte' || res.data.Rol==='Admin')?"Dashboard":"Perfil",
+                    icon: (res.data.Rol==='Soporte' || res.data.Rol==='Admin')?'pi pi-briefcase':'pi pi-cog',
+                    command:()=>redireccionar((res.data.Rol==='Soporte' || res.data.Rol==='Admin')?'/dash':'/dash/perfil')
+                }
+            ]
+            },
+        
+            {
+                separator: true
+            },
+            {
+                label: 'Salir',
+                icon: 'pi pi-sign-out',
+                command: cerrarSesion
+            }
+          ])
+
       }) 
     }
-}, [])
+}, []) //eslint-disable-line
 
   const [infoTopBar, setInfoTopBar] = useState({})
 
@@ -39,40 +69,9 @@ const Header = () => {
     history.push("/log")
   }
 
-  const overlayMenuItems = [
+  const [overlayMenuItems, setOverlayMenuItems] = useState([])
 
-    {
-
-        label: infoTopBar.nombre,
-
-        items:[
-
-        {
-            label:infoTopBar.Rol,
-            icon: 'pi pi-refresh'
-        },
-        {
-            label:"Cuenta",
-            icon: 'pi pi-tag',
-            command:()=>redireccionar('/')
-        },
-        {
-            label:"Perfil",
-            icon: 'pi pi-cog',
-            command:()=>redireccionar('/dash/perfil')
-        }
-    ]
-    },
-
-    {
-        separator: true
-    },
-    {
-        label: 'Salir',
-        icon: 'pi pi-sign-out',
-        command: cerrarSesion
-    }
-];
+  const homeBreadMenu = { icon: 'pi pi-home', url: '/#/' }
 
   return (<div className='block h-6rem'>
     <div className="layout-topbar">
@@ -87,6 +86,8 @@ const Header = () => {
               <button type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={toggleMenu}>
                   <i className="pi pi-user" />
               </button>
+
+              <BreadCrumb home={homeBreadMenu} style={{background:'transparent', border:'none'}}/>
 
               <div className={classNames("layout-topbar-menu lg:flex origin-top")}>
 

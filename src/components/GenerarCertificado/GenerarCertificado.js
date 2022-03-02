@@ -23,7 +23,6 @@ useEffect(() => {
       res.data.fecha_ingreso = res.data.fecha_ingreso.split('-')
       res.data.salarioLetras = NumerosALetras(res.data.salario.monto_salario).slice(0,-12)
       setInfoEmp(res.data)
-      console.log(res.data)
       validateDate(res.data)
     })
 

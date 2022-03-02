@@ -31,9 +31,9 @@ const Carousel = () => {
 
   return (
     <div className="card">
-        <h5>Imagenes FXA</h5>
-        <Galleria value={images} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '640px'}}
-            showThumbnails={false} showIndicators showIndicatorsOnItem item={itemTemplate} />
+        <h5>Home Page FXA</h5>
+        {/* <Galleria value={images} responsiveOptions={responsiveOptions} numVisible={5} style={{ maxWidth: '640px'}}
+            showThumbnails={false} showIndicators showIndicatorsOnItem item={itemTemplate} /> */}
     </div>
   )
 }
