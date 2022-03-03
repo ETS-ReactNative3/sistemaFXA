@@ -2,13 +2,11 @@ import { FilterMatchMode } from 'primereact/api';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
 import React, { useEffect, useRef, useState } from 'react';
 import CentroCostoService from '../../../service/CentroCostoService';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 import { OverlayPanel } from 'primereact/overlaypanel';
-import { DefaultSelect } from '../../usuario/items/DefaultSelect';
 import classNames from 'classnames';
 import CentroCostoFormik from './CentroCostoFormik';
 import { Toast } from 'primereact/toast';
@@ -24,7 +22,6 @@ const CentroCosto = (props) => {
 
     const op = useRef(null);
     const [data, setData] = useState([])
-    const [ciudades, setCiudades] = useState([])
 
     const onGlobalFilterChange1 = (e) => {
         const value = e.target.value;
@@ -44,10 +41,6 @@ const CentroCosto = (props) => {
 
     const centroCostoService = new CentroCostoService()
     
-    const ItemServiceCiudad  = require(`../../../service/DefaultService`);
-    const itemServiceCiudad = ItemServiceCiudad.default('ciudad')
-    const ciudadService = new itemServiceCiudad()
-
     const [estadoPagina, setEstadoPagina] = useState(false)
 
     useEffect(() => {
@@ -61,15 +54,6 @@ const CentroCosto = (props) => {
         }else{
             setData(props.centroCosto)
             setLoading1(false)
-        }
-
-        if(!props.ciudades[0]){
-            ciudadService.getAll().then(res=>{
-                props.setCiudades(res.data)
-                setCiudades(res.data)
-            })
-        }else{
-            setCiudades(props.ciudades)
         }
 
         initFilters1();
@@ -123,18 +107,7 @@ const CentroCosto = (props) => {
         return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
     }
 
-    const ciudadEditor = (options) => {
-        return (
-            <Dropdown dropdownIcon={null} value={options.rowData.id_ciudad_fk} options={ciudades} onChange={(e) => options.editorCallback(e.value)} optionLabel='nombre_ciudad' optionValue='id_ciudad' filter filterBy={'nombre_ciudad'} placeholder=""
-            emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
-        );
-    }
 
-    const bodyCiudad = (rowData) =>{
-        return(
-            <span>{rowData.nombre_ciudad}</span>
-        )
-    }
 
     const borrarCentro = (id) =>{
         centroCostoService.deleteCentroCosto(id).then(res=>{
@@ -195,9 +168,8 @@ const CentroCosto = (props) => {
         <Toast ref={toast} position="bottom-right"/>
        <DataTable selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)} editMode="row" onRowEditComplete={confirm1} value={data} paginator className="p-datatable-customers" rows={10}
         dataKey="id" filters={filters1} rowsPerPageOptions={[10, 25, 50, 100, 200]} size="small" filterDisplay="menu" loading={loading1} responsiveLayout="scroll" 
-        globalFilterFields={['nombre_centro_costo', 'nombre_ciudad', 'empleados']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
+        globalFilterFields={['nombre_centro_costo', 'empleados']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
             <Column filter editor={(options) => textEditor(options)} showFilterMenu={false} field='nombre_centro_costo' header="Nombre" sortable/>
-            <Column filter sortable showFilterMenu={false} field="id_ciudad_fk" body={bodyCiudad} header="Ciudad" editor={(options) => ciudadEditor(options)}></Column>
             <Column filter showFilterMenu={false} header="Empleados" style={{ minWidth: '5rem' }} sortable field='empleados'/>
             <Column rowEditor headerStyle={{ width: '10%', minWidth: '5rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
             <Column body={bodyEliminar} editor={bodyEliminarD} headerStyle={{ width: '10%', minWidth: '2rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
@@ -214,13 +186,6 @@ const CentroCosto = (props) => {
                     </span>
                     <div>{getFormErrorMessage('nombre_centro_costo')}</div>
                 </div>
-                <div className="col-12 mt-4">
-                    <span className="p-float-label">
-                        <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_ciudad_fk') })+' w-full'} name='id_ciudad_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="ciudad"  id={formik.values.tipo_identificacion_fk} onChange={formik.handleChange} />
-                        <label>Ciudad:</label>
-                    </span>
-                    <div>{getFormErrorMessage('id_ciudad_fk')}</div>
-                </div> 
                 <Button onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </div>;

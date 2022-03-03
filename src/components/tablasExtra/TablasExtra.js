@@ -8,6 +8,7 @@ import DefaultData2 from './tablas/DefaultData2';
 import DefaultData3 from './tablas/DefaultData3';
 import Empresa from './tablas/Empresa';
 import Ciudad from './tablas/Ciudad';
+import JefeDirecto from './tablas/JefeDirecto';
 
 const TablasExtra = () => {
 
@@ -35,6 +36,7 @@ const TablasExtra = () => {
     const [salario, setSalario] = useState({})
     const [auxMovilidad, setAuxMovilidad] = useState({})
     const [tipoDocumento, setTipoDocumento] = useState({})
+    const [jefeZona, setJefeZona] = useState({})
 
     const toast = useRef(null);
 
@@ -87,6 +89,9 @@ const TablasExtra = () => {
                     </TabPanel>
                     <TabPanel header="Estado Contrato">
                         <DefaultData toast={toast} name='Estado Contrato' model='estado-contrato' nombre='estado_contrato' data={estadoContrato} setData={setEstadoContrato} minMax={[3,25]}/>
+                    </TabPanel>
+                    <TabPanel header="Jefes">
+                        <JefeDirecto toast={toast} setJefeZona={setJefeZona} jefeZona={jefeZona}/> 
                     </TabPanel>
                 </TabView>
             </AccordionTab>

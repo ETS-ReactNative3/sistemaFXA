@@ -195,6 +195,7 @@ const App = () => {
         'p-ripple-disabled': ripple === false,
         'layout-theme-light': layoutColorMode === 'light'
     });
+      
 
     return (
         <>
