@@ -6,7 +6,13 @@ import { useHistory } from 'react-router-dom';
 import CredencialService from './service/CredencialService';
 import './DashTopbar.css'
 import { BreadCrumb } from 'primereact/breadcrumb';
+import { Dialog } from 'primereact/dialog';
+import Cuenta from './components/cuenta/Cuenta';
+import { Toast } from 'primereact/toast';
 export const AppTopbar = (props) => {
+
+    const toast = useRef(null);
+
     const history = new useHistory()
 
     const logo = require('./assets/images/logo-fxa-version-principal.svg')
@@ -51,8 +57,9 @@ export const AppTopbar = (props) => {
                 command:()=>redireccionar('/')
             },
             {
-                label:"Cuenta",
-                icon: 'pi pi-tag',
+                label:"Seguridad",
+                icon: 'pi pi-sync',
+                command:()=>setDialogCuenta(true)
             },
             {
                 label:"Perfil",
@@ -92,8 +99,17 @@ export const AppTopbar = (props) => {
 
     const homeBreadMenu = { icon: 'pi pi-home', url: '/#/' }
 
+    const [ dialogCuenta, setDialogCuenta] = useState(false)
+
+    const hideModal = () =>{
+        setDialogCuenta(false)
+    }
+
+
     return (
         <div className="layout-topbar">
+            <Toast ref={toast} position="bottom-right"/>
+
             <Link to="/" className="layout-topbar-logo">
                 <img src={logo} alt="logo"/>
                 <small className='mx-4'>Recursos Humanos</small>
@@ -111,14 +127,18 @@ export const AppTopbar = (props) => {
 
             <div className={classNames("layout-topbar-menu lg:flex origin-top")}>
 
-                    <Menu className="mt-1" ref={menu} model={overlayMenuItems} popup />
+                <Menu className="mt-1" ref={menu} model={overlayMenuItems} popup />
 
-                    <button className="p-link perfil" onClick={toggleMenu}>
-                        <i className="pi pi-user px-2"/>
-                        <span className="pl-2 pr-3">{infoTopBar.nombre}</span>
-                    </button>
+                <button className="p-link perfil" onClick={toggleMenu}>
+                    <i className="pi pi-user px-2"/>
+                    <span className="pl-2 pr-3">{infoTopBar.nombre}</span>
+                </button>
 
             </div>
+
+            <Dialog header={<h4 className='text-center'>Cambio de contraseña</h4>} draggable={false} position='center' blockScroll={true} visible={dialogCuenta} style={{ width: '25vw' }} breakpoints={{'1150px': '30vw', '960px': '35vw', '640px': '100vw'}} onHide={hideModal}>
+                <Cuenta hideModal={hideModal} toast={toast}/>
+            </Dialog>
         </div>
     );
 }

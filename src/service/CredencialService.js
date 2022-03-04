@@ -12,6 +12,10 @@ class CredencialService {
         return axios.get(`${API}/data-top-bar`)
     }
 
+    changePass(data){
+        return axios.post(`${API}/chage-pass`,data)
+    }
+
 }
 
 export default CredencialService

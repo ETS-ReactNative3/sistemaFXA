@@ -57,8 +57,7 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
         doc.text(`NIT ${infoEmp.empresa.nit}`, 280, 220,{align:'center'})
 
         doc.text("CERTIFICA QUE:", 280, 285,{align:'center'})
-
-        doc.text(`El(la) señor(a) ${infoEmp.nombres} ${infoEmp.apellidos}, identificado(a) con ${infoEmp.tipo_identificacion.nombre_tipo_identificacion} No. ${infoEmp.numero_identificacion}, labora en nuestra empresa desde el día ${infoEmp.fecha_ingreso[2]} de ${ObtenerMes(infoEmp.fecha_ingreso[1])} de ${infoEmp.fecha_ingreso[0]} y vigente a la fecha, con un contrato a término ${infoEmp.tipo_contrato.nombre_tipo_contrato}, desempeñando el cargo de ${infoEmp.cargo.nombre_cargo} y devengando un salario mensual de ${infoEmp.salarioLetras} (${formatterPeso.format(infoEmp.salario.monto_salario)}).`, 80, 355,{align:'justify', maxWidth:430})
+        doc.text(`El(la) señor(a) ${infoEmp.nombres} ${infoEmp.apellidos}, identificado(a) con ${infoEmp.tipo_identificacion.nombre_tipo_identificacion} No. ${infoEmp.numero_identificacion}, labora en nuestra empresa desde el día ${infoEmp.fecha_ingreso[2]} de ${ObtenerMes(parseInt(infoEmp.fecha_ingreso[1]))} de ${infoEmp.fecha_ingreso[0]} y vigente a la fecha, con un contrato a término ${infoEmp.tipo_contrato.nombre_tipo_contrato}, desempeñando el cargo de ${infoEmp.cargo.nombre_cargo} y devengando un salario mensual de ${infoEmp.salarioLetras} (${formatterPeso.format(infoEmp.salario.monto_salario)}).`, 80, 355,{align:'justify', maxWidth:430})
         
         
         doc.text(`La presente certificación se expide a solicitud del interesado el día (${fechaActual.getDate()}) de ${ObtenerMes(fechaActual.getMonth())} de ${fechaActual.getFullYear()} en la ciudad de Bogotá.`, 80, 460,{align:'justify', maxWidth:430})

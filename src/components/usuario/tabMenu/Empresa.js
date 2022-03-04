@@ -89,7 +89,7 @@ export const Empresa = (props = {empleado:{}}) => {
         </div>
         <div className='text-left mb-2'>
             <span className='text-800 font-medium'>Jefe Directo:</span> 
-            <InputText name='jefe_directo_fk' type="text" className='inputForm' value={props.empleado.values.jefe_directo_fk}></InputText> 
+            <DefaultSelect className={classNames({ 'error-input': isFormFieldValid('jefe_directo_fk') })+' inputForm'} name='jefe_directo_fk' id_def="id_empleado" nombre_def="nombres" serviceName="jefe-directo" id={props.empleado.values.jefe_directo_fk} onChange={props.empleado.handleChange}/>
             <div>{getFormErrorMessage('jefe_directo_fk')}</div>
         </div> 
     </div>

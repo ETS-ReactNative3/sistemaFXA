@@ -5,9 +5,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import CredencialService from '../../../service/CredencialService'
 import { BreadCrumb } from 'primereact/breadcrumb'
+import { Dialog } from 'primereact/dialog'
+import Cuenta from '../../cuenta/Cuenta'
+import { Toast } from 'primereact/toast'
 
 const Header = () => {
-    
+  
+    const toast = useRef(null);
+
+
     const history = new useHistory()
 
     const logo = require('../../../assets/images/logo-fxa-version-principal.svg')
@@ -16,7 +22,14 @@ const Header = () => {
 
     const toggleMenu = (event) => {
       menu.current.toggle(event);
-  };
+    };
+
+  const [ dialogCuenta, setDialogCuenta] = useState(false)
+
+  const hideModal = () =>{
+    setDialogCuenta(false)
+  }
+
 
   useEffect(() => {
     if(localStorage.getItem('token')){
@@ -30,10 +43,10 @@ const Header = () => {
                 label: res.data.nombre,
         
                 items:[
-                {
-                    label:"Cuenta",
-                    icon: 'pi pi-tag',
-                    command:()=>redireccionar('/')
+                  {
+                    label:"Seguridad",
+                    icon: 'pi pi-sync',
+                    command:()=>setDialogCuenta(true)
                 },
                 {
                     label:(res.data.Rol==='Soporte' || res.data.Rol==='Admin')?"Dashboard":"Perfil",
@@ -74,6 +87,7 @@ const Header = () => {
   const homeBreadMenu = { icon: 'pi pi-home', url: '/#/' }
 
   return (<div className='block h-6rem'>
+    <Toast ref={toast} position="bottom-right"/>
     <div className="layout-topbar">
             <div className='blur-topbar'></div>
             <Link to="/" className="layout-topbar-logo">
@@ -104,6 +118,10 @@ const Header = () => {
             {!localStorage.getItem('token') && <>
               <Button label="Iniciar Sesión" onClick={()=>redireccionar('/log')} className="layout-topbar-menu py-2 px-3" />
             </>}
+
+            <Dialog header={<h4 className='text-center'>Cambio de contraseña</h4>} draggable={false} position='center' blockScroll={true} visible={dialogCuenta} style={{ width: '25vw' }} breakpoints={{'1150px': '30vw', '960px': '35vw', '640px': '100vw'}} onHide={hideModal}>
+                <Cuenta hideModal={hideModal} toast={toast}/>
+            </Dialog>
 
         </div>
   </div>)

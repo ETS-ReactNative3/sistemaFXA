@@ -135,12 +135,12 @@ class FormikEmp {
                     errors.estado_contrato_fk = 'El estado de contrato es obligatorio.'
                 }
                 
-                if(!data.jefe_zona_fk){
-                    data.jefe_zona_fk = undefined
-                    errors.jefe_zona_fk = 'Definir un jefe de zona es obligatorio.'
+                if(!data.jefe_directo_fk){
+                    data.jefe_directo_fk = undefined
+                    errors.jefe_directo_fk = 'Definir un jefe de zona es obligatorio.'
                 }
                 
-                if(errors.empresa_fk || errors.lugar_trabajo_fk || errors.centro_costo_fk || errors.cargo_fk || errors.tipo_contrato_fk || errors.tipo_tiempo_fk || errors.fecha_ingreso || errors.estado_contrato_fk || errors.jefe_zona_fk){
+                if(errors.empresa_fk || errors.lugar_trabajo_fk || errors.centro_costo_fk || errors.cargo_fk || errors.tipo_contrato_fk || errors.tipo_tiempo_fk || errors.fecha_ingreso || errors.estado_contrato_fk || errors.jefe_directo_fk){
                     errors.empresa = 'error'
                 }
 
@@ -251,15 +251,23 @@ class FormikEmp {
             onSubmit: data =>{
                 if(data.id_empleado){
                     serviceEmpleado.updateEmpleado(data.id_empleado, data).then(res=>{
-                        options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
-                        options.hideModal()
-                        options.reloadPage()
+                        if(res.status===201){
+                            options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
+                            options.hideModal()
+                            options.reloadPage()
+                        }else
+                            options.setToatsEmpelado({ severity: 'error', summary: 'Error', detail: res.data, life: 3000 })
+
                     })
                 }else{
                     serviceEmpleado.createEmpleado(data).then(res=>{
-                        options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
-                        options.hideModal()
-                        options.reloadPage()
+                        if(res.status===201){
+                            options.setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
+                            options.hideModal()
+                            options.reloadPage()
+                        }else
+                            options.setToatsEmpelado({ severity: 'error', summary: 'Error', detail: res.data, life: 3000 })
+
                     })
                 } 
             }
