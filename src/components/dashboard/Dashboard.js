@@ -56,7 +56,7 @@ export const Dashboard = (props) => {
                 <div className="card mb-0">
                     <span className="block text-xl font-medium mb-3">¡Bienvenido {sesionData.nombre}!</span>
                     <div className="text-600 font-medium mb-3">Para ver tus datos personales ve a la sección de perfil.</div>
-                    <Button label="Ver Perfil" className="p-button-link text-pink-300 font-medium"></Button>
+                    <Button label="Ver Perfil" onClick={()=>history.push('/dash/perfil')} className="p-button-link text-pink-300 font-medium"></Button>
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-7">
@@ -92,11 +92,11 @@ export const Dashboard = (props) => {
                             <div className="text-900 font-medium text-xl">{datosCards.card2[0].total_empleados_ciudad} Empleados</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{width: '2.5rem', height: '2.5rem'}}>
-                            <i className="pi  text-orange-500 text-xl">1°</i>
+                            <i className=" text-orange-500 text-xl font-medium">1°</i>
                         </div>
                     </div>
                     <span className="text-pink-400 font-medium">{datosCards.card2[0].nombre_centro_costo}</span>
-                    <div className="text-900 font-medium mt-2">{datosCards.card2[0].total_empleados} Empleados</div>
+                    <div className="text-900 font-medium mt-2 ">{datosCards.card2[0].total_empleados} Empleados</div>
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
@@ -107,7 +107,7 @@ export const Dashboard = (props) => {
                             <div className="text-900 font-medium text-xl">{datosCards.card2[1].total_empleados_ciudad} Empleados</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{width: '2.5rem', height: '2.5rem'}}>
-                            <i className="pi text-cyan-500 text-xl">2°</i>
+                            <i className="text-cyan-500 text-xl font-medium">2°</i>
                         </div>
                     </div>
                     <span className="text-pink-400 font-medium">{datosCards.card2[1].nombre_centro_costo}</span>
@@ -122,24 +122,26 @@ export const Dashboard = (props) => {
                             <div className="text-900 font-medium text-xl">{datosCards.card2[2].total_empleados_ciudad} Empleados</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{width: '2.5rem', height: '2.5rem'}}>
-                            <i className="pi text-purple-500 text-xl">3°</i>
+                            <i className="text-purple-500 text-xl font-medium">3°</i>
                         </div>
                     </div>
                     <span className="text-pink-400 font-medium">{datosCards.card2[2].nombre_centro_costo}</span>
                     <div className="text-900 font-medium mt-2">{datosCards.card2[2].total_empleados} Empleados</div>
                 </div>
             </div>
-            <div className="col-offset-5 col-7"><Button className='p-button-text' onClick={()=>setTodasCiudades(!todasCiudades)}>Mostrar todas las ciudades</Button></div>
             {todasCiudades &&
                 datosCards.card3.map((el,id)=>{
                     if(id>2)
                     return(
-                        <div key={id} className="col-6 lg:col-2 xl:col-2 md:col-3 sm:col-3">
+                        <div key={id} className="col-12 md:col-3 sm:col-6">
                             <div className="card mb-0 cardHover" onClick={handleRedireccionUsu}>
                                 <div className="flex justify-content-between">
                                     <div>
-                                        <div className="text-900 font-medium text-xl  mb-2">{el.nombre_ciudad}</div>
+                                        <div className="text-700 font-medium text-xl  mb-2">{el.nombre_ciudad}</div>
                                         <span className="block text-500 font-medium">{el.total_empleados} Empleados</span>
+                                    </div>
+                                    <div className="flex align-items-center justify-content-center bg-pink-100 border-round" style={{width: '2.5rem', height: '2.5rem'}}>
+                                        <i className="text-purple-600 font-medium text-xl">{id+1}°</i>
                                     </div>
                                 </div>
                             </div>
@@ -150,6 +152,7 @@ export const Dashboard = (props) => {
                 })
             }
 
+            <div className="col-offset-5 col-7"><Button className='p-button-text' onClick={()=>setTodasCiudades(!todasCiudades)}>{!todasCiudades?'Mostrar todas las ciudades':'Mostrar menos ciudades'}</Button></div>
 
             <div className="col-12 xl:col-7">
                 <div className="card">
@@ -160,7 +163,7 @@ export const Dashboard = (props) => {
                
                     <DataTable value={empleadosNuevos} rows={5} paginator responsiveLayout="scroll">
                         <Column field="nombres" header="Nombre" sortable/>
-                        <Column field="empresa.nombre_empresa" header="Empresa" sortable style={{width: '100%'}}/>
+                        <Column field="empresa.nombre_empresa" header="Empresa" sortable/>
                         <Column field="centro_costo.nombre_centro_costo" header="Tienda" sortable  />
                         <Column field="fecha_ingreso" header="Ingreso" sortable  />
                         

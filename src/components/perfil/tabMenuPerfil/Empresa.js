@@ -11,43 +11,43 @@ export const Empresa = (props = {empleado:{}}) => {
             </div>
         </Divider>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Empresa:</span>
+            <span className='text-800 font-medium'>Empresa: </span>
             {props.empleado.empresa.nombre_empresa}
         </div>
        <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>NIT:</span> 
+            <span className='text-800 font-medium'>NIT: </span> 
             {props.empleado.empresa.nit}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Lugar De Trabajo:</span> 
+            <span className='text-800 font-medium'>Lugar De Trabajo: </span> 
             {props.empleado.lugar_trabajo.nombre_ciudad}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Centro De Costo:</span> 
+            <span className='text-800 font-medium'>Centro De Costo: </span> 
             {props.empleado.centro_costo.nombre_centro_costo}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Cargo:</span>
+            <span className='text-800 font-medium'>Cargo: </span>
             {props.empleado.cargo.nombre_cargo}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Tipo De Contrato:</span> 
+            <span className='text-800 font-medium'>Tipo De Contrato: </span> 
             {props.empleado.tipo_contrato.nombre_tipo_contrato}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Tiempo:</span>
+            <span className='text-800 font-medium'>Tiempo: </span>
             {props.empleado.tiempo.nombre_tiempo}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Fecha Ingreso:</span> 
+            <span className='text-800 font-medium'>Fecha Ingreso: </span> 
             {props.empleado.fecha_ingreso}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Contrato Firmado:</span> 
+            <span className='text-800 font-medium'>Contrato Firmado: </span> 
             {props.empleado.estado_contrato.nombre_estado_contrato}
         </div>
         <div className='text-left mb-2'>
-            <span className='text-800 font-medium'>Jefe De Zona:</span> 
+            <span className='text-800 font-medium'>Jefe De Zona: </span> 
             {props.empleado.jefe_directo.nombres} 
             {props.empleado.jefe_directo.apellidos}
         </div> 

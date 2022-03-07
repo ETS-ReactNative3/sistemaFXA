@@ -68,7 +68,10 @@ export const Perfil = (params) => {
             <div className="col-12 xl:col-9 lg:col-8 md:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img className='w-5' style={{maxWidth:'150px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                    <img className='w-full' style={{maxWidth:'120px'}} src="https://drm2ecjli5gr8.cloudfront.net/efectos/grandes/polaroidStyle.jpg" alt="" />
+                    <div onClick={showModal} className={showChangeIgame?'flex card w-full justify-content-center top-0 align-items-center right-0 h-full absolute cursor-pointer':'hidden'} style={{background:'rgba(1,1,1,0.2)'}}>
+                        <i className="pi pi-undo text-4xl"></i>
+                    </div>
                 </div>
                 <div className="card">
                         <TabView className='hidden xl:block lg:block md:block sm:block'>
@@ -87,16 +90,16 @@ export const Perfil = (params) => {
                         </TabView>
                         <TabView className='block xl:hidden lg:hidden md:hidden sm:hidden'>
                             <TabPanel leftIcon='pi pi-user'>
-                                {/* <Datos empleado={params.formik}/> */}
+                                <Datos empleado={empleado}/> 
                             </TabPanel>
                             <TabPanel leftIcon='pi pi-building'>
-                                {/* <Empresa empleado={params.formik}/> */}
+                                <Empresa empleado={empleado}/>
                             </TabPanel>
                             <TabPanel leftIcon='pi pi-paperclip'>
-                               {/*  <Extras empleado={params.formik}/> */}
+                                <Extras empleado={empleado}/>
                             </TabPanel>
                             <TabPanel leftIcon='pi pi-heart-fill'>
-                                {/* <Riesgo empleado={params.formik}/> */}
+                                <Riesgo empleado={empleado}/>
                             </TabPanel>
                         </TabView>
                 </div>
