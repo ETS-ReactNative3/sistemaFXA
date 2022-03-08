@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,  useRef } from 'react';
 import { EmpleadoService } from '../../service/EmpleadoService';
 
 import CredencialService from '../../service/CredencialService';
 import { useHistory } from 'react-router-dom';
 import { Divider } from 'primereact/divider';
 import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
+import { Button } from 'primereact/button';
+import { OverlayPanel } from 'primereact/overlaypanel';
 
 export const DocumentosEmp = (params) => {
+
+    const op = useRef(null);
 
     const history = new useHistory()
 
@@ -34,6 +38,8 @@ export const DocumentosEmp = (params) => {
         
     }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
+    const [ fileValue, setFileValue] = useState(null)
+
   return (
     <>
         {loading &&
@@ -50,6 +56,7 @@ export const DocumentosEmp = (params) => {
                     <Divider align="left">
                         <div className="inline-flex align-items-center">
                             <b>Subidos</b>
+                            <Button icon="pi pi-plus" onClick={(e) => op.current.toggle(e)} className="p-button-text p-button-rounded mb-2"></Button>
                         </div>
                     </Divider>
                     <Divider align="left">
@@ -88,6 +95,13 @@ export const DocumentosEmp = (params) => {
             </div>
         </div>
         }
+        <OverlayPanel ref={op} /* onHide={()=>setItemSeleccionado(null)} */ showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
+            <div className='w-full text-center'>
+                <h6>Agregar Documento</h6>
+            </div>
+            <input id='file' name='file' type="file" accept='application/pdf' onChange={e=>setFileValue(['file',e.currentTarget.files[0]])} />
+            <Button type='button' onClick={()=>console.log(fileValue)} label='Guardar' className='mt-2 w-full'/>
+        </OverlayPanel>
     </>
   )
 };

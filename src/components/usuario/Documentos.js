@@ -132,8 +132,8 @@ export const Documentos = (params) => {
                 </div>
             </div>
             <div className="col-12 lg:col-4 md:col-4">
-                <div className='card hidden xl:block md:block lg:block'>
-                    <img className='w-full' style={{maxWidth:'180px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                <div className='card hidden xl:flex md:flex lg:flex align-items-center justify-content-center'>
+                    <img className='w-full' style={{maxWidth:'200px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
                 </div>
                <div className="card">
                     <h5>Datos:<i onClick={()=>params.changeModal(1)} className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>

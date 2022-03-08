@@ -78,10 +78,9 @@ const ChangeFotografia = (params) => {
 
   return (
     <div>
-      <FileUpload ref={fileUploadRef} name="prueba[]" /* url=""  */ customUpload uploadHandler={uploadImage} accept="image/*" maxFileSize={1000000}
-        onUpload={onTemplateUpload} 
-        headerTemplate={headerTemplate} itemTemplate={itemTemplate} emptyTemplate={emptyTemplate}
-        chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} />
+      <FileUpload ref={fileUploadRef} name="fotoPerfil" /* url=""  */ customUpload uploadHandler={uploadImage} accept="image/*" maxFileSize={1000000}
+        onUpload={onTemplateUpload} headerTemplate={headerTemplate} itemTemplate={itemTemplate} emptyTemplate={emptyTemplate}
+        chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions}/>
     </div>
   )
 }

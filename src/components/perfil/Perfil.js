@@ -105,7 +105,7 @@ export const Perfil = (params) => {
                 </div>
             </div>
             <div className="col-12 xl:col-3 lg:col-4 md:col-4">
-                <div className='card hidden xl:block md:block lg:block relative' onMouseEnter={()=>setshowChangeIgame(true)} onMouseLeave={()=>setshowChangeIgame(false)}>
+                <div className='card hidden xl:flex md:flex lg:flex relative justify-content-center align-items-center' onMouseEnter={()=>setshowChangeIgame(true)} onMouseLeave={()=>setshowChangeIgame(false)}>
                     <img className='w-full' style={{maxWidth:'180px'}} src="https://drm2ecjli5gr8.cloudfront.net/efectos/grandes/polaroidStyle.jpg" alt="" />
                     <div onClick={showModal} className={showChangeIgame?'flex card w-full justify-content-center top-0 align-items-center right-0 h-full absolute cursor-pointer':'hidden'} style={{background:'rgba(1,1,1,0.2)'}}>
                         <i className="pi pi-undo text-4xl"></i>

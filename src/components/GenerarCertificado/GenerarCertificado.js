@@ -85,7 +85,7 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
             <p className='text-700 font-nomral'>Este certificado solo puede ser descargado 1 vez al mes. si requiere de dicho certificado más de una vez solicitelo al area de talento humano.</p>
             <p className='text-600 font-medium'>Ultimo certificado generado el día: <span className='text-800 font-medium'>{infoEmp.fecha_gen_certificado?infoEmp.fecha_gen_certificado:'No se ha generado ningun certificado hasta la fecha'}</span></p>
             {!(!infoEmp.fecha_gen_certificado||new Date(infoEmp.fecha_gen_certificado).getMonth()<new Date().getMonth()||new Date(infoEmp.fecha_gen_certificado).getFullYear()<new Date().getFullYear())&&<Message severity="warn" className='mb-4' text="Para generar un nuevo certificado laboral es necesario esperar hasta el otro mes" />}
-            <Button onClick={GeneratePdf} loading={stateButton} label="Generar Certificado" className="p-button-outlined mr-2 mb-2" />
+            <Button onClick={GeneratePdf} loading={stateButton} label="Generar Certificado" className="p-button-outlined block mr-2 mb-2" />
           </div>
         </div>
       </div>;
