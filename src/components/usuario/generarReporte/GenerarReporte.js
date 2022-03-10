@@ -268,7 +268,7 @@ const GenerarReporte = (params) => {
                         {
                             valuesDatosBasicos.map((el,id)=>{
                                 return(
-                                <div key={id} className="col-12 md:col-4">
+                                <div key={id} className="col-6 sm:col-4">
                                     <div className="field-checkbox">
                                         <Checkbox inputId={"checkOption"+id} name="option" value={el.value} checked={checkboxValue.indexOf(el.value) !== -1 } onChange={onCheckboxChange} />
                                         <label htmlFor={"checkOption"+id}>{el.label}</label>
@@ -289,7 +289,7 @@ const GenerarReporte = (params) => {
                         {
                             valuesEmpresa.map((el,id)=>{
                                 return(
-                                <div key={id} className="col-12 md:col-4">
+                                <div key={id} className="col-6 sm:col-4">
                                     <div className="field-checkbox">
                                         <Checkbox inputId={"checkOption"+id} name="option" value={el.value} checked={checkboxValue.indexOf(el.value) !== -1} onChange={onCheckboxChange} />
                                         <label htmlFor={"checkOption"+id}>{el.label}</label>
@@ -310,7 +310,7 @@ const GenerarReporte = (params) => {
                         {
                             valuesComplementarios.map((el,id)=>{
                                 return(
-                                <div key={id} className="col-12 md:col-4">
+                                <div key={id} className="col-6 sm:col-4">
                                     <div className="field-checkbox">
                                         <Checkbox inputId={"checkOption"+id} name="option" value={el.value} checked={checkboxValue.indexOf(el.value) !== -1} onChange={onCheckboxChange} />
                                         <label htmlFor={"checkOption"+id}>{el.label}</label>
@@ -331,7 +331,7 @@ const GenerarReporte = (params) => {
                         {
                             valuesAfiliaciones.map((el,id)=>{
                                 return(
-                                <div key={id} className="col-12 md:col-4">
+                                <div key={id} className="col-6 sm:col-4">
                                     <div className="field-checkbox">
                                         <Checkbox inputId={"checkOption"+id} name="option" value={el.value} checked={checkboxValue.indexOf(el.value) !== -1} onChange={onCheckboxChange} />
                                         <label htmlFor={"checkOption"+id}>{el.label}</label>

@@ -101,7 +101,7 @@ export const Usuarios = () => {
                 <div className='col-8 md:col-10 block xl:hidden lg:hidden'>
                     <Button onClick={showModalNewUsu} icon="pi pi-plus" className="p-button-rounded mx-3 my-1"></Button>
                     <Button icon="pi pi-user-plus" iconPos="right" className="p-button-rounded p-button-outlined mx-3 my-1" />
-                    <Button icon="pi pi-file-excel" iconPos="right" className="p-button-rounded p-button-outlined mx-3 my-1" />
+                    <Button icon="pi pi-file-excel" onClick={showDialogExport} iconPos="right" className="p-button-rounded p-button-outlined mx-3 my-1" />
                 </div>
                 <div className='col-4 xl:col-2 lg:col-2 md:col-2'>
                     <span className="p-buttonset">
@@ -292,7 +292,7 @@ export const Usuarios = () => {
                 {renderHeadTable()}
                 {dataView === false &&
                     <DataTable value={empleados} paginator className="p-datatable-customers datatable-responsive" rows={5}
-                        dataKey="id" rowsPerPageOptions={[5, 10, 25, 50, 100]} filters={filters1} filterDisplay="menu" loading={loading1} responsiveLayout="stack"
+                        dataKey="id" rowsPerPageOptions={[5, 10, 25, 50, 100]} filters={filters1} filterDisplay="menu" loading={loading1} size="large" responsiveLayout="stack"
                         globalFilterFields={['nombres', 'empresa.nombre_empresa', 'lugar_trabajo.nombre_ciudad', 'centro_costo.nombre_centro_costo', 'numero_identificacion']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontraron Empleados" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
                         <Column body={avatarTableBody()} style={{ minWidth: '5rem' }} />
                         <Column field='nombres' header="Nombres" sortable filter filterPlaceholder="Buscar Por Nombre" style={{ minWidth: '10rem' }} />

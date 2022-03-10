@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
+import { Divider } from 'primereact/divider';
 
 const FiltrarInformacion = (params) => {
 
@@ -33,8 +34,8 @@ const FiltrarInformacion = (params) => {
         {label:'Empresa',serviceName:'empresa',optionsName:'empresa'},
     ]
     
-    const [campoSeleccionado, setCampoSeleccionado] = useState(null);
-    const [itemSeleccionado, setItemSeleccionado] = useState(null);
+    const [campoSeleccionado, setCampoSeleccionado] = useState('');
+    const [itemSeleccionado, setItemSeleccionado] = useState('');
     const [dataOption, setDataOption] = useState([])
 
     const [infoItem , setInfoItem] = useState('')
@@ -64,6 +65,8 @@ const FiltrarInformacion = (params) => {
 
     const SaveOption = () =>{
         let arregloItem = Object.values(itemSeleccionado)
+        console.log(campoSeleccionado)
+        console.log(itemSeleccionado)
         if(campoSeleccionado && itemSeleccionado){
         params.setCondiciones([...params.condiciones,...[{campo:campoSeleccionado.foranea?campoSeleccionado.foranea:campoSeleccionado.optionsName, valor:arregloItem[0], label:campoSeleccionado.label, labelContenido:arregloItem[1]}]])
         setItemSeleccionado(null)
@@ -106,6 +109,7 @@ const FiltrarInformacion = (params) => {
         {
             params.condiciones.map((el,id)=>{
                 return <div className='grid' key={id}>
+                <Divider/>
                 <div className="col-12 md:col-1">
                     <Button icon="pi pi-minus" onClick={()=>dropOption(id)} className="mb-2"></Button>
                 </div>

@@ -72,13 +72,13 @@ const ChangeFotografia = (params) => {
   const uploadOptions = {icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined'};
   const cancelOptions = {icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined'};
 
-  const uploadImage = (e) =>{
-    console.log(e)
+  const uploadImage = ({files}) =>{
+    console.log(files)
   }
 
   return (
     <div>
-      <FileUpload ref={fileUploadRef} name="fotoPerfil" /* url=""  */ customUpload uploadHandler={uploadImage} accept="image/*" maxFileSize={1000000}
+      <FileUpload ref={fileUploadRef} name="fotoPerfil" customUpload uploadHandler={uploadImage} accept="image/*" maxFileSize={1000000}
         onUpload={onTemplateUpload} headerTemplate={headerTemplate} itemTemplate={itemTemplate} emptyTemplate={emptyTemplate}
         chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions}/>
     </div>

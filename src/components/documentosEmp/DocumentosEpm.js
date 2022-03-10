@@ -99,7 +99,7 @@ export const DocumentosEmp = (params) => {
             <div className='w-full text-center'>
                 <h6>Agregar Documento</h6>
             </div>
-            <input id='file' name='file' type="file" accept='application/pdf' onChange={e=>setFileValue(['file',e.currentTarget.files[0]])} />
+            <input id='file' name='file' type="file" accept='application/pdf' onChange={e=>setFileValue([e.currentTarget.files[0]])} />
             <Button type='button' onClick={()=>console.log(fileValue)} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </>
