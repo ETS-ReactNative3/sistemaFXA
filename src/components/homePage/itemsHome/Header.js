@@ -2,9 +2,8 @@ import classNames from 'classnames'
 import { Menu } from 'primereact/menu'
 import { Button } from 'primereact/button'
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import CredencialService from '../../../service/CredencialService'
-import { BreadCrumb } from 'primereact/breadcrumb'
 import { Dialog } from 'primereact/dialog'
 import Cuenta from '../../cuenta/Cuenta'
 import { Toast } from 'primereact/toast'
@@ -84,24 +83,19 @@ const Header = () => {
 
   const [overlayMenuItems, setOverlayMenuItems] = useState([])
 
-  const homeBreadMenu = { icon: 'pi pi-home', url: '/#/' }
-
-  return (<div className='block h-6rem'>
+  return (<div className='top-0'>
     <Toast ref={toast} position="bottom-right"/>
     <div className="layout-topbar">
             <div className='blur-topbar'></div>
-            <Link to="/" className="layout-topbar-logo">
+            <span className="layout-topbar-logo">
                 <img src={logo} alt="logo"/>
-                <small className='mx-4'>Recursos Humanos</small>
-            </Link>
-        
+                <small className='mx-4'>Recursos Humanos (SIGE)</small>
+            </span>
             {localStorage.getItem('token') && <>
             
               <button type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={toggleMenu}>
                   <i className="pi pi-user" />
               </button>
-
-              <BreadCrumb home={homeBreadMenu} style={{background:'transparent', border:'none'}}/>
 
               <div className={classNames("layout-topbar-menu lg:flex origin-top")}>
 

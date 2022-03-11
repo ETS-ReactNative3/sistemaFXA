@@ -61,7 +61,7 @@ export const Dashboard = (props) => {
             </div>
             <div className="col-12 lg:col-6 xl:col-7">
                 <div className="card mb-0">
-                    <span className="block text-xl font-medium mb-2">RRHH</span>
+                    <span className="block text-xl font-medium mb-2">SIGE</span>
                     <div className="text-600 font-medium mb-2">Acceso rapido a los modulos del sistema</div>
                     <Button label='Usuarios' onClick={()=>history.push('/dash/usuarios')} icon="pi pi-users" className="p-button-text text-pink-400 mr-2 mb-2"></Button>
                     <Button label='Permisos' onClick={()=>history.push('/dash/permisos')} icon="pi pi-user-edit" className="p-button-text text-pink-400 mr-2 mb-2"></Button>

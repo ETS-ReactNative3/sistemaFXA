@@ -1,0 +1,9 @@
+.menu-mountain{
+    border-radius: 50% / 0% 0% 100% 100%;
+	background: #E31D93;
+    z-index: -2;
+	height: 90px;
+	width: 9rem;
+    top:-1%;
+    left: 45.7%;
+}

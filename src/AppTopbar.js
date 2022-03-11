@@ -112,7 +112,7 @@ export const AppTopbar = (props) => {
 
             <Link to="/" className="layout-topbar-logo">
                 <img src={logo} alt="logo"/>
-                <small className='mx-4'>Recursos Humanos</small>
+                <small className='mx-4'>Recursos Humanos (SIGE)</small>
             </Link>
 
             <button type="button" className="p-link  layout-menu-button layout-topbar-button" onClick={props.onToggleMenuClick}>
