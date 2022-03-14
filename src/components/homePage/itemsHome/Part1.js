@@ -23,7 +23,7 @@ const Part1 = () => {
   const img = require('../../../assets/images/home/Mobile.png')
   const img1 = require('../../../assets/images/home/Desktop.png')
   return (
-    <div className="h-screen w-full relative cursor-pointer" onClick={()=>history.push(link)}>
+    <div id='Part1' className="h-screen w-full relative cursor-pointer" onClick={()=>history.push(link)}>
         <img src={img1} alt="" className='absolute h-screen w-full hidden md:block'/>
         <img src={img} alt="" className='absolute h-screen w-full block md:hidden'/>
     </div>

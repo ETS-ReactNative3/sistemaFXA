@@ -101,7 +101,7 @@ const Cuenta = (params) => {
             <div>{getFormErrorMessage('pass2')}</div>
         </div>
         <div className='flex justify-content-end w-full mt-3'>
-            <Button label="Cancelar" onClick={params.hideModal} className="p-button-secondary mr-2 mb-2"></Button>
+            <Button label="Cancelar" onClick={params.hideModal} className="p-button-secondary p-button-text mr-2 mb-2"></Button>
             <Button label="Guardar" type='button' onClick={formik.handleSubmit} className="mr-2 mb-2"></Button>
         </div>
     </div>

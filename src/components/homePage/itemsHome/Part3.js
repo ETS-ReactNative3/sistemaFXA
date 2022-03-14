@@ -2,7 +2,7 @@ import React from 'react'
 
 const Part3 = () => {
   return (
-    <div className="grid grid-nogutter surface-section text-800 mt-0">
+    <div id='Part3' className="grid grid-nogutter surface-section text-800 mt-0">
         <div className="col-12 md:col-6 overflow-hidden">
             <img src="images/blocks/hero/hero-1.png" alt="hero-1" className="md:ml-auto block md:h-full" style={{ clipPath: 'circle(97% at 0 33%)' }} />
         </div>

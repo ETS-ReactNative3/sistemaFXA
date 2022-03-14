@@ -12,7 +12,6 @@ const Header = () => {
   
     const toast = useRef(null);
 
-
     const history = new useHistory()
 
     const logo = require('../../../assets/images/logo-fxa-version-principal.svg')

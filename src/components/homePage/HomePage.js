@@ -7,13 +7,14 @@ import Footer from './itemsHome/Footer'
 import Header2 from './itemsHome/Header2'
 
 const HomePage = () => {
-  return (<>
-    <Header/>
+
+  return (<div style={{overflow:'hidden'}}>
+    <Header2/>
     <Part1/>
     <Part2/>
     <Part3/>
     <Footer/>
-  </>)
+  </div>)
 }
 
 export default HomePage

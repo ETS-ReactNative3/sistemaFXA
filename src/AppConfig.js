@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RadioButton } from 'primereact/radiobutton';
 import classNames from 'classnames';
 import {Button} from "primereact/button";
+import { Divider } from 'primereact/divider';
 
 export const AppConfig = (props) => {
 
     const [active, setActive] = useState(false);
-    const [scale, setScale] = useState(13);
-    const [scales] = useState([12,13,14]);
+    const scale  = 13;
+    
     const [theme, setTheme] = useState('saga-purple');
     const config = useRef(null);
     let outsideClickListener = useRef(null);
@@ -49,13 +50,6 @@ export const AppConfig = (props) => {
         return !(config.current.isSameNode(event.target) || config.current.contains(event.target));
     }
 
-    const decrementScale = () => {
-        setScale((prevState) => --prevState);
-    }
-
-    const incrementScale = () => {
-        setScale((prevState) => ++prevState);
-    }
 
     useEffect(() => {
         document.documentElement.style.fontSize = scale + 'px';
@@ -121,16 +115,7 @@ export const AppConfig = (props) => {
             <Button className="p-button-danger layout-config-close p-button-rounded p-button-text" icon="pi pi-times" onClick={hideConfigurator}/>
 
             <div className="layout-config-content">
-                <h5 className="mt-0">Tamaño</h5>
-                <div className="config-scale">
-                    <Button icon="pi pi-minus" onClick={decrementScale} className="p-button-text" disabled={scale === scales[0]} />
-                    {
-                        scales.map((item) => {
-                            return <i className={classNames('pi pi-circle-on', {'scale-active': item === scale})} key={item}/>
-                        })
-                    }
-                    <Button icon="pi pi-plus" onClick={incrementScale} className="p-button-text" disabled={scale === scales[scales.length - 1]} />
-                </div>
+
 
                 <h5>Tipo Menu</h5>
                 <div className="p-formgroup-inline">
@@ -143,6 +128,8 @@ export const AppConfig = (props) => {
                         <label htmlFor="overlay">Oculto</label>
                     </div>
                 </div>
+
+                <Divider layout='horizontal'/>
 
                 <h5>Temas</h5>
                 <div className="grid free-themes">

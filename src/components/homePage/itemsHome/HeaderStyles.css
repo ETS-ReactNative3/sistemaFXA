@@ -1,9 +1,60 @@
-.menu-mountain{
-    border-radius: 50% / 0% 0% 100% 100%;
-	background: #E31D93;
+   .menu-mountain, .menu-mountain2{
+    border-radius: 0 0 0 0;
     z-index: -2;
-	height: 90px;
-	width: 9rem;
-    top:-1%;
-    left: 45.7%;
+	height: 65px;
+	width: 11.15rem;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: absolute;
+    clip-path: ellipse(100% 68% at 0% 100%);
+
+}
+
+.menu-mountain2{
+    transform: scaleX(-1);
+    right: 0;
+}
+
+.menu-mountain3{
+    background: #E31D93;
+    border-radius:  0% 0% 100% 100%;
+    z-index: -2;
+	height: 10rem;
+	width: 9.7rem;
+    left: calc(-50vw + 50%); 
+    right: calc(-50vw + 50%); 
+    margin-left: auto; 
+    margin-right: auto;
+    top: -2.5rem;
+    position: absolute;
+}
+.menu-mountain4{
+    z-index: -12;
+    background: #E31D93;
+	height: 5rem;
+	width: 90%;
+    position: absolute;
+}
+.logo-menu-mountain{
+    top: 4rem;
+    left: calc(-50vw + 50%); 
+    right: calc(-50vw + 50%); 
+    margin-left: auto; 
+    margin-right: auto;
+    position: absolute;
+    width: 80px;
+}
+
+.conten-menu-mountain{
+    width: 400px;
+    display: block;
+    top: 0;
+    position: fixed;
+    z-index: -1;
+    left: calc(-50vw + 50%); 
+    right: calc(-50vw + 50%); 
+    margin-left: auto; 
+    margin-right: auto
 }
