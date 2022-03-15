@@ -82,7 +82,6 @@ const App = () => {
     }, [mobileMenuActive]); 
 
     useEffect(()=>{
-        console.log(window.innerWidth)
         if(window.location.hash.length >2 && window.location.hash!== '#/log')
             document.body.style.overflowY = 'visible'
         else if(!isDesktop())

@@ -5,7 +5,6 @@ import { Menu } from 'primereact/menu';
 import { useHistory } from 'react-router-dom';
 import CredencialService from './service/CredencialService';
 import './DashTopbar.css'
-import { BreadCrumb } from 'primereact/breadcrumb';
 import { Dialog } from 'primereact/dialog';
 import Cuenta from './components/cuenta/Cuenta';
 import { Toast } from 'primereact/toast';
@@ -79,25 +78,6 @@ export const AppTopbar = (props) => {
         }
     ];
 
-    const [ itemsBreadMenu, setItemsBreadMenu] = useState([])
-
-    useEffect(()=>{
-        let itemsBread = []
-        let items = window.location.hash.split('/')
-        let url = '/#'
-        items.forEach((el,id)=>{
-            if(id>0 && (infoTopBar.Rol==='Soporte'||infoTopBar.Rol==='Admin')){
-                url += `/${el}`
-                itemsBread.push({label:el,url:url})
-            }else if(id>1 && infoTopBar.Rol==='Empleado'){
-                url += `/dash/${el}`
-                itemsBread.push({label:el,url:url})
-            }
-        })
-        setItemsBreadMenu(itemsBread)
-    },[window.location.hash, infoTopBar]) //eslint-disable-line
-
-    const homeBreadMenu = { icon: 'pi pi-home', url: '/#/' }
 
     const [ dialogCuenta, setDialogCuenta] = useState(false)
 
@@ -122,8 +102,6 @@ export const AppTopbar = (props) => {
             <button type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={toggleMenu}>
                 <i className="pi pi-user" />
             </button>
-
-            <BreadCrumb model={itemsBreadMenu} home={homeBreadMenu} style={{background:'transparent', border:'none'}}/>
 
             <div className={classNames("layout-topbar-menu lg:flex origin-top")}>
 

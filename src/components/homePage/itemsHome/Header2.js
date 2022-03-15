@@ -101,7 +101,7 @@ const Header2 = () => {
         smooth={'easeInCubic'}
         duration={800}
         >
-          <i className='pi pi-home text-xl mx-1 sm:mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
+          <i className='pi pi-home text-xl mx-1 hidden sm:block mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
         </Link>
         <Link
         activeClass="text-purple-300"
@@ -110,7 +110,7 @@ const Header2 = () => {
         smooth={'easeInCubic'}
         duration={800}
         >
-          <i className='pi pi-book text-xl mx-1 sm:mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
+          <i className='pi pi-book text-xl mx-1 hidden sm:block mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
         </Link>
         <Link
         activeClass="text-purple-300"
@@ -119,7 +119,7 @@ const Header2 = () => {
         smooth={'easeInCubic'}
         duration={800}
         >
-          <i className='pi pi-heart text-xl mx-1 sm:mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
+          <i className='pi pi-heart text-xl mx-1 hidden sm:block mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
         </Link>
         <Link
         activeClass="text-purple-300"
@@ -128,7 +128,7 @@ const Header2 = () => {
         smooth={'easeInCubic'}
         duration={800}
         >
-          <i className='pi pi-info-circle text-xl mx-1 sm:mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
+          <i className='pi pi-info-circle text-xl mx-1 hidden sm:block mx-3 cursor-pointer' style={{marginTop:'2.4rem'}}/>
         </Link>
       </div>
 
@@ -161,7 +161,7 @@ const Header2 = () => {
 
       {!localStorage.getItem('token') && <>
         <Button label="Iniciar Sesión" onClick={()=>redireccionar('/log')} className="layout-topbar-menu p-button-text absolute py-3 px-4 font-medium" style={{right:'3rem', top:'1.5rem'}} />
-        <Button tooltip='Iniciar Sesión' tooltipOptions={{position:'left'}} onClick={()=>redireccionar('/log')} className="pi pi-sign-in text-xl block lg:hidden p-button-text absolute py-3 px-4 font-medium" style={{right:'3rem', top:'1.5rem'}} />
+        <Button tooltip='Iniciar Sesión' tooltipOptions={{position:'left'}} onClick={()=>redireccionar('/log')} className="pi pi-sign-in text-xl block lg:hidden p-button-text absolute py-3 font-medium" style={{right:'0', top:'1.5rem'}} />
       </>}
       
       <Dialog header={<h4 className='text-center'>Cambio de contraseña</h4>} draggable={false} position='center' blockScroll={true} visible={dialogCuenta} style={{ width: '25vw' }} breakpoints={{'1150px': '30vw', '960px': '35vw', '640px': '100vw'}} onHide={hideModal}>
