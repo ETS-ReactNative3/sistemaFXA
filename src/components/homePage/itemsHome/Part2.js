@@ -1,13 +1,15 @@
+import { Button } from 'primereact/button'
 import React from 'react'
+import { Link } from 'react-scroll/modules'
 
-const Part2 = () => {
-    
+import './Part2.css'
+
+const Part2 = () => {    
+
   return (
-    
-        <div id='Part2' className="card px-6 py-4 md:px-8 lg:px-10 mb-0 relative" style={{borderRadius:'0', minHeight:'100vh'}}>
-            <div className="grid">
-                <img className='absolute bottom-0 left-0' src="https://images.hive.blog/p/X37EMQ9WSwsLaUVnWj5uXRHwjwzR6KfScsHyS24twkWHXTmg7HHYV2Z8Q5iCeP8LiLGPHXJSkgmzTRwEK1R6yc8NRekZ19x6mqvHt?format=match&mode=fit" alt="" />
-                <div className="col-12 lg:col-4 mt-6">
+        <div id='Part2' className="card relative" style={{borderRadius:'0', minHeight:'100vh'}}>
+            <div className="grid sm:px-6 py-4 md:px-8 lg:px-10 mb-0 ">
+                <div className="col-12 lg:col-4 mt-8">
                     <div className="p-3 h-full">
                         <div className="shadow-2 p-3 h-full flex flex-column surface-card text-center" style={{ borderRadius: '10px' }}>
                             <i className='pi pi-check-circle text-600 font-medium text-3xl mb-2 text-purple-300'/>
@@ -16,8 +18,7 @@ const Part2 = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-12 lg:col-4"></div>
-                <div className="col-12 lg:col-4 mt-6">
+                <div className="col-12 lg:col-4 mt-8">
                     <div className="p-3 h-full">
                         <div className="shadow-2 p-3 h-full flex flex-column surface-card text-center" style={{ borderRadius: '10px' }}>
                             <i className='pi pi-check-circle text-600 font-medium text-3xl mb-2 text-purple-300'/>
@@ -26,8 +27,7 @@ const Part2 = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-12 lg:col-4"></div>
-                <div className="col-12 lg:col-4 mt-6">
+                <div className="col-12 lg:col-4 mt-8">
                     <div className="p-3 h-full">
                         <div className="shadow-2 p-3 h-full flex flex-column surface-card text-center" style={{ borderRadius: '10px' }}>
                             <i className='pi pi-check-circle text-600 font-medium text-3xl mb-2 text-purple-300'/>
@@ -37,7 +37,20 @@ const Part2 = () => {
                     </div>
                 </div>
 
+                <div className="ocean hidden lg:block">
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                </div>
+            
             </div>
+            <Link
+            to="Part3"
+            spy={true}
+            smooth={'easeInCubic'}
+            duration={800}
+            >
+                <Button className='hidden lg:block p-button-rounded p-button-outlined absolute bottom-0 mx-4 my-6 text-white-alpha-90'><i className='pi pi-angle-down text-4xl'/></Button>
+            </Link>
         </div>
     
   )

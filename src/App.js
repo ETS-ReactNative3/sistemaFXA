@@ -79,8 +79,15 @@ const App = () => {
             removeClass(document.body, "body-overflow-hidden");
         }
 
-    }, [mobileMenuActive]);
+    }, [mobileMenuActive]); 
 
+    useEffect(()=>{
+        console.log(window.innerWidth)
+        if(window.location.hash.length >2 && window.location.hash!== '#/log')
+            document.body.style.overflowY = 'visible'
+        else if(!isDesktop())
+            document.body.style.overflowY = 'visible'
+    },[window.location.hash]) //eslint-disable-line
 
 
 
@@ -195,7 +202,6 @@ const App = () => {
         'p-ripple-disabled': ripple === false,
         'layout-theme-light': layoutColorMode === 'light'
     });
-      
 
     return (
         <>

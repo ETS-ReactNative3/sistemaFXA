@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Divider } from 'primereact/divider';
-
+import { Dialog } from 'primereact/dialog';
 
 const Footer = () => {
+
+  const [ modalTrabajaConNosotros, setModalTrabajaConNosotros] = useState(true)
+
+  const hideModal = () =>{
+    setModalTrabajaConNosotros(false)
+  }
+  const showModal = () =>{
+    setModalTrabajaConNosotros(true)
+  }
+
   return (
     <div id='Footer' className='card surface-card' style={{borderRadius:'0'}}>
       <footer className="grid">
@@ -26,10 +36,17 @@ const Footer = () => {
           <Divider className='md:hidden block ' layout='horizontal'/>
           <div className="col-12 xl:col-2 md:col-5">
             <div className="grid text-center align-items-center justify-content-center h-full">
-              <span className='col-12 font-medium'><i className='pi pi-info-circle text-3xl block mb-2 cursor-pointer' onClick={()=>alert('Info trabaja')}/>Trabaja Con Nosotros</span>  
+              <span className='col-12 font-medium'><i className='pi pi-info-circle text-3xl block mb-2 cursor-pointer' onClick={showModal}/>Trabaja Con Nosotros</span>  
             </div>
           </div>
       </footer>
+
+      <Dialog header='Trabaja Con Nosotros' className='text-lg' draggable={false} position='bottom-right' blockScroll={true} visible={modalTrabajaConNosotros} style={{ width: '35vw', rigth:'0' }} breakpoints={{'1150px': '45vw', '960px': '65vw', '640px': '100vw'}} onHide={hideModal}>
+        <div>¿Quieres hacer parte del equipo FXA?<span role="img" aria-label='emoji'>👌</span></div> 
+        <div className='my-2'>Envía un correo a: <span className='mx-1 font-medium'>hojasdevida@fuxiaaccesorios.com</span> </div>
+        <div>Especificando el cargo al que quieras aplicar y la ciudad donde desees aplicar.<span role="img" aria-label='emoji'>😊</span></div>
+      </Dialog>
+
     </div>
   )
 }
