@@ -45,13 +45,13 @@ import './assets/demo/flags/flags.css';
 import './assets/demo/Demos.scss';
 import './assets/layout/layout.scss';
 import './App.scss';
-import Login from './components/login/Login';
 import Permisos from './components/permisos/Permisos';
 import { Perfil } from './components/perfil/Perfil';
 import GenerarCertificado from './components/GenerarCertificado/GenerarCertificado';
 import TablasExtra from './components/tablasExtra/TablasExtra';
 import { DocumentosEmp } from './components/documentosEmp/DocumentosEpm';
 import HomePage from './components/homePage/HomePage';
+import Log from './components/login/Log';
 
 const App = () => {
 
@@ -258,7 +258,7 @@ const App = () => {
                     </div>
                 </Route>
                 <Route path='/log'>
-                    <Login/>
+                    <Log/>
                 </Route>
             </Switch>
 

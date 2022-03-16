@@ -3,22 +3,20 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Tooltip } from 'primereact/tooltip';
-import { Toast } from 'primereact/toast';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormikLogin from './FormikLogin';
 import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const Login = (params) => {
     const history = useHistory();
     const [toastLog, setToastLog] = useState({});
-    const toast = useRef(null);
 
     useEffect(()=>{
         localStorage.removeItem('token')
         if(toastLog.severity){
-            toast.current.show(toastLog);
+            params.toast.current.show(toastLog);
         }
-    },[toastLog])
+    },[toastLog]) //eslint-disable-line
 
     const formikLogin = new FormikLogin()
     const formik = formikLogin.formikLog({setToastLog:setToastLog, history:history})
@@ -30,11 +28,6 @@ const Login = () => {
     };
 
   return (
-        <div className="flex align-items-center justify-content-center" style={{width: "100%", height: "100%", position: 'fixed'}}>
-        <Toast ref={toast} position="bottom-right"/>
-
-        <i onClick={()=>history.push('/')} className='pi pi-home text-3xl absolute top-0 left-0 mt-4 ml-4 cursor-pointer'/>
-
         <div className="card p-4">
             <div className="flex align-items-center justify-content-center">
                     <form onSubmit={formik.handleSubmit} className="p-fluid relative">
@@ -80,12 +73,11 @@ const Login = () => {
                             </div>
                             <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('contraseña')}</p>
                         </div>
-                        <Button type="button"/*  onClick={handleOlvideContra} */ label="Olvidé mi contraseña" className="p-button-text absolute"  style={{bottom:"-15px"}}/>
+                        <Button type="button" onClick={()=>history.push('/log/recover-pass')} label="Olvidé mi contraseña" className="p-button-text absolute"  style={{bottom:"-15px"}}/>
                         <Button type="submit" label="Ingresar" className="mb-4"/>
                     </form>
             </div>
         </div>
-    </div>
     )
 };
 

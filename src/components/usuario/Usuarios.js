@@ -7,6 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
+import { confirmPopup } from 'primereact/confirmpopup';
 import { EmpleadoService } from '../../service/EmpleadoService';
 import './DataTableDemo.css';
 import { Usuario } from './Usuario';
@@ -14,6 +15,7 @@ import FormikEmp from './formikUsuario';
 import NewUsuario from './NewUsuario';
 import GenerarReporte from './generarReporte/GenerarReporte';
 import { Documentos } from './Documentos';
+import CredencialService from '../../service/CredencialService';
 
 export const Usuarios = () => {
     const [empleados, setEmpleados] = useState(null);
@@ -86,6 +88,8 @@ export const Usuarios = () => {
 
     const [dialogExport, setDialogExport] = useState(false)
     
+
+
     const showDialogExport = () =>{
         setDialogExport(true)
     }
@@ -201,12 +205,19 @@ export const Usuarios = () => {
         setNewUsuDialog(true)
     }
 
+    const [ modalChangePass, setModalChangePass] = useState(false)
+
+    const showModalChangePass = () =>{
+        setModalChangePass(true)
+    }
+
     const hideModal = () =>{
         setModalUsuario(false)
         setNewUsuDialog(false)
         setModalChangeState(false)
         setDialogExport(false)
         setModalDocumentosUsuario(false)
+        setModalChangePass(false)
     }
 
     const header1 = renderHeader1();
@@ -231,14 +242,33 @@ export const Usuarios = () => {
         empleadoFormik.handleSubmit()
     }
 
+
+
+    const confirm1 = (event) => {
+        confirmPopup({
+            target: event.currentTarget,
+            message: '¿Está seguro de restablecer la contraseña?',
+            icon: 'pi pi-exclamation-triangle',
+            acceptLabel:'Seguro!',
+            accept:showModalChangePass,
+        });
+    };
+
     const dialogHeader = () =>{
         return (
-            <div className='flex justify-content-end'>
-                <div className={buttonsDialog?'block':'hidden'}>
-                    <Button onClick={() => {empleadoFormik.setValues(empleadoDialog); setEmpleadoDialog({}) }} icon="pi pi-replay" className="p-button-rounded p-button-outlined mx-2" />
-                    <Button type="button" onClick={handleButtonSubmit} icon="pi pi-check" className="p-button-rounded p-button-outlined mx-2" />
+            <div className='w-full grid justify-content-between'>
+                <div className="mb-2 sm:mb-0 sm:col-6">
+                    <Button onClick={confirm1}  tooltip="Restablecer Contraseña" icon="pi pi-unlock" className="p-button-rounded p-button-outlined mx-2" />
                 </div>
-                <Button onClick={hideModal} icon="pi pi-times" className="p-button-rounded p-button-outlined mx-2" />
+                <div className='sm:col-6 flex justify-content-end'>
+                    <div className={buttonsDialog?'block':'hidden'}>
+                        <Button onClick={() => {empleadoFormik.setValues(empleadoDialog); setEmpleadoDialog({}) }} icon="pi pi-replay" className="p-button-rounded p-button-outlined mx-2" />
+                        <Button type="button" onClick={handleButtonSubmit} icon="pi pi-check" className="p-button-rounded p-button-outlined mx-2" />
+                    </div>
+                    <div className="block">
+                        <Button onClick={hideModal} icon="pi pi-times" className="p-button-rounded p-button-outlined mx-2" />
+                    </div>
+                </div>
             </div>
         )
     }
@@ -268,9 +298,24 @@ export const Usuarios = () => {
         setPageState(true)
     }
 
+    const credencialService = new CredencialService()
+
+    const handleButtonChangePass = () =>{
+        credencialService.restorePass(empleadoDialog.id_empleado).then(res=>{
+            toast.current.show({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 });
+            hideModal()
+        })
+    }
+
     const footerChangeStateEmpleado = () =>{
         return <>
             <Button type="button" label='Aceptar' onClick={handleButtonChangeState} icon="pi pi-check" className="mx-2" />
+            <Button label='Cancelar' type="button" onClick={hideModal} icon="pi pi-times" className="mx-2" />
+        </>
+    }
+    const footerChangePass = () =>{
+        return <>
+            <Button type="button" label='Aceptar' onClick={handleButtonChangePass} icon="pi pi-check" className="mx-2" />
             <Button label='Cancelar' type="button" onClick={hideModal} icon="pi pi-times" className="mx-2" />
         </>
     }
@@ -332,6 +377,12 @@ export const Usuarios = () => {
                     <div className="flex align-items-center justify-content-center" style={{color:'var(--yellow-700)' }}>
                         <i className="pi pi-exclamation-triangle mr-3 " style={{ fontSize: '3rem' }} />
                         <span>¿Está seguro de cambiar el estado a <b>{empleadoChangeState.nombres}</b>?</span>
+                    </div>
+                </Dialog>
+                <Dialog  footer={footerChangePass} closable={false} draggable={false} position='bottom' blockScroll={true} visible={modalChangePass} style={{ width: '35vw' }} breakpoints={{'1150px': '40vw', '960px': '60vw', '640px': '100vw'}} onHide={hideModal}>
+                    <div className="flex align-items-center justify-content-center" style={{color:'var(--yellow-700)' }}>
+                        <i className="pi pi-exclamation-triangle mr-3 " style={{ fontSize: '3rem' }} />
+                        <div>Está Apunto de restablecer la contraseña de {empleadoDialog.nombres}</div>
                     </div>
                 </Dialog>
             </div>
