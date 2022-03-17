@@ -31,7 +31,7 @@ const Login = (params) => {
         <div className="card p-4">
             <div className="flex align-items-center justify-content-center">
                     <form onSubmit={formik.handleSubmit} className="p-fluid relative">
-                        <h5 className="text-center">Iniciar Sesión</h5>
+                        <h5 className="text-center">Iniciar Sesión en SIGE</h5>
                         <div className="formgrid mt-5 mb-4 relative">
                             <div className="field col p-inputgroup m-0">
                                 <span className="p-inputgroup-addon">

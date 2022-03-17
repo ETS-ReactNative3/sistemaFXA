@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { ScrollPanel } from 'primereact/scrollpanel';
 import React, { useEffect, useState } from 'react';
-import FormikLogin from './FormikLogin';
+import FormikSendEmailPass from './FormikSendEmailPass';
 import { useHistory } from 'react-router-dom';
 
 const SendEmailPass = (params) => {
@@ -18,8 +18,8 @@ const SendEmailPass = (params) => {
         }
     },[toastLog]) //eslint-disable-line
 
-    const formikLogin = new FormikLogin()
-    const formik = formikLogin.formikLog({setToastLog:setToastLog, history:history})
+    const formikSendEmailPass = new FormikSendEmailPass()
+    const formik = formikSendEmailPass.formikSendEmail({setToastLog:setToastLog, history:history})
     
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
 
@@ -29,12 +29,12 @@ const SendEmailPass = (params) => {
   return (
         <form onSubmit={formik.handleSubmit} className="p-fluid card p-4 col-4">
             <ScrollPanel style={{width: '100%', height: '85vh'}}>
-                <h5 className="text-center">¿Olvidaste La Contraseña?</h5>
-                <div className="formgrid mt-5 mb-4 relative grid">
-                    <div className="card">
-                        Para restablecer tu contraseña se te pide que llenes el siguiente formulario con tus datos basicos y de manera opcional se te pide que dejes un mensaje
+                <div className="formgrid  relative grid">
+                    <h5 className="text-center mt-4 w-full">¿Olvidaste La Contraseña?</h5>
+                    <div className="card mt-5 mb-4">
+                        Para restablecer tu contraseña el SIGE te pide que llenes el siguiente formulario con tus datos basicos y de manera opcional se te pide que dejes un mensaje
                     </div>
-                    <div className="field col-6 p-inputgroup mt-4">
+                    <div className="field col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-id-card"></i>
                         </span>
@@ -48,10 +48,10 @@ const SendEmailPass = (params) => {
                             className={classNames({ 'p-invalid': isFormFieldValid('numero_identificacion') })}
                             />
                             <label htmlFor="numero_identificacion" className={classNames({ 'p-error': isFormFieldValid('numero_identificacion') })}>Número Identificación:</label>
+                            <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('numero_identificacion')}</p>
                         </span>
-                        <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('numero_identificacion')}</p>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-4">
+                    <div className="field col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-user"></i>
                         </span>
@@ -59,16 +59,16 @@ const SendEmailPass = (params) => {
                             <InputText
                             tooltip="Ingrese su nombre"
                             tooltipOptions={{position: 'bottom'}}
-                            name="nombres"
-                            value={formik.values.nombres}
+                            name="nombre"
+                            value={formik.values.nombre}
                             onChange={formik.handleChange}
-                            className={classNames({ 'p-invalid': isFormFieldValid('nombres') })}
+                            className={classNames({ 'p-invalid': isFormFieldValid('nombre') })}
                             />
-                            <label htmlFor="nombres" className={classNames({ 'p-error': isFormFieldValid('nombres') })}>Nombre:</label>
+                            <label htmlFor="nombre" className={classNames({ 'p-error': isFormFieldValid('nombre') })}>Nombre:</label>
+                            <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('nombre')}</p>
                         </span>
-                        <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('nombres')}</p>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-4">
+                    <div className="field col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-money-bill"></i>
                         </span>
@@ -82,12 +82,12 @@ const SendEmailPass = (params) => {
                             className={classNames({ 'p-invalid': isFormFieldValid('centro_costo') })}
                             />
                             <label htmlFor="centro_costo" className={classNames({ 'p-error': isFormFieldValid('centro_costo') })}>Centro De Costo:</label>
+                            <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('centro_costo')}</p>
                         </span>
-                        <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('centro_costo')}</p>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-4">
+                    <div className="field col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
-                            <i className="pi pi-money-bill"></i>
+                            <i className="pi pi-briefcase"></i>
                         </span>
                         <span className="p-float-label">
                             <InputText
@@ -99,10 +99,10 @@ const SendEmailPass = (params) => {
                             className={classNames({ 'p-invalid': isFormFieldValid('cargo') })}
                             />
                             <label htmlFor="cargo" className={classNames({ 'p-error': isFormFieldValid('cargo') })}>Cargo:</label>
+                            <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('cargo')}</p>
                         </span>
-                        <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('cargo')}</p>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-4">
+                    <div className="field col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-phone"></i>
                         </span>
@@ -116,10 +116,10 @@ const SendEmailPass = (params) => {
                             className={classNames({ 'p-invalid': isFormFieldValid('tel_contacto') })}
                             />
                             <label htmlFor="tel_contacto" className={classNames({ 'p-error': isFormFieldValid('tel_contacto') })}>Tel. Contacto:</label>
+                            <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('tel_contacto')}</p>
                         </span>
-                        <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('tel_contacto')}</p>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-4">
+                    <div className="field col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-map-marker"></i>
                         </span>
@@ -133,8 +133,8 @@ const SendEmailPass = (params) => {
                             className={classNames({ 'p-invalid': isFormFieldValid('ciudad') })}
                             />
                             <label htmlFor="ciudad" className={classNames({ 'p-error': isFormFieldValid('ciudad') })}>Ciudad:</label>
+                            <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('ciudad')}</p>
                         </span>
-                        <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('ciudad')}</p>
                     </div>
                     <div className="field col-12 p-inputgroup mt-4">
                         <span className="p-inputgroup-addon">
@@ -142,17 +142,18 @@ const SendEmailPass = (params) => {
                         </span>
                         <span className="p-float-label">
                             <InputTextarea
-                            tooltip="Ingrese la ciudad donde trabaja"
+                            tooltip="Ingrese un mensaje para el restablecimiento de su contraseña"
                             tooltipOptions={{position: 'bottom'}}
                             autoResize
-                            name="ciudad"
-                            value={formik.values.ciudad}
+                            name="mensaje"
+                            value={formik.values.mensaje}
+                            maxLength={500}
                             onChange={formik.handleChange}
-                            className={classNames({ 'p-invalid': isFormFieldValid('ciudad') })}
+                            className={classNames({ 'p-invalid': isFormFieldValid('mensaje') })}
                             />
-                            <label htmlFor="ciudad" className={classNames({ 'p-error': isFormFieldValid('ciudad') })}>Mensaje del Email:</label>
+                            <label htmlFor="mensaje" className={classNames({ 'p-error': isFormFieldValid('mensaje') })}>Mensaje del Email:</label>
+                            <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('mensaje')}</p>
                         </span>
-                        <p className="mx-6 absolute" style={{top:'2.6rem'}}>{getFormErrorMessage('ciudad')}</p>
                     </div>
                 </div>
                 
