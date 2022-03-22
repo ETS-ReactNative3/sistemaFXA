@@ -27,14 +27,14 @@ const SendEmailPass = (params) => {
         return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
     };
   return (
-        <form onSubmit={formik.handleSubmit} className="p-fluid card p-4 col-4">
+        <form onSubmit={formik.handleSubmit} className="p-fluid card p-4 col-12 sm:col-10 md:col-9 lg:col-7 xl:col-5">
             <ScrollPanel style={{width: '100%', height: '85vh'}}>
                 <div className="formgrid  relative grid">
                     <h5 className="text-center mt-4 w-full">¿Olvidaste La Contraseña?</h5>
-                    <div className="card mt-5 mb-4">
+                    <div className="card mt-2 mb-3">
                         Para restablecer tu contraseña el SIGE te pide que llenes el siguiente formulario con tus datos basicos y de manera opcional se te pide que dejes un mensaje
                     </div>
-                    <div className="field col-6 p-inputgroup mt-5 relative">
+                    <div className="field col-12 sm:col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-id-card"></i>
                         </span>
@@ -47,11 +47,11 @@ const SendEmailPass = (params) => {
                             onChange={formik.handleChange}
                             className={classNames({ 'p-invalid': isFormFieldValid('numero_identificacion') })}
                             />
-                            <label htmlFor="numero_identificacion" className={classNames({ 'p-error': isFormFieldValid('numero_identificacion') })}>Número Identificación:</label>
+                            <label htmlFor="numero_identificacion" className={classNames({ 'p-error': isFormFieldValid('numero_identificacion') })}>N° Identificación:</label>
                             <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('numero_identificacion')}</p>
                         </span>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-5 relative">
+                    <div className="field col-12 sm:col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-user"></i>
                         </span>
@@ -68,7 +68,7 @@ const SendEmailPass = (params) => {
                             <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('nombre')}</p>
                         </span>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-5 relative">
+                    <div className="field col-12 sm:col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-money-bill"></i>
                         </span>
@@ -85,7 +85,7 @@ const SendEmailPass = (params) => {
                             <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('centro_costo')}</p>
                         </span>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-5 relative">
+                    <div className="field col-12 sm:col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-briefcase"></i>
                         </span>
@@ -102,7 +102,7 @@ const SendEmailPass = (params) => {
                             <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('cargo')}</p>
                         </span>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-5 relative">
+                    <div className="field col-12 sm:col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-phone"></i>
                         </span>
@@ -115,11 +115,11 @@ const SendEmailPass = (params) => {
                             onChange={formik.handleChange}
                             className={classNames({ 'p-invalid': isFormFieldValid('tel_contacto') })}
                             />
-                            <label htmlFor="tel_contacto" className={classNames({ 'p-error': isFormFieldValid('tel_contacto') })}>Tel. Contacto:</label>
+                            <label htmlFor="tel_contacto" className={classNames({ 'p-error': isFormFieldValid('tel_contacto') })}>Tel Contacto:</label>
                             <p className="absolute" style={{top:'2.1rem'}}>{getFormErrorMessage('tel_contacto')}</p>
                         </span>
                     </div>
-                    <div className="field col-6 p-inputgroup mt-5 relative">
+                    <div className="field col-12 sm:col-6 p-inputgroup mt-5 relative">
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-map-marker"></i>
                         </span>

@@ -16,6 +16,10 @@ class CredencialService {
         return axios.post(`${API}/chage-pass`,data)
     }
 
+    sendEmailRestorePass(data){
+        return axios.post(`${API}/send-email-restore-pass`, data)
+    }
+
     restorePass(id){
         return axios.post(`${API}/restore-pass`,{idUsuario:id})
     }

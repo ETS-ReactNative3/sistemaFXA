@@ -43,7 +43,15 @@ class FormikSendEmailPass {
 
             },
             onSubmit: data =>{
-                console.log("enviao")
+                credencialservice.sendEmailRestorePass(data).then(res=>{
+                    if(res.status===201){
+                        params.setToastLog({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
+                        params.history.push('/log')   
+                    }else{
+                        params.setToastLog({ severity: 'error', summary: 'Error', detail: res.data, life: 3000 })    
+                    }
+
+                })
             }
         })
         return formik

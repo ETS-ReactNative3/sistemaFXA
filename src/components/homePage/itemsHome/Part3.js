@@ -7,7 +7,7 @@ const Part3 = () => {
     <div className='relative w-full hscreen'>
       <div id='Part3' className="grid grid-nogutter surface-section text-800 mt-0">
           <div className="col-12 md:col-6 overflow-hidden">
-              <img src="images/blocks/hero/hero-1.png" alt="hero-1" className="md:ml-auto block md:h-screen" style={{ clipPath: 'circle(97% at 0 33%)', maxHeight:'100vw' }} />
+              <img src="images/blocks/hero/hero-1.png" alt="hero-1" className="md:ml-auto block h-screen" style={{ clipPath: 'circle(97% at 0 33%)'}} />
           </div>
           <div className="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
               <section>

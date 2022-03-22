@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 
 import { FileUpload } from 'primereact/fileupload';
 import { Divider } from 'primereact/divider';
+import UploadFilesService from '../../service/UploadFilesService';
 
 
 const ChangeFotografia = (params) => {
@@ -31,7 +32,7 @@ const ChangeFotografia = (params) => {
               <div className="col-5 text-center">
                 Foto Anterior
                 <div className="flex align-items-center justify-content-center w-full">
-                    <img alt='' src={'https://drm2ecjli5gr8.cloudfront.net/efectos/grandes/polaroidStyle.jpg'} width={100} />
+                    <img alt='' src={params.img} width={100} />
                 </div>
               </div>
               <Divider layout='vertical col-1'/>
@@ -54,7 +55,7 @@ const ChangeFotografia = (params) => {
               <div className="col-5 text-center">
                 Foto Anterior
                 <div className="flex align-items-center justify-content-center w-full">
-                    <img alt='' src={'https://drm2ecjli5gr8.cloudfront.net/efectos/grandes/polaroidStyle.jpg'} width={100} />
+                    <img alt='' src={params.img} width={100} />
                 </div>
               </div>
               <Divider layout='vertical col-1'/>
@@ -72,13 +73,22 @@ const ChangeFotografia = (params) => {
   const uploadOptions = {icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined'};
   const cancelOptions = {icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined'};
 
+  const uploadFilesService = new UploadFilesService()
+
   const uploadImage = ({files}) =>{
-    console.log(files)
+    const formData = new FormData();
+    console.log(files[0])
+    formData.append('file', files[0])
+
+    uploadFilesService.uploadPerfilImage(formData).then(res=>{
+      console.log(res.data)
+    })
   }
+
 
   return (
     <div>
-      <FileUpload ref={fileUploadRef} name="fotoPerfil" customUpload uploadHandler={uploadImage} accept="image/*" maxFileSize={1000000}
+      <FileUpload ref={fileUploadRef} name="fotoPerfil"  customUpload uploadHandler={uploadImage} accept="image/*" maxFileSize={1000000}
         onUpload={onTemplateUpload} headerTemplate={headerTemplate} itemTemplate={itemTemplate} emptyTemplate={emptyTemplate}
         chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions}/>
     </div>

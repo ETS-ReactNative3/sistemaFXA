@@ -24,6 +24,10 @@ export const Perfil = (params) => {
     const [loading, setLoading] = useState(true);
     const toast = useRef(null);
 
+    const API = process.env.REACT_APP_API + '/img/perfil'
+
+    const [ routeFile, setRouteFile] = useState(null)
+
     useEffect(() => {
         const credencialService = new CredencialService()
         const empleadoService = new EmpleadoService()
@@ -33,6 +37,12 @@ export const Perfil = (params) => {
                 setEmpleado(resp.data)
                 setLoading(false)
             })
+        })
+        empleadoService.getRouteImgPerfil().then(res=>{
+            if(res.data)
+                setRouteFile(`${API}/${res.data}`)
+            else
+                setRouteFile(`${API}/UsuarioDefault.webp`)
         })
         
     }, []);  // eslint-disable-line react-hooks/exhaustive-deps
@@ -68,7 +78,7 @@ export const Perfil = (params) => {
             <div className="col-12 xl:col-9 lg:col-8 md:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img className='w-full' style={{maxWidth:'120px'}} src="https://drm2ecjli5gr8.cloudfront.net/efectos/grandes/polaroidStyle.jpg" alt="" />
+                    <img className='w-full' style={{maxWidth:'120px'}} src={routeFile} alt="" />
                     <div onClick={showModal} className={showChangeIgame?'flex card w-full justify-content-center top-0 align-items-center right-0 h-full absolute cursor-pointer':'hidden'} style={{background:'rgba(1,1,1,0.2)'}}>
                         <i className="pi pi-undo text-4xl"></i>
                     </div>
@@ -106,7 +116,7 @@ export const Perfil = (params) => {
             </div>
             <div className="col-12 xl:col-3 lg:col-4 md:col-4">
                 <div className='card hidden xl:flex md:flex lg:flex relative justify-content-center align-items-center' onMouseEnter={()=>setshowChangeIgame(true)} onMouseLeave={()=>setshowChangeIgame(false)}>
-                    <img className='w-full' style={{maxWidth:'180px'}} src="https://drm2ecjli5gr8.cloudfront.net/efectos/grandes/polaroidStyle.jpg" alt="" />
+                    <img className='w-full' style={{maxWidth:'180px'}} src={routeFile} alt="" />
                     <div onClick={showModal} className={showChangeIgame?'flex card w-full justify-content-center top-0 align-items-center right-0 h-full absolute cursor-pointer':'hidden'} style={{background:'rgba(1,1,1,0.2)'}}>
                         <i className="pi pi-undo text-4xl"></i>
                     </div>
@@ -135,7 +145,7 @@ export const Perfil = (params) => {
         </div>
         }
         <Dialog header='Cambiar Fotografía' draggable={false} position='center' blockScroll={true} visible={changeFotoModal} style={{ width: '35vw' }} breakpoints={{'1150px': '45vw', '960px': '65vw', '640px': '100vw'}} onHide={hideModal}>
-            <ChangeFotografia toast={toast}/>
+            <ChangeFotografia toast={toast} img={routeFile}/>
         </Dialog>
         <Toast ref={toast}></Toast>
     </>

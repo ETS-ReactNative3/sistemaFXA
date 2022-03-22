@@ -67,4 +67,8 @@ export class EmpleadoService {
     getInfoPerfil(idUsu){
         return axios.get(`${API}/info-perfil/${idUsu}`)
     }
+
+    getRouteImgPerfil(){
+        return axios.get(`${API}/default/obtener-img-perfil`)
+    }
 }

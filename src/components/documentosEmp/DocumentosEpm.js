@@ -7,8 +7,11 @@ import { Divider } from 'primereact/divider';
 import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
 import { Button } from 'primereact/button';
 import { OverlayPanel } from 'primereact/overlaypanel';
+import UploadFilesService from '../../service/UploadFilesService';
 
 export const DocumentosEmp = (params) => {
+
+    const API = process.env.REACT_APP_API + '/img/perfil'
 
     const op = useRef(null);
 
@@ -22,6 +25,8 @@ export const DocumentosEmp = (params) => {
 
     const [documentosFaltantesData, setDocumentosFaltantesData] = useState([])
 
+    const [ routeFile, setRouteFile] = useState(null)
+
     useEffect(() => {
         const credencialService = new CredencialService()
         const empleadoService = new EmpleadoService()
@@ -34,11 +39,30 @@ export const DocumentosEmp = (params) => {
             documentosFaltantesService.getByIdEmp(res.data.id).then(res=>{
             setDocumentosFaltantesData(res.data)
             })
+
+            empleadoService.getRouteImgPerfil().then(res=>{
+                if(res.data)
+                    setRouteFile(`${API}/${res.data}`)
+                else
+                    setRouteFile(`${API}/UsuarioDefault.webp`)
+            })
+
         })
         
     }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
     const [ fileValue, setFileValue] = useState(null)
+
+    const uploadFilesService = new UploadFilesService()
+    const sendFile = () => {
+        const formData = new FormData();
+        console.log(fileValue[0])
+        formData.append('file', fileValue[0])
+        
+        uploadFilesService.uploadPerfilImage(formData).then(res=>{
+            console.log(res.data)
+        })
+    }
 
   return (
     <>
@@ -50,7 +74,7 @@ export const DocumentosEmp = (params) => {
             <div className="col-12 xl:col-9 lg:col-8 md:col-8">
                 <h5 className='text-center'>{dataEmpleado.nombres} {dataEmpleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img className='w-5' style={{maxWidth:'150px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                    <img className='w-5' style={{maxWidth:'150px'}} src={routeFile} alt="" />
                 </div>
                 <div className="card">
                     <Divider align="left">
@@ -79,7 +103,7 @@ export const DocumentosEmp = (params) => {
             </div>
             <div className="col-12 xl:col-3 lg:col-4 md:col-4">
                 <div className='card hidden xl:block md:block lg:block'>
-                    <img className='w-full' style={{maxWidth:'180px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                    <img className='w-full' style={{maxWidth:'180px'}} src={routeFile} alt="" />
                 </div>
                <div className="card">
                     <h5>Datos:<i onClick={()=>history.push("/dash/perfil")} className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
@@ -99,8 +123,8 @@ export const DocumentosEmp = (params) => {
             <div className='w-full text-center'>
                 <h6>Agregar Documento</h6>
             </div>
-            <input id='file' name='file' type="file" accept='application/pdf' onChange={e=>setFileValue([e.currentTarget.files[0]])} />
-            <Button type='button' onClick={()=>console.log(fileValue)} label='Guardar' className='mt-2 w-full'/>
+            <input id='file' encType="multipart/form-data" name='file' type="file" accept='application/pdf' onChange={e=>setFileValue([e.currentTarget.files[0]])} />
+            <Button type='button' onClick={sendFile} label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </>
   )
