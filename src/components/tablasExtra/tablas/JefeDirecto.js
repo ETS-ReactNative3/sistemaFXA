@@ -142,12 +142,14 @@ const JefeDirecto = (props) => {
     }
 
     const saveJefe = () =>{
-        jefeDirectoService.newJefe({id_empleado:empleadoSeleccionado}).then(res=>{
+        jefeDirectoService.newJefe({id_empleado:empleadoSeleccionado.id_empleado}).then(res=>{
             setToatsEmpelado({ severity: 'success', summary: 'Todo Bien', detail: res.data, life: 3000 })
             reload()
             op.current.hide()
         })
     }
+
+    const API = process.env.REACT_APP_API + '/img/perfil'
 
     return <div>
         <Toast ref={toast} position="bottom-right"/>
@@ -163,25 +165,25 @@ const JefeDirecto = (props) => {
 
         <OverlayPanel ref={op} onHide={()=>setEmpleadoSeleccionado(null)} showCloseIcon id="overlay_panel" style={{ width: '300px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
             <div className='w-full text-center'>
-                <h5>Nuevo Jefe</h5>
+                <h4>Nuevo Jefe</h4>
             </div>
             
-            <h6>Filtrar Empleados Por:</h6>
+            <h5>Filtrar Empleados Por:</h5>
             <SelectButton unselectable={false} value={selectedOptionButton} options={OptionsButton} optionLabel="name" onChange={(e) => changeValueOption(e)} />
             <div className="col-12 mt-5">
                 <span className="p-float-label">
-                    <Dropdown resetFilterOnHide className='w-full' dropdownIcon={null} value={empleadoSeleccionado} options={empleados} onChange={onEmpleadoChange} optionLabel={selectedOptionButton} optionValue={'id_empleado'} filter filterBy={selectedOptionButton} placeholder=""
+                    <Dropdown resetFilterOnHide className='w-full' dropdownIcon={null} value={empleadoSeleccionado} options={empleados} onChange={onEmpleadoChange} optionLabel={selectedOptionButton} filter filterBy={selectedOptionButton} placeholder=""
                     emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
                     <label>Empleados:</label>
                 </span>
             </div>
-{/* 
-            <span>Empelado Seleccionado:</span>
-            <div>Nombres:</div>
-            <div>Apellidos:</div>
-            <div>Identificación:</div> */}
-
-            <Button onClick={saveJefe} label='Guardar' className='mt-4 w-full'/>
+            { empleadoSeleccionado && <>
+                <h5>Empleado Seleccionado:</h5>
+                <div className="w-full flex justify-content-center my-2"><img className='border-circle' width={60} height={60} src={empleadoSeleccionado.src_fotografia?`${API}/${empleadoSeleccionado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="Foto Empleado" /></div> 
+                <div className='font-medium'>{empleadoSeleccionado.nombres} {empleadoSeleccionado.apellidos}</div>
+                <div>Identificación: {empleadoSeleccionado.numero_identificacion}</div>
+                <Button onClick={saveJefe} label='Guardar' className='mt-4 w-full'/>
+            </>}
         </OverlayPanel>
     </div>;
 };

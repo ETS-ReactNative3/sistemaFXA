@@ -8,6 +8,10 @@ class UploadFilesService {
         return axios.post(`${API}/perfil-image`,data)
     }
 
+    uploadFile(data){
+        return axios.post(`${API}/file-emp`, data)
+    }
+
 }
 
 export default UploadFilesService

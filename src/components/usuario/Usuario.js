@@ -29,11 +29,11 @@ export const Usuario = (params) => {
             params.setEmpleadoDialog(res.data)
             setLoading(false)
         })
-    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);  // eslint-disable-line
 
     useEffect(()=>{
         params.setEmpleadoDialog(empleado)
-    },[params.empleadoDialog]) // eslint-disable-line react-hooks/exhaustive-deps
+    },[params.empleadoDialog]) // eslint-disable-line
 
     const documentosFaltantesService = new DocumentosFaltantesService()
     const [documentosFaltantesData, setDocumentosFaltantesData] = useState([])
@@ -53,6 +53,8 @@ export const Usuario = (params) => {
         )
     }
 
+    const API = process.env.REACT_APP_API + '/img/perfil'
+
   return (
     <>
         {loading &&
@@ -63,7 +65,7 @@ export const Usuario = (params) => {
             <div className="col-12 xl:col-8 lg:col-8 md:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img className='w-5' style={{maxWidth:'150px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                    <img className='w-5' style={{maxWidth:'150px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
                 </div>
                 <div className="card">
                     <form onSubmit={params.formik.handleSubmit}>
@@ -100,7 +102,7 @@ export const Usuario = (params) => {
             </div>
             <div className="col-12 xl:col-4 lg:col-4 md:col-4">
                 <div className='card hidden xl:flex md:flex lg:flex align-items-center justify-content-center'>
-                    <img className='w-full' style={{maxWidth:'200px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                    <img className='w-full' style={{maxWidth:'200px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
                 </div>
                 <div className="card">
                     <div className="mb-6">

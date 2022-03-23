@@ -27,12 +27,13 @@ const ChangeFotografia = (params) => {
   }
 
   const itemTemplate = (file) => {
+    
       return (
         <div className="grid">
               <div className="col-5 text-center">
                 Foto Anterior
                 <div className="flex align-items-center justify-content-center w-full">
-                    <img alt='' src={params.img} width={100} />
+                    <img alt='Imagen anterior' src={params.img} width={100} />
                 </div>
               </div>
               <Divider layout='vertical col-1'/>
@@ -77,11 +78,12 @@ const ChangeFotografia = (params) => {
 
   const uploadImage = ({files}) =>{
     const formData = new FormData();
-    console.log(files[0])
     formData.append('file', files[0])
 
     uploadFilesService.uploadPerfilImage(formData).then(res=>{
-      console.log(res.data)
+      params.toast.current.show({severity: 'success', summary: 'Todo Bien', detail: res.data});
+      params.setReloadPage(params.reloadPage+1)
+      params.hideModal()
     })
   }
 
@@ -90,7 +92,8 @@ const ChangeFotografia = (params) => {
     <div>
       <FileUpload ref={fileUploadRef} name="fotoPerfil"  customUpload uploadHandler={uploadImage} accept="image/*" maxFileSize={1000000}
         onUpload={onTemplateUpload} headerTemplate={headerTemplate} itemTemplate={itemTemplate} emptyTemplate={emptyTemplate}
-        chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions}/>
+        chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions}
+        invalidFileSizeMessageSummary='Archivo no valido' invalidFileSizeMessageDetail='Maximo de tamaño soportado es {0}'/>
     </div>
   )
 }

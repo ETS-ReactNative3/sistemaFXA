@@ -161,10 +161,12 @@ export const Usuarios = () => {
         )
     }
 
-    const avatarTableBody = () =>{
+    const API = process.env.REACT_APP_API + '/img/perfil'
+
+    const avatarTableBody = (e) =>{
         return (
             <div className='w-full flex align-items-center justify-content-center'>
-                <img className='border-circle' width={50} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="avatar" />
+                <img className='border-circle' width={50} height={50} src={e.src_fotografia?`${API}/${e.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="Imagen Perfil" />
             </div>
         )
     }
@@ -339,7 +341,7 @@ export const Usuarios = () => {
                     <DataTable value={empleados} paginator className="p-datatable-customers datatable-responsive" rows={5}
                         dataKey="id" rowsPerPageOptions={[5, 10, 25, 50, 100]} filters={filters1} filterDisplay="menu" loading={loading1} size="large" responsiveLayout="stack"
                         globalFilterFields={['nombres', 'empresa.nombre_empresa', 'lugar_trabajo.nombre_ciudad', 'centro_costo.nombre_centro_costo', 'numero_identificacion']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontraron Empleados" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
-                        <Column body={avatarTableBody()} style={{ minWidth: '5rem' }} />
+                        <Column body={e=>avatarTableBody(e)} style={{ minWidth: '5rem' }} />
                         <Column field='nombres' header="Nombres" sortable filter filterPlaceholder="Buscar Por Nombre" style={{ minWidth: '10rem' }} />
                         <Column header="Empresa" style={{ minWidth: '12rem' }} sortable field='empresa.nombre_empresa' filter filterPlaceholder="Buscar Por Empresa"/>
                         <Column header="Lugar Trabajo" style={{ minWidth: '12rem' }} sortable field='lugar_trabajo.nombre_ciudad' filter filterPlaceholder="Buscar Por Lugar Trabajo"/>

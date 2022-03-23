@@ -91,6 +91,7 @@ export const Documentos = (params) => {
         });
     }
     
+    const API = process.env.REACT_APP_API + '/img/perfil'
 
   return (
     <>
@@ -102,7 +103,7 @@ export const Documentos = (params) => {
             <div className="col-12 lg:col-8 md:col-8">
                 <h5 className=' text-center'>{dataEmpleado.nombres} {dataEmpleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img className='w-5' style={{maxWidth:'150px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                <img className='w-5' style={{maxWidth:'150px', borderRadius:'5px'}} src={dataEmpleado.src_fotografia?`${API}/${dataEmpleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
                 </div>
                 <div className="card">
                     <h5>Documentos:</h5>
@@ -133,7 +134,7 @@ export const Documentos = (params) => {
             </div>
             <div className="col-12 lg:col-4 md:col-4">
                 <div className='card hidden xl:flex md:flex lg:flex align-items-center justify-content-center'>
-                    <img className='w-full' style={{maxWidth:'200px'}} src="https://images.vexels.com/media/users/3/153765/isolated/preview/c10b13f96511782d983e3a60940cc58a-como-iconos-sociales-de-icono-de-trazo-de-color.png" alt="" />
+                    <img className='w-full' style={{maxWidth:'200px', borderRadius:'5px'}} src={dataEmpleado.src_fotografia?`${API}/${dataEmpleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
                 </div>
                <div className="card">
                     <h5>Datos:<i onClick={()=>params.changeModal(1)} className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>

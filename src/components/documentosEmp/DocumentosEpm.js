@@ -6,10 +6,17 @@ import { useHistory } from 'react-router-dom';
 import { Divider } from 'primereact/divider';
 import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
 import { Button } from 'primereact/button';
+import { FileUpload } from 'primereact/fileupload';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import UploadFilesService from '../../service/UploadFilesService';
+import { Dropdown } from 'primereact/dropdown';
+import { Toast } from 'primereact/toast';
+import DocumentosService from '../../service/DocumentosService';
+
 
 export const DocumentosEmp = (params) => {
+
+    const toast = useRef(null);
 
     const API = process.env.REACT_APP_API + '/img/perfil'
 
@@ -25,9 +32,15 @@ export const DocumentosEmp = (params) => {
 
     const [documentosFaltantesData, setDocumentosFaltantesData] = useState([])
 
+    const [documentosData, setDocumentosData] = useState([])
+
     const [ routeFile, setRouteFile] = useState(null)
 
+    const [ reloadPage, setReloadPage] = useState(0)
+
+    
     useEffect(() => {
+        const documentosService = new DocumentosService()
         const credencialService = new CredencialService()
         const empleadoService = new EmpleadoService()
 
@@ -37,32 +50,59 @@ export const DocumentosEmp = (params) => {
                 setLoading(false)
             })
             documentosFaltantesService.getByIdEmp(res.data.id).then(res=>{
-            setDocumentosFaltantesData(res.data)
+                setDocumentosFaltantesData(res.data)
             })
 
-            empleadoService.getRouteImgPerfil().then(res=>{
-                if(res.data)
-                    setRouteFile(`${API}/${res.data}`)
-                else
-                    setRouteFile(`${API}/UsuarioDefault.webp`)
+            documentosService.getByIdEmp(res.data.id).then(res=>{
+                setDocumentosData(res.data)
             })
 
         })
+        empleadoService.getRouteImgPerfil().then(res=>{
+            if(res.data)
+                setRouteFile(`${API}/${res.data}`)
+            else
+                setRouteFile(`${API}/UsuarioDefault.webp`)
+        })
         
-    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+    }, [reloadPage]);  // eslint-disable-line
 
-    const [ fileValue, setFileValue] = useState(null)
+    const [dataOption, setDataOption] = useState([])
+    const [itemSeleccionado, setItemSeleccionado] = useState(null);
+
+
+    const ItemService  = require('../../service/DefaultService');
+    const itemService = ItemService.default('tipo-documento')
+    const service = new itemService()
+
+    useEffect(()=>{
+        service.getAll().then(res=>{
+            setDataOption(res.data)
+        })
+    },[])// eslint-disable-line 
+
+    const onItemChange = (e) =>{
+        let value = e.value
+        setItemSeleccionado(value);
+    }
+
+    const hideModal = () =>{
+        op.current.hide()
+    }
 
     const uploadFilesService = new UploadFilesService()
-    const sendFile = () => {
+
+    const uploadImage = ({files}) =>{
         const formData = new FormData();
-        console.log(fileValue[0])
-        formData.append('file', fileValue[0])
-        
-        uploadFilesService.uploadPerfilImage(formData).then(res=>{
-            console.log(res.data)
+        formData.append('file', files[0])
+        formData.append('tipo_documento_fk', itemSeleccionado.id_tipo_documento)
+    
+        uploadFilesService.uploadFile(formData).then(res=>{
+          toast.current.show({severity: 'success', summary: 'Todo Bien', detail: res.data});
+          setReloadPage(reloadPage+1)
+          hideModal()
         })
-    }
+      }
 
   return (
     <>
@@ -74,7 +114,7 @@ export const DocumentosEmp = (params) => {
             <div className="col-12 xl:col-9 lg:col-8 md:col-8">
                 <h5 className='text-center'>{dataEmpleado.nombres} {dataEmpleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img className='w-5' style={{maxWidth:'150px'}} src={routeFile} alt="" />
+                    <img className='w-5' style={{maxWidth:'150px', borderRadius:'5px'}} src={routeFile} alt="" />
                 </div>
                 <div className="card">
                     <Divider align="left">
@@ -83,6 +123,21 @@ export const DocumentosEmp = (params) => {
                             <Button icon="pi pi-plus" onClick={(e) => op.current.toggle(e)} className="p-button-text p-button-rounded mb-2"></Button>
                         </div>
                     </Divider>
+{/* 
+                    {documentosData && <>
+                        {
+                            documentosData.map((el,id)=>{
+                                return <div className='text-600 font-medium mb-2' key={id}>
+                                    <span>Carta Precentacion</span>
+                                    <i className='pi pi-eye text-purple-600 ml-2 cursor-pointer' onClick={()=>window.open('http://192.168.0.54:3003/file/emp/SIGE_File_userId217_1648071291086_6.%20Apr.%20CALDERON%20BARRETO%20FREDDY%20STIBEN-CARTA%20DE%20PRESENTACION%20DEL%20APRENDIZ%20A%20LA%20EMPRESA.pdf')}/>
+                                    <i className='pi pi-trash text-purple-600 ml-2 cursor-pointer' onClick={()=>window.open('http://192.168.0.54:3003/file/emp/SIGE_File_userId217_1648071291086_6.%20Apr.%20CALDERON%20BARRETO%20FREDDY%20STIBEN-CARTA%20DE%20PRESENTACION%20DEL%20APRENDIZ%20A%20LA%20EMPRESA.pdf')}/>
+                                </div>
+                            })
+                        }
+                        
+                    </>} */}
+
+                    
                     <Divider align="left">
                         <div className="inline-flex align-items-center">
                             <b>Faltantes</b>
@@ -102,8 +157,8 @@ export const DocumentosEmp = (params) => {
                 </div>
             </div>
             <div className="col-12 xl:col-3 lg:col-4 md:col-4">
-                <div className='card hidden xl:block md:block lg:block'>
-                    <img className='w-full' style={{maxWidth:'180px'}} src={routeFile} alt="" />
+            <div className='card hidden xl:flex md:flex lg:flex relative justify-content-center align-items-center'>
+                    <img className='w-full' style={{maxWidth:'180px', maxHeight:'180px', borderRadius:'5px'}} src={routeFile} alt="" />
                 </div>
                <div className="card">
                     <h5>Datos:<i onClick={()=>history.push("/dash/perfil")} className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
@@ -119,13 +174,27 @@ export const DocumentosEmp = (params) => {
             </div>
         </div>
         }
-        <OverlayPanel ref={op} /* onHide={()=>setItemSeleccionado(null)} */ showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
+        <OverlayPanel ref={op} onHide={()=>setItemSeleccionado(null)} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
+            
             <div className='w-full text-center'>
-                <h6>Agregar Documento</h6>
+                <h5>Agregar Documento</h5>
             </div>
-            <input id='file' encType="multipart/form-data" name='file' type="file" accept='application/pdf' onChange={e=>setFileValue([e.currentTarget.files[0]])} />
-            <Button type='button' onClick={sendFile} label='Guardar' className='mt-2 w-full'/>
+            
+            <div className="col-12 mt-5 mb-3">
+                <span className="p-float-label">
+                    <Dropdown className='w-full' value={itemSeleccionado} options={dataOption} onChange={e=>onItemChange(e)} optionLabel='nombre_tipo_documento' filter filterBy='nombre_tipo_documento'
+                    emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
+                    <label>Tipo Documento:</label>
+                </span>
+            </div>
+            <div className="col-12 justify-content-center flex">
+                {itemSeleccionado && <>
+                    <FileUpload name="demo" url="./upload" mode="basic" accept='application/pdf'
+                    chooseLabel='Elija el archivo a subir' customUpload uploadHandler={uploadImage}/>
+                </>}
+            </div>
         </OverlayPanel>
+        <Toast ref={toast} position='bottom-right'></Toast>
     </>
   )
 };
