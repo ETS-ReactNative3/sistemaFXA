@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { EmpleadoService } from '../../service/EmpleadoService';
 import { TabView, TabPanel } from 'primereact/tabview';
 
@@ -10,6 +10,7 @@ import { Extras } from './tabMenu/Extras';
 import { Riesgo } from './tabMenu/Riesgo';
 import classNames from 'classnames';
 import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
+import DocumentosService from '../../service/DocumentosService';
 
 
 
@@ -21,6 +22,8 @@ export const Usuario = (params) => {
     
 
 
+    const documentosService = new DocumentosService()
+
     useEffect(() => {
         const empleadoService = new EmpleadoService()
         empleadoService.getEmpleado(params.idUsuario).then(res=>{
@@ -29,6 +32,11 @@ export const Usuario = (params) => {
             params.setEmpleadoDialog(res.data)
             setLoading(false)
         })
+
+        documentosService.getByIdEmp(params.idUsuario).then(resp=>{
+            setDocumentosData(resp.data)
+        })
+
     }, []);  // eslint-disable-line
 
     useEffect(()=>{
@@ -54,6 +62,25 @@ export const Usuario = (params) => {
     }
 
     const API = process.env.REACT_APP_API + '/img/perfil'
+    const APIFILE = process.env.REACT_APP_API + '/file/emp'
+
+    const [documentosData, setDocumentosData] = useState([])
+
+
+    const linkRef = useRef() 
+    
+    async function downloadImage(e) {
+        console.log('si')
+      e.preventDefault()   
+      const src = linkRef.current.href  
+      const imageBlob = await (await fetch(src)).blob()       
+      linkRef.current.href = URL.createObjectURL(imageBlob)        
+      linkRef.current.download = `fotografia_${empleado.nombres}_${empleado.apellidos}`
+      linkRef.current.click()
+    }
+
+    const [ showChangeIgame, setshowChangeIgame ] = useState(false)
+
 
   return (
     <>
@@ -65,7 +92,10 @@ export const Usuario = (params) => {
             <div className="col-12 xl:col-8 lg:col-8 md:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img className='w-5' style={{maxWidth:'150px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
+                    <img onMouseEnter={()=>setshowChangeIgame(true)} onMouseLeave={()=>setshowChangeIgame(false)} onClick={downloadImage} className='w-5' style={{maxWidth:'150px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
+                    <a style={{background:'rgba(1,1,1,0.2)'}} className={showChangeIgame?'flex card w-full justify-content-center top-0 align-items-center right-0 h-full absolute cursor-pointer':'hidden'}   ref= {linkRef} href={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} download="download" >
+                        <i className="pi pi-undo text-4xl"></i>
+                    </a>
                 </div>
                 <div className="card">
                     <form onSubmit={params.formik.handleSubmit}>
@@ -102,15 +132,27 @@ export const Usuario = (params) => {
             </div>
             <div className="col-12 xl:col-4 lg:col-4 md:col-4">
                 <div className='card hidden xl:flex md:flex lg:flex align-items-center justify-content-center'>
-                    <img className='w-full' style={{maxWidth:'200px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
+                    <a className='cursor-pointer w-full'  ref= {linkRef} href={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} download="download" >
+                        <img onClick={downloadImage} className='w-full' style={{maxWidth:'200px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
+                    </a>
                 </div>
                 <div className="card">
                     <div className="mb-6">
                         <h5>Documentos:<i onClick={()=>params.changeModal(0)}className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
-                        <Button label="ejemplo-de-un-pdf.pdf" className="p-button-link text-sm"></Button>
-                        <Button label="nomina-de-ejemplo.pdf" className="p-button-link text-sm"></Button>
-                        <Button label="hoja-de-vida.pdf" className="p-button-link text-sm"></Button>
+                        {documentosData && <>
+                            {
+                                documentosData.map((el,id)=>{
+                                    return <div className='text-600 font-medium mb-2' key={id}>
+                                        <Button label={el.nombre_documento+'.pdf'} onClick={()=>window.open(`${APIFILE}/${el.src_documento}`)} className="p-button-link text-sm"></Button>
+                                    </div>
+                                })
+                            }
+                        
+                        </>}
+
+                        {!documentosData[0] && <div className='text-600 font-medium mb-2'>No cuenta con documentos subidos</div>}
                     </div>
+                    
                     <h6>Documentos Faltantes:</h6>
                     {!documentosFaltantesData[0] && <div className='text-600 font-medium text-sm mb-2'>El empelado no cuenta con documentos faltantes</div>}
                     {

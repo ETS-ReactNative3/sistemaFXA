@@ -9,6 +9,9 @@ class DocumentosService {
         return axios.get(`${API}/docs-emp/${id}`)
     }
 
+    delete(data){
+        return axios.post(`${API}/delete-doc`, data)
+    }
 
 }
 

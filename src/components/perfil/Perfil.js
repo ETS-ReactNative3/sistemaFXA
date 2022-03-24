@@ -13,6 +13,7 @@ import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import ChangeFotografia from './ChangeFotografia';
 import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
+import DocumentosService from '../../service/DocumentosService';
 
 export const Perfil = (params) => {
 
@@ -29,6 +30,8 @@ export const Perfil = (params) => {
     const [ routeFile, setRouteFile] = useState(null)
 
     const empleadoService = new EmpleadoService()
+    const documentosService = new DocumentosService()
+
     useEffect(() => {
         const credencialService = new CredencialService()
 
@@ -36,6 +39,10 @@ export const Perfil = (params) => {
             empleadoService.getInfoPerfil(res.data.id).then(resp=>{
                 setEmpleado(resp.data)
                 setLoading(false)
+            })
+
+            documentosService.getByIdEmp(res.data.id).then(resp=>{
+                setDocumentosData(resp.data)
             })
         })
         
@@ -73,6 +80,10 @@ export const Perfil = (params) => {
             setDocumentosFaltantesData(res.data)
         })
     },[])// eslint-disable-line 
+
+    const [documentosData, setDocumentosData] = useState([])
+
+    const APIFILE = process.env.REACT_APP_API + '/file/emp'
 
   return (
     <>
@@ -130,9 +141,18 @@ export const Perfil = (params) => {
                <div className="card">
                     <div className="mb-6">
                         <h5>Documentos:<i onClick={()=>history.push("/dash/documentos")} className="pi pi-arrow-right text-lg mx-3 cursor-pointer" /></h5>
-                        <Button label="ejemplo-de-un-pdf.pdf" className="p-button-link text-sm"></Button>
-                        <Button label="nomina-de-ejemplo.pdf" className="p-button-link text-sm"></Button>
-                        <Button label="hoja-de-vida.pdf" className="p-button-link text-sm"></Button>
+                        {documentosData && <>
+                            {
+                                documentosData.map((el,id)=>{
+                                    return <div className='text-600 font-medium mb-2' key={id}>
+                                        <Button label={el.nombre_documento+'.pdf'} onClick={()=>window.open(`${APIFILE}/${el.src_documento}`)} className="p-button-link text-sm"></Button>
+                                    </div>
+                                })
+                            }
+                        
+                        </>}
+
+                        {!documentosData[0] && <div className='text-600 font-medium mb-2'>No cuenta con documentos subidos</div>}
                     </div>
                     <h6>Documentos Faltantes:</h6>
                     {!documentosFaltantesData[0] && <div className='text-600 font-medium text-sm mb-2'>No cuenta con documentos faltantes</div>}

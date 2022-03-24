@@ -18,7 +18,8 @@ axios.interceptors.response.use(config=>{
         prueba = 1
     }if (err.response.status === 403  && prueba===0) {
         alert(err.response.data.error)
-        window.location.href = '/#/dash/inicio';
+        window.location.href = '/#/dash/perfil';
+        window.location.reload()
+        prueba = 1
     }
-    console.log(err.response.data);
   });

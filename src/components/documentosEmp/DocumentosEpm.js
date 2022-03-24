@@ -12,13 +12,17 @@ import UploadFilesService from '../../service/UploadFilesService';
 import { Dropdown } from 'primereact/dropdown';
 import { Toast } from 'primereact/toast';
 import DocumentosService from '../../service/DocumentosService';
+import { confirmPopup } from 'primereact/confirmpopup';
+import { InputText } from 'primereact/inputtext';
 
+import './DocumentosEmp.css'
 
 export const DocumentosEmp = (params) => {
 
     const toast = useRef(null);
 
     const API = process.env.REACT_APP_API + '/img/perfil'
+    const APIFILE = process.env.REACT_APP_API + '/file/emp'
 
     const op = useRef(null);
 
@@ -34,13 +38,13 @@ export const DocumentosEmp = (params) => {
 
     const [documentosData, setDocumentosData] = useState([])
 
-    const [ routeFile, setRouteFile] = useState(null)
+    const [ routeFile, setRouteFile] = useState([])
 
     const [ reloadPage, setReloadPage] = useState(0)
 
     
+    const documentosService = new DocumentosService()
     useEffect(() => {
-        const documentosService = new DocumentosService()
         const credencialService = new CredencialService()
         const empleadoService = new EmpleadoService()
 
@@ -49,12 +53,11 @@ export const DocumentosEmp = (params) => {
                 setDataEmpleado(resp.data)
                 setLoading(false)
             })
-            documentosFaltantesService.getByIdEmp(res.data.id).then(res=>{
-                setDocumentosFaltantesData(res.data)
+            documentosFaltantesService.getByIdEmp(res.data.id).then(resp=>{
+                setDocumentosFaltantesData(resp.data)
             })
-
-            documentosService.getByIdEmp(res.data.id).then(res=>{
-                setDocumentosData(res.data)
+            documentosService.getByIdEmp(res.data.id).then(resp=>{
+                setDocumentosData(resp.data)
             })
 
         })
@@ -95,6 +98,7 @@ export const DocumentosEmp = (params) => {
     const uploadImage = ({files}) =>{
         const formData = new FormData();
         formData.append('file', files[0])
+        formData.append('nombre_documento', data.nombreDoc)
         formData.append('tipo_documento_fk', itemSeleccionado.id_tipo_documento)
     
         uploadFilesService.uploadFile(formData).then(res=>{
@@ -103,6 +107,52 @@ export const DocumentosEmp = (params) => {
           hideModal()
         })
       }
+
+    const handlerDeleteDoc = (el) =>{
+        documentosService.delete({src_documento:el.src_documento,id_documento:el.id_documento}).then(res=>{
+            toast.current.show({severity: 'success', summary: 'Todo Bien', detail: res.data});
+            setReloadPage(reloadPage+1)
+        })
+    }
+
+    const [ data, setData] = useState({
+        nombreDoc: ''
+    })
+    const [ error, setError] = useState({
+        errorDoc:'El nombre es obligatorio'
+    })
+
+    const handleChangeNombreDocumento = (e) =>{
+        let i = e.target.value
+        let err = {}
+
+        if(!i)
+            err.errorDoc = 'El nombre es obligatorio'
+        else if(i.length<4)
+            err.errorDoc = 'El nombre tiene que tener mas de 4 caracteres'
+        else if(i.length>25)
+            err.errorDoc = 'El nombre tiene que ser menor de 25 caracteres'
+        else if (!/^[A-Za-z0-9_]+$/g.test(i))
+            err.errorDoc = 'El nombre solo acepta letras, numeros y raya al piso'
+        else 
+            err.errorDoc = ''
+
+        setError(err)
+
+        setData({
+            ...data,
+            [e.target.name]:i
+        })
+    }
+
+    const confirm1 = (e, el) => {
+        confirmPopup({
+            target: e.currentTarget,
+            message: 'Are you sure you want to proceed?',
+            icon: 'pi pi-exclamation-triangle',
+            accept: ()=>handlerDeleteDoc(el)
+        });
+    };
 
   return (
     <>
@@ -123,19 +173,20 @@ export const DocumentosEmp = (params) => {
                             <Button icon="pi pi-plus" onClick={(e) => op.current.toggle(e)} className="p-button-text p-button-rounded mb-2"></Button>
                         </div>
                     </Divider>
-{/* 
+
                     {documentosData && <>
                         {
                             documentosData.map((el,id)=>{
                                 return <div className='text-600 font-medium mb-2' key={id}>
-                                    <span>Carta Precentacion</span>
-                                    <i className='pi pi-eye text-purple-600 ml-2 cursor-pointer' onClick={()=>window.open('http://192.168.0.54:3003/file/emp/SIGE_File_userId217_1648071291086_6.%20Apr.%20CALDERON%20BARRETO%20FREDDY%20STIBEN-CARTA%20DE%20PRESENTACION%20DEL%20APRENDIZ%20A%20LA%20EMPRESA.pdf')}/>
-                                    <i className='pi pi-trash text-purple-600 ml-2 cursor-pointer' onClick={()=>window.open('http://192.168.0.54:3003/file/emp/SIGE_File_userId217_1648071291086_6.%20Apr.%20CALDERON%20BARRETO%20FREDDY%20STIBEN-CARTA%20DE%20PRESENTACION%20DEL%20APRENDIZ%20A%20LA%20EMPRESA.pdf')}/>
+                                    <span>{el.nombre_documento}</span>
+                                    <i className='pi pi-eye text-purple-600 ml-2 cursor-pointer' onClick={()=>window.open(`${APIFILE}/${el.src_documento}`)}/>
+                                    <i className='pi pi-trash text-purple-600 ml-2 cursor-pointer' onClick={(e)=>confirm1(e,el)}/>
                                 </div>
                             })
                         }
                         
-                    </>} */}
+                    </>}
+                    {!documentosData[0] && <div className='text-600 font-medium mb-2'>No cuenta con documentos subidos</div>}
 
                     
                     <Divider align="left">
@@ -180,19 +231,36 @@ export const DocumentosEmp = (params) => {
                 <h5>Agregar Documento</h5>
             </div>
             
-            <div className="col-12 mt-5 mb-3">
+            <div className="col-12 mt-5">
                 <span className="p-float-label">
                     <Dropdown className='w-full' value={itemSeleccionado} options={dataOption} onChange={e=>onItemChange(e)} optionLabel='nombre_tipo_documento' filter filterBy='nombre_tipo_documento'
                     emptyMessage="No se encontraron resultados" emptyFilterMessage="No se encontraron resultados" />
                     <label>Tipo Documento:</label>
                 </span>
             </div>
-            <div className="col-12 justify-content-center flex">
-                {itemSeleccionado && <>
+            {itemSeleccionado && <>
+                <div className="col-12 mt-3">
+                    <span className="p-float-label">
+                        <InputText
+                        name="nombreDoc"
+                        className='w-full'
+                        value={data.nombreDoc} 
+                        onChange={handleChangeNombreDocumento}
+                        />
+                        <label>Nombre Documento:</label>
+                    </span>
+                </div>
+                <div className='w-full text-center p-error'>{error.errorDoc}</div>
+            </>}
+
+            {!error.errorDoc && <>
+            <div className="col-12 justify-content-center flex upload-file-emp">
+                
                     <FileUpload name="demo" url="./upload" mode="basic" accept='application/pdf'
                     chooseLabel='Elija el archivo a subir' customUpload uploadHandler={uploadImage}/>
-                </>}
+            
             </div>
+            </>}
         </OverlayPanel>
         <Toast ref={toast} position='bottom-right'></Toast>
     </>

@@ -65,8 +65,6 @@ const FiltrarInformacion = (params) => {
 
     const SaveOption = () =>{
         let arregloItem = Object.values(itemSeleccionado)
-        console.log(campoSeleccionado)
-        console.log(itemSeleccionado)
         if(campoSeleccionado && itemSeleccionado){
         params.setCondiciones([...params.condiciones,...[{campo:campoSeleccionado.foranea?campoSeleccionado.foranea:campoSeleccionado.optionsName, valor:arregloItem[0], label:campoSeleccionado.label, labelContenido:arregloItem[1]}]])
         setItemSeleccionado(null)

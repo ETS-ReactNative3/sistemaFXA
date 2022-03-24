@@ -7,6 +7,7 @@ import { OverlayPanel } from 'primereact/overlaypanel';
 import { Dropdown } from 'primereact/dropdown';
 import { confirmPopup } from 'primereact/confirmpopup';
 import DocumentosFaltantesService from '../../service/DocumentosFaltantesService';
+import DocumentosService from '../../service/DocumentosService';
 
 export const Documentos = (params) => {
 
@@ -17,8 +18,10 @@ export const Documentos = (params) => {
 
     const [loading, setLoading] = useState(true);
     
+    const [documentosData, setDocumentosData] = useState([])
+    const APIFILE = process.env.REACT_APP_API + '/file/emp'
 
-
+    const documentosService = new DocumentosService()
     useEffect(() => {
         const empleadoService = new EmpleadoService()
 
@@ -26,6 +29,11 @@ export const Documentos = (params) => {
             setDataEmpleado(resp.data)
             setLoading(false)
         })
+
+        documentosService.getByIdEmp(params.idUsuario).then(resp=>{
+            setDocumentosData(resp.data)
+        })
+
         
     }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -112,6 +120,21 @@ export const Documentos = (params) => {
                             <b>Subidos</b>
                         </div>
                     </Divider>
+
+                    {documentosData && <>
+                        {
+                            documentosData.map((el,id)=>{
+                                return <div className='text-600 font-medium mb-2' key={id}>
+                                    <span>{el.nombre_documento}</span>
+                                    <i className='pi pi-eye text-purple-600 ml-2 cursor-pointer' onClick={()=>window.open(`${APIFILE}/${el.src_documento}`)}/>
+                                </div>
+                            })
+                        }
+                        
+                    </>}
+
+                    {!documentosData[0] && <div className='text-600 font-medium mb-2'>No cuenta con documentos subidos</div>}
+
                     <Divider align="left">
                         <div className="inline-flex align-items-center">
                             <b>Faltantes</b>
