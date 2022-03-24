@@ -79,9 +79,6 @@ export const Usuario = (params) => {
       linkRef.current.click()
     }
 
-    const [ showChangeIgame, setshowChangeIgame ] = useState(false)
-
-
   return (
     <>
         {loading &&
@@ -92,9 +89,8 @@ export const Usuario = (params) => {
             <div className="col-12 xl:col-8 lg:col-8 md:col-8 text-center">
                 <h5>{empleado.nombres} {empleado.apellidos}</h5>
                 <div className='w-full flex align-items-center justify-content-center block xl:hidden md:hidden lg:hidden'>
-                    <img onMouseEnter={()=>setshowChangeIgame(true)} onMouseLeave={()=>setshowChangeIgame(false)} onClick={downloadImage} className='w-5' style={{maxWidth:'150px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
-                    <a style={{background:'rgba(1,1,1,0.2)'}} className={showChangeIgame?'flex card w-full justify-content-center top-0 align-items-center right-0 h-full absolute cursor-pointer':'hidden'}   ref= {linkRef} href={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} download="download" >
-                        <i className="pi pi-undo text-4xl"></i>
+                    <a className='cursor-pointer w-full'  ref= {linkRef} href={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} download="download" >
+                        <img onClick={downloadImage} className='w-5' style={{maxWidth:'150px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
                     </a>
                 </div>
                 <div className="card">
