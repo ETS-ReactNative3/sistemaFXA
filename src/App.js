@@ -55,8 +55,11 @@ import Log from './components/login/Log';
 
 const App = () => {
 
-    const [layoutMode, setLayoutMode] = useState('static');
-    const [layoutColorMode, setLayoutColorMode] = useState('light')
+    const menuDisplay = localStorage.getItem('menuDisplay')
+    const scheme = localStorage.getItem('scheme')
+
+    const [layoutMode, setLayoutMode] = useState(menuDisplay?menuDisplay:'static');
+    const [layoutColorMode, setLayoutColorMode] = useState(scheme?scheme:'light')
     const [inputStyle, setInputStyle] = useState('outlined');
     const [ripple, setRipple] = useState(true);
     const [staticMenuInactive, setStaticMenuInactive] = useState(false);

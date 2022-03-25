@@ -73,6 +73,10 @@ export const DocumentosEmp = (params) => {
     const [dataOption, setDataOption] = useState([])
     const [itemSeleccionado, setItemSeleccionado] = useState(null);
 
+    const dropData = () =>{
+        setItemSeleccionado(null)
+        setData({nombreDoc: ''})
+    }
 
     const ItemService  = require('../../service/DefaultService');
     const itemService = ItemService.default('tipo-documento')
@@ -148,7 +152,8 @@ export const DocumentosEmp = (params) => {
     const confirm1 = (e, el) => {
         confirmPopup({
             target: e.currentTarget,
-            message: 'Are you sure you want to proceed?',
+            message: '¿Está seguro de eliminar el documento del sistema?',
+            acceptLabel: 'Acepto!',
             icon: 'pi pi-exclamation-triangle',
             accept: ()=>handlerDeleteDoc(el)
         });
@@ -225,7 +230,7 @@ export const DocumentosEmp = (params) => {
             </div>
         </div>
         }
-        <OverlayPanel ref={op} onHide={()=>setItemSeleccionado(null)} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
+        <OverlayPanel ref={op} onHide={()=>dropData()} showCloseIcon id="overlay_panel" style={{ width: '250px', boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)' }} breakpoints={{'640px': '90vw'}}>
             
             <div className='w-full text-center'>
                 <h5>Agregar Documento</h5>
@@ -257,7 +262,8 @@ export const DocumentosEmp = (params) => {
             <div className="col-12 justify-content-center flex upload-file-emp">
                 
                     <FileUpload name="demo" url="./upload" mode="basic" accept='application/pdf'
-                    chooseLabel='Elija el archivo a subir' customUpload uploadHandler={uploadImage}/>
+                    chooseLabel='Elija el archivo a subir' customUpload uploadHandler={uploadImage} maxFileSize={2000000}
+                    invalidFileSizeMessageSummary='Archivo no valido' invalidFileSizeMessageDetail='Maximo de tamaño soportado es {0}'/>
             
             </div>
             </>}

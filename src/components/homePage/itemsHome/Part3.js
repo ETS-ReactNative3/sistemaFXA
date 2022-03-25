@@ -13,7 +13,7 @@ const Part3 = () => {
               <section>
                   <span className="block text-6xl font-bold mb-1">FXA by Fuxia</span>
                   <div className="text-6xl text-primary font-bold mb-3">Desde hace 15 años</div>
-                  <p className="mt-0 mb-4 text-700 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p className="mt-0 mb-4 text-700 line-height-3 text-2xl">"Gracias por hacer parte de esta gran familia!"</p>
               </section>
           </div>
           

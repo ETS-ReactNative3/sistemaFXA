@@ -9,7 +9,9 @@ export const AppConfig = (props) => {
     const [active, setActive] = useState(false);
     const scale  = 13;
     
-    const [theme, setTheme] = useState('saga-purple');
+    const themeColor = localStorage.getItem('themeColor')
+
+    const [theme, setTheme] = useState(themeColor?themeColor:'arya-purple');
     const config = useRef(null);
     let outsideClickListener = useRef(null);
 
@@ -103,8 +105,15 @@ export const AppConfig = (props) => {
     }
 
     const changeTheme = (e, theme, scheme) => {
+        localStorage.setItem('themeColor', theme)
+        localStorage.setItem('scheme', scheme)
         props.onColorModeChange(scheme);
         setTheme(theme);
+    }
+
+    const changeMenuDisplay = (e) =>{
+        props.onLayoutModeChange(e.value)
+        localStorage.setItem('menuDisplay', e.value)
     }
 
     return (
@@ -120,11 +129,11 @@ export const AppConfig = (props) => {
                 <h5>Tipo Menu</h5>
                 <div className="p-formgroup-inline">
                     <div className="field-radiobutton">
-                        <RadioButton inputId="static" name="layoutMode" value="static" onChange={(e) => props.onLayoutModeChange(e.value)} checked={props.layoutMode === 'static'} />
+                        <RadioButton inputId="static" name="layoutMode" value="static" onChange={(e) => changeMenuDisplay(e)} checked={props.layoutMode === 'static'} />
                         <label htmlFor="static">Estatico</label>
                     </div>
                     <div className="field-radiobutton">
-                        <RadioButton inputId="overlay" name="layoutMode" value="overlay" onChange={(e) => props.onLayoutModeChange(e.value)} checked={props.layoutMode === 'overlay'} />
+                        <RadioButton inputId="overlay" name="layoutMode" value="overlay" onChange={(e) => changeMenuDisplay(e)} checked={props.layoutMode === 'overlay'} />
                         <label htmlFor="overlay">Oculto</label>
                     </div>
                 </div>

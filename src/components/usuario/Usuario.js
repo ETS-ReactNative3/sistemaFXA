@@ -128,7 +128,7 @@ export const Usuario = (params) => {
             </div>
             <div className="col-12 xl:col-4 lg:col-4 md:col-4">
                 <div className='card hidden xl:flex md:flex lg:flex align-items-center justify-content-center'>
-                    <a className='cursor-pointer w-full'  ref= {linkRef} href={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} download="download" >
+                    <a className='cursor-pointer w-full relative'  ref= {linkRef} href={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} download="download" >
                         <img onClick={downloadImage} className='w-full' style={{maxWidth:'200px', borderRadius:'5px'}} src={empleado.src_fotografia?`${API}/${empleado.src_fotografia}`:`${API}/UsuarioDefault.webp`} alt="" />
                     </a>
                 </div>

@@ -78,9 +78,13 @@ export const Usuarios = () => {
         setGlobalFilterValue1('');
     }
 
-    const [dataView, setDataView] = useState(false);
+    let styleDataTable = localStorage.getItem('styleDataTable')
+    let styleDataTableB = styleDataTable==='true'?true:false
+
+    const [dataView, setDataView] = useState(styleDataTable?styleDataTableB:false);
 
     const cambiarEstilo = (i) =>{
+        localStorage.setItem('styleDataTable', i?true:false )
         setDataView(i)
     }
 
