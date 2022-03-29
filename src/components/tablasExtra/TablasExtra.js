@@ -136,7 +136,10 @@ const TablasExtra = () => {
             <AccordionTab header="Tipos Documento">
                 <DefaultData toast={toast} name='Tipos Documento' model='tipo-documento' nombre='tipo_documento' data={tipoDocumento} setData={setTipoDocumento} minMax={[3,25]}/>
             </AccordionTab>
+            
         </Accordion>
+
+
     </div>
 };
 

@@ -3,8 +3,11 @@ import { RadioButton } from 'primereact/radiobutton';
 import classNames from 'classnames';
 import {Button} from "primereact/button";
 import { Divider } from 'primereact/divider';
+import { useHistory } from 'react-router-dom';
 
 export const AppConfig = (props) => {
+
+    const history = new useHistory()
 
     const [active, setActive] = useState(false);
     const scale  = 13;
@@ -160,6 +163,18 @@ export const AppConfig = (props) => {
                         </button>
                         <span className='text-xl mx-3'>Oscuro</span>
                     </div>
+                </div>
+
+                <Divider layout='horizontal'/>
+                <h5>¿Como Funciona SIGE?</h5>
+                <div className="grid">
+                    <div className="col-12">
+                        <button className="p-link" onClick={e => history.push('/guia-uso')}>
+                            <i className='pi pi-book'/>
+                        </button>
+                        <span className='text-xl mx-3'>Documentación</span>
+                    </div>
+                    
                 </div>
 
             </div>

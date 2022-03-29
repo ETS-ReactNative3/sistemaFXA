@@ -52,6 +52,7 @@ import TablasExtra from './components/tablasExtra/TablasExtra';
 import { DocumentosEmp } from './components/documentosEmp/DocumentosEpm';
 import HomePage from './components/homePage/HomePage';
 import Log from './components/login/Log';
+import HomeGuia from './components/GuiasDeUso/HomeGuia';
 
 const App = () => {
 
@@ -262,6 +263,9 @@ const App = () => {
                 </Route>
                 <Route path='/log'>
                     <Log/>
+                </Route>
+                <Route path='/guia-uso'>
+                    <HomeGuia/>
                 </Route>
             </Switch>
 
