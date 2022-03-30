@@ -10,6 +10,7 @@ import { OverlayPanel } from 'primereact/overlaypanel';
 import classNames from 'classnames';
 import CentroCostoFormik from './CentroCostoFormik';
 import { Toast } from 'primereact/toast';
+import { DefaultSelect } from '../../usuario/items/DefaultSelect';
 
 const CentroCosto = (props) => {
 
@@ -107,6 +108,10 @@ const CentroCosto = (props) => {
         return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
     }
 
+    
+    const selectCiudad = (options) =>{
+        return <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_ciudad_fk') })+' w-full'} name='id_ciudad_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="ciudad" id={options.rowData.id_ciudad_fk} onChange={(e) => options.editorCallback(e.value)}/>
+    }
 
 
     const borrarCentro = (id) =>{
@@ -133,7 +138,8 @@ const CentroCosto = (props) => {
             <Button onClick={()=>eliminarData(rowData)} className='p-button-secondary p-button-text p-button-rounded' icon='pi pi-trash'/>
         )
     }
-    const bodyEliminarD = (rowData) =>{
+
+    const bodyEliminarD = () =>{
         return (
             <Button disabled className='p-button-secondary p-button-text p-button-rounded' icon='pi pi-trash'/>
         )
@@ -165,11 +171,12 @@ const CentroCosto = (props) => {
     };
 
     return <div>
-        <Toast ref={toast} position="bottom-right"/>
+       <Toast ref={toast} position="bottom-right"/>
        <DataTable selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)} editMode="row" onRowEditComplete={confirm1} value={data} paginator className="p-datatable-customers" rows={10}
         dataKey="id" filters={filters1} rowsPerPageOptions={[10, 25, 50, 100, 200]} size="small" filterDisplay="menu" loading={loading1} responsiveLayout="scroll" 
         globalFilterFields={['nombre_centro_costo', 'empleados']} header={header1} paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" emptyMessage="No se encontro información" currentPageReportTemplate="Registros {first} a {last} de un total de {totalRecords}">
-            <Column filter editor={(options) => textEditor(options)} showFilterMenu={false} field='nombre_centro_costo' header="Nombre" sortable/>
+            <Column filter editor={options => textEditor(options)} showFilterMenu={false} field='nombre_centro_costo' header="Nombre" sortable/>
+            <Column filter editor={options=>selectCiudad(options)} showFilterMenu={false} header="Ciudad" style={{ minWidth: '5rem' }} sortable field='id_ciudad_fk' body={e=>e.nombre_ciudad}/>
             <Column filter showFilterMenu={false} header="Empleados" style={{ minWidth: '5rem' }} sortable field='empleados'/>
             <Column rowEditor headerStyle={{ width: '10%', minWidth: '5rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
             <Column body={bodyEliminar} editor={bodyEliminarD} headerStyle={{ width: '10%', minWidth: '2rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
@@ -186,7 +193,14 @@ const CentroCosto = (props) => {
                     </span>
                     <div>{getFormErrorMessage('nombre_centro_costo')}</div>
                 </div>
-                <Button onClick={formik.handleSubmit} label='Guardar' className='mt-2 w-full'/>
+                <div className="col-12 mt-5">
+                    <span className="p-float-label">
+                        <DefaultSelect className={classNames({ 'p-invalid': isFormFieldValid('id_ciudad_fk') })+' w-full'} name='id_ciudad_fk' id_def="id_ciudad" nombre_def="nombre_ciudad" serviceName="ciudad" id={formik.values.id_ciudad_fk} onChange={formik.handleChange}/>
+                        <label>Ciudad:</label>
+                    </span>
+                    <div>{getFormErrorMessage('id_ciudad_fk')}</div>
+                </div>
+                <Button onClick={formik.handleSubmit} type='button' label='Guardar' className='mt-2 w-full'/>
         </OverlayPanel>
     </div>;
 };

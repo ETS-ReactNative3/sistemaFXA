@@ -82,15 +82,17 @@ const TopMenu = () => {
                 {
                     label: 'Rol Empleado',
                     icon: 'pi pi-fw pi-user',
-                    command:()=>redireccionar('/guia-uso/manual-empleado')
+                    command:()=>redireccionar('/guia-uso/manual-empleado'),
                 },
                 {
                     label: 'Rol Admin',
-                    icon: 'pi pi-fw pi-briefcase'
+                    icon: 'pi pi-fw pi-briefcase',
+                    command:()=>redireccionar('/guia-uso/manual-admin')
                 },
                 {
                     label: 'Rol Soporte',
-                    icon: 'pi pi-fw pi-star'
+                    icon: 'pi pi-fw pi-star',
+                    command:()=>redireccionar('/guia-uso/manual-soporte')
                 }
 
             ]
@@ -126,7 +128,7 @@ const TopMenu = () => {
 
   return (
     <div>
-        <div className="card">
+        <div className="card" style={{borderRadius:'0'}}>
             <Menubar model={items} start={start} end={end} />
         </div>
     </div>

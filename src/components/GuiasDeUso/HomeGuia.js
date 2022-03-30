@@ -3,6 +3,7 @@ import { Switch } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import ManualAdmin from './items/ManualAdmin'
 import ManualEmpleado from './items/ManualEmpleado'
+import ManualSoporte from './items/ManualSoporte'
 import Presentation from './items/Presentation'
 import TopMenu from './items/TopMenu'
 
@@ -19,6 +20,9 @@ const HomeGuia = () => {
             </Route> 
             <Route exact path="/guia-uso/manual-admin">
                 <ManualAdmin/>
+            </Route> 
+            <Route exact path="/guia-uso/manual-soporte">
+                <ManualSoporte/>  
             </Route> 
         </Switch>
     </>
