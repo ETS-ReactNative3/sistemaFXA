@@ -16,12 +16,16 @@ const GenerarCertificado = () => {
   const [infoEmp, setInfoEmp] = useState({})
   const [reload, setReload] = useState(0)
   const [stateButton, setStateButton] = useState(true)
+  const [fechaUltimoCertificado, setFechaUltimoCertificado] = useState(new Date())
 
 useEffect(() => {
     
     serviceEmp.getInfoCertificado().then(res=>{
       res.data.fecha_ingreso = res.data.fecha_ingreso.split('-')
       res.data.salarioLetras = NumerosALetras(res.data.salario.monto_salario).slice(0,-12)
+      let fechaGenCertificado = new Date(res.data.fecha_gen_certificado)
+      fechaGenCertificado.setDate(fechaGenCertificado.getDate() +1)
+      setFechaUltimoCertificado(fechaGenCertificado)
       setInfoEmp(res.data)
       validateDate(res.data)
     })
@@ -35,8 +39,8 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
 })
 
   const validateDate = (data) =>{
-    let fechaGenCertificado = new Date(data.fecha_gen_certificado)
-    if(!data.fecha_gen_certificado||fechaGenCertificado.getMonth()<new Date().getMonth()||fechaGenCertificado.getFullYear()<new Date().getFullYear()){
+    
+    if(!data.fecha_gen_certificado||fechaUltimoCertificado.getMonth()<new Date().getMonth()||fechaUltimoCertificado.getFullYear()<new Date().getFullYear()){
       setStateButton(false)
     }else{
       setStateButton(true)
@@ -84,7 +88,7 @@ const formatterPeso = new Intl.NumberFormat('es-CO', {
             <p className='text-800 font-nomral'>En el siguiente espacio podra descargar su certificado laboral.</p>
             <p className='text-700 font-nomral'>Este certificado solo puede ser descargado 1 vez al mes. si requiere de dicho certificado más de una vez solicitelo al area de talento humano.</p>
             <p className='text-600 font-medium'>Ultimo certificado generado el día: <span className='text-800 font-medium'>{infoEmp.fecha_gen_certificado?infoEmp.fecha_gen_certificado:'No se ha generado ningun certificado hasta la fecha'}</span></p>
-            {!(!infoEmp.fecha_gen_certificado||new Date(infoEmp.fecha_gen_certificado).getMonth()<new Date().getMonth()||new Date(infoEmp.fecha_gen_certificado).getFullYear()<new Date().getFullYear())&&<Message severity="warn" className='mb-4' text="Para generar un nuevo certificado laboral es necesario esperar hasta el otro mes" />}
+            {!(!infoEmp.fecha_gen_certificado||fechaUltimoCertificado.getMonth()<new Date().getMonth()||fechaUltimoCertificado.getFullYear()<new Date().getFullYear())&&<Message severity="warn" className='mb-4' text="Para generar un nuevo certificado laboral es necesario esperar hasta el otro mes" />}
             <Button onClick={GeneratePdf} loading={stateButton} label="Generar Certificado" className="p-button-outlined block mr-2 mb-2" />
           </div>
         </div>

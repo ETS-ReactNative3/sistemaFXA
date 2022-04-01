@@ -40,6 +40,9 @@ export const Perfil = (params) => {
                 setEmpleado(resp.data)
                 setLoading(false)
             })
+            documentosFaltantesService.getByIdEmp(res.data.id).then(res=>{
+                setDocumentosFaltantesData(res.data)
+            })
 
             documentosService.getByIdEmp(res.data.id).then(resp=>{
                 setDocumentosData(resp.data)
@@ -74,12 +77,6 @@ export const Perfil = (params) => {
 
     const documentosFaltantesService = new DocumentosFaltantesService()
     const [documentosFaltantesData, setDocumentosFaltantesData] = useState([])
-
-    useEffect(()=>{
-        documentosFaltantesService.getByIdEmp(params.idUsuario).then(res=>{
-            setDocumentosFaltantesData(res.data)
-        })
-    },[])// eslint-disable-line 
 
     const [documentosData, setDocumentosData] = useState([])
 
